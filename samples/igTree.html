@@ -1,0 +1,53 @@
+﻿<!pcCTYPE html>
+<html ng-app="igniteui-sample">
+<head>
+	<title>Ignite UI Tree integration with AngularJS</title>
+
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.tree.css" rel="stylesheet" />
+
+</head>
+<body ng-controller="SampleController">
+	<h1>igTree sample</h1> 
+	<ig-tree id="tree1" data-source="ProductCategories">
+		<bindings>
+			<binding child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID">
+			</binding>
+		</binding>
+	</ig-tree>
+	<input type="button" ng-click="addNodeRootLevel()" value="Add Node" />
+	<input type="button" ng-click="removeSelectedNode()" value="Remove selected node" />
+	<table id="treesampletable" class="borders">
+		<tbody>
+			<tr>
+				<td>{{newProductCategory.ProductCategoryID = ProductCategories.length + 1}}</td>
+				<td><input type="text" ng-model="newProductCategory.Name"></input></td>
+				<td><input type="button" value="Add" ng-click="addProductCategory($index)"/></td>
+			</tr>
+			<tr ng-repeat="pc in ProductCategories">
+				<td>{{pc.ProductCategoryID}}</td>
+				<td><input type="text" ng-model="pc.Name"></input></td>
+				<td><input type="button" value="Delete" ng-click="deleteProductCategory($index)"/></td>
+				<td>
+					<div>{{newProductSubcategory.ProductSubcategoryID = pc.ProductSubcategories.length + 1}}<input type="text" ng-model="newProductSubcategory.Name"></input><input type="button" value="Add" ng-click="addProductSubcategory($index)"/></div>
+					<div ng-repeat="ps in pc.ProductSubcategories"><input type="text" ng-model="ps.Name"></input><input type="button" value="Delete" ng-click="deleteProductSubcategory($parent.$index, $index)"/></div>
+				</td>
+				
+			 </tr>
+		</tbody>
+	</table>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.templating.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.tree.js"></script>
+	<script type="text/javascript" src="../src/igniteui-angular.js"></script>
+	<script type="text/javascript" src="js/igniteui-sample.js"></script>
+</body>
+</html>

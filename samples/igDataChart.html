@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html ng-app="igniteui-sample">
+<head>
+	<title>Ignite UI Chart and Zoombar integration with AngularJS</title>
+
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/infragistics.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.zoombar.css" rel="stylesheet" />
+
+</head>
+<body ng-controller="SampleController">
+	<h1>igChart and igZoombar sample</h1> 
+	<ig-data-chart id="datachart1" data-source="dataChart">
+		<axes>
+			<axe name="NameAxis" type="categoryX" title="Country" label="CountryName"></axe>
+			<axe name="PopulationAxis" type="numericY" minimumValue="0" title="Milions of People"></axe>
+		</axes>
+		<series>
+			<serie name="2015Population" type="column" is-highlighting-enabled="true" is-transition-in-enabled="true" x-axis="NameAxis" y-axis="PopulationAxis" value-member-path="Pop2015">
+			</serie>
+		</series>
+	</ig-data-chart>
+
+	<ig-zoombar target="#datachart1">
+	</ig-zoombar>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.dv.core.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_piechart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_categorychart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_financialchart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_polarchart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_radialchart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_rangecategorychart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.chart_scatterchart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.dvcommonwidget.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.geographicmap_core.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.chart.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.zoombar.js"></script>
+	<script type="text/javascript" src="../src/igniteui-angular.js"></script>
+	<script type="text/javascript" src="js/igniteui-sample.js"></script>
+</body>
+</html>

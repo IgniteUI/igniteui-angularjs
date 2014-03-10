@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html ng-app="igniteui-sample">
+<head>
+	<title>Ignite UI Editors integration with AngularJS</title>
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
+</head>
+<body ng-controller="SampleController">
+	<h1>igEditors sample</h1>
+	<table id="simpletable2">
+		<tbody>
+			<tr>
+				<td>igCurrencyEditor</td>
+				<td><input type="number" ng-model="editors.currency"/></td>
+				<td><ig-currency-editor ng-model="editors.currency"></ig-currency-editor></td>
+			</tr>
+			<tr>
+				<td>igDateEditor</td>
+				<td><input type="text" ng-model="editors.date"/></td>
+				<td><ig-date-editor ng-model="editors.date"></ig-date-editor></td>
+			</tr>
+			<tr>
+				<td>igEditor</td>
+				<td><input type="text" ng-model="editors.editor"/></td>
+				<td><ig-editor ng-model="editors.editor"></ig-editor></td>
+			</tr>
+			<tr>
+				<td>igMaskEditor</td>
+				<td><input type="text" ng-model="editors.mask"/></td>
+				<td><ig-mask-editor ng-model="editors.mask" input-mask="999-999-999"></ig-mask-editor></td>
+			</tr>
+			<tr>
+				<td>igNumericEditor</td>
+				<td><input type="number" ng-model="editors.currency"/></td>
+				<td><ig-numeric-editor ng-model="editors.currency" button="spin"></ig-numeric-editor></td>
+			</tr>
+			<tr>
+				<td>igPrecentEditor</td>
+				<td><input type="number" ng-model="editors.percent"/></td>
+				<td><ig-percent-editor ng-model="editors.percent"></ig-percent-editor></td>
+			</tr>
+			<tr>
+				<td>igTextEditor</td>
+				<td><input type="text" id="editor11" ng-model="editors.text"/></td>
+				<td><ig-text-editor id="editor1" ng-model="editors.text"></ig-text-editor></td>
+			</tr>
+			<tr>
+				<td>igDatePicker</td>
+				<td><input type="text" id="datePicker11" ng-model="editors.date"/></td>
+				<td><ig-date-picker id="datePicker1" ng-model="editors.date"></ig-date-picker></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.js"></script>
+
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.editors.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.templating.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.validator.js"></script>
+	<script type="text/javascript" src="../src/igniteui-angular.js"></script>
+	<script type="text/javascript" src="js/igniteui-sample.js"></script>
+</body>
+</html>

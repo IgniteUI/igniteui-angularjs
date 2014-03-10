@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="igniteui-sample">
+<head>
+	<title>Ignite UI Video Player integration with AngularJS</title>
+
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" /> 
+	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.videoplayer.css" rel="stylesheet" />
+
+</head>
+<body ng-controller="SampleController">
+	<h1>igVideoPlayer sample</h1> 
+	<ig-video-player id="video1" width="700px" height="400px">
+		<sources>
+			<source>http://dl.infragistics.com/pg/2011-1/web/shared/videoplayer/videos/Infragistics_Presentation_lowRes_1.h264.mp4</source>
+			<source>http://dl.infragistics.com/pg/2011-1/web/shared/videoplayer/videos/Infragistics_Presentation_lowRes_1.webmvp8.webm</source>
+			<source>http://dl.infragistics.com/pg/2011-1/web/shared/videoplayer/videos/Infragistics_Presentation_lowRes_1.theora.ogv</source>
+		</sources>
+	</ig-video-player>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.videoplayer.js"></script>
+	<script type="text/javascript" src="../src/igniteui-angular.js"></script>
+	<script type="text/javascript" src="js/igniteui-sample.js"></script>
+</body>
+</html>
