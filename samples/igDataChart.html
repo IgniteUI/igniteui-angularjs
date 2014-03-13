@@ -6,23 +6,67 @@
 	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
 	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/infragistics.css" rel="stylesheet" />
 	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.zoombar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="sample.css" />
 
 </head>
-<body ng-controller="SampleController">
-	<h1>igChart and igZoombar sample</h1> 
-	<ig-data-chart id="datachart1" data-source="dataChart">
-		<axes>
-			<axe name="NameAxis" type="categoryX" title="Country" label="CountryName"></axe>
-			<axe name="PopulationAxis" type="numericY" minimumValue="0" title="Milions of People"></axe>
-		</axes>
-		<series>
-			<serie name="2015Population" type="column" is-highlighting-enabled="true" is-transition-in-enabled="true" x-axis="NameAxis" y-axis="PopulationAxis" value-member-path="Pop2015">
-			</serie>
-		</series>
-	</ig-data-chart>
+<body class="container" ng-controller="SampleController">
+    <nav class="pull-right well well-sm">
+        <a href="../index.html">Home</a>
+    </nav>
+	<h1>igChart &amp; igZoombar</h1> 
 
-	<ig-zoombar target="#datachart1">
-	</ig-zoombar>
+    <div class="well">
+        <span class="h3">Try it out</span>
+        <ul>
+            <li>Scroll the zoombar with the bottom scroll bar</li>
+            <li>Change the viewable area of the chart by dragging the handles inside the zoombar</li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <ig-data-chart id="datachart1" data-source="dataChart">
+                <axes>
+                    <axe name="NameAxis"
+                         type="categoryX"
+                         title="Country"
+                         label="CountryName"></axe>
+
+                    <axe name="PopulationAxis"
+                         type="numericY"
+                         minimumvalue="0"
+                         title="Milions of People"></axe>
+                </axes>
+                <series>
+                    <serie name="2015Population"
+                           type="column"
+                           is-highlighting-enabled="true"
+                           is-transition-in-enabled="true"
+                           x-axis="NameAxis"
+                           y-axis="PopulationAxis"
+                           value-member-path="Pop2015">
+                    </serie>
+                </series>
+            </ig-data-chart>
+
+        </div>
+        <div class="col-md-6">
+
+            <ig-zoombar target="#datachart1"></ig-zoombar>
+
+        </div>
+
+    </div>
+
+	
+
+	
+
+    <footer>
+        <small class="text-muted">For more information or to download a trial of Ignite UI, please visit: <a href="http://igniteui.com">http://igniteui.com</a></small>
+    </footer>
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
