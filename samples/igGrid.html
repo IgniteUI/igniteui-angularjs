@@ -12,11 +12,12 @@
 <body ng-controller="SampleController">
 	<h1>igGrid sample</h1>
 	<p>This sample shows angular directives of the iggrid and also the ability to have two way data binding</p>
-	<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">
+	<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" auto-generate-columns="false">
 		<columns>
-			<column key="ProductID" header-text="Product ID" width="200px"></column>
-			<column key="ProductName" header-text="Name"  width="300px"></column>
-			<column key="QuantityPerUnit" header-text="Quantity per unit"  width="200px"></column>
+			<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>
+			<column key="ProductName" header-text="Name"  width="300px"  data-type="string"></column>
+			<column key="QuantityPerUnit" header-text="Quantity per unit"  width="200px" data-type="string"></column>
+			<column key="UnitPrice" header-text="Unit Price"  width="200px" data-type="string"></column>
 		</columns>
 		<features>
 			<feature name="Updating">
@@ -34,10 +35,17 @@
 	<table id="simpletable">
 		<tbody>
 			<tr>
+				<th>Product ID</th>
+				<th>Name</th>
+				<th>Quantity per unit</th>
+				<th>Unit Price</th>
+				<th></th>
+			</tr>
+			<tr>
 				<td>{{newProduct.ProductID = northwind.length + 1}}</td>
 				<td><input type="text" ng-model="newProduct.ProductName"></td>
 				<td><input type="text" ng-model="newProduct.QuantityPerUnit"></td>
-				<td><input type="number" ng-model="newProduct.UnitPrice"></td>
+				<td><input type="text" ng-model="newProduct.UnitPrice"></td>
 				<td><input type="button" value="Add" ng-click="addProduct($index)"/></td>
 			</tr>
 			<tr ng-repeat="product in northwind">
