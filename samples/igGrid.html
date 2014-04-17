@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app="igniteui-sample">
 <head>
 	<title>Ignite UI Grid integration with AngularJS</title>
@@ -7,11 +7,24 @@
 	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
 	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
 	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="sample.css" />
 </head>
-<body ng-controller="SampleController">
+<body class="container" ng-controller="SampleController">
+    <nav class="pull-right well well-sm">
+        <a href="../index.html">Home</a>
+    </nav>
 	<h1>igGrid sample</h1>
-	<p>This sample shows angular directives of the iggrid and also the ability to have two way data binding</p>
+    
+    <div class="well">
+        <p>This sample shows angular directives of the iggrid and also the ability to have two way data binding</p>
+        <span class="h3">Try it out</span>
+        <ul>
+            <li>Enter a Product ID in the textbox and see how the combos change</li>
+            <li>Change a product's name in the group of textboxes below and see how the names change in each combo</li>
+        </ul>
+    </div>
+    
 	<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" auto-generate-columns="false">
 		<columns>
 			<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>
@@ -31,9 +44,9 @@
 			</feature>
 		</features>
 	</ig-grid>
-
-	<table id="simpletable">
-		<tbody>
+    <hr/>
+	<table id="simpletable" class="table table-striped table-hover">
+		<thead>
 			<tr>
 				<th>Product ID</th>
 				<th>Name</th>
@@ -41,19 +54,21 @@
 				<th>Unit Price</th>
 				<th></th>
 			</tr>
+        </thead>
+        <tbody>
 			<tr>
 				<td>{{newProduct.ProductID = northwind.length + 1}}</td>
-				<td><input type="text" ng-model="newProduct.ProductName"></td>
-				<td><input type="text" ng-model="newProduct.QuantityPerUnit"></td>
-				<td><input type="text" ng-model="newProduct.UnitPrice"></td>
-				<td><input type="button" value="Add" ng-click="addProduct($index)"/></td>
+				<td><input type="text" ng-model="newProduct.ProductName" class="form-control"></td>
+				<td><input type="text" ng-model="newProduct.QuantityPerUnit" class="form-control"></td>
+				<td><input type="text" ng-model="newProduct.UnitPrice" class="form-control"></td>
+				<td><input type="button" value="Add" ng-click="addProduct($index)" class="btn btn-default"/></td>
 			</tr>
 			<tr ng-repeat="product in northwind">
 				<td>{{product.ProductID}}</td>
-				<td><input type="text" ng-model="product.ProductName"></td>
+				<td><input type="text" ng-model="product.ProductName" class="form-control"></td>
 				<td>{{product.QuantityPerUnit}}</td>
 				<td>{{product.UnitPrice}}</td>
-				<td><input type="button" value="Delete" ng-click="deleteProduct($index)"/></td>
+				<td><input type="button" value="Delete" ng-click="deleteProduct($index)" class="btn btn-default"/></td>
 			 </tr>
 		</tbody>
 	</table>
