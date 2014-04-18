@@ -187,15 +187,15 @@
 	function extractOptions(nodeName, context, options, element, scope) {
 		//extract all options from the element
 		var i, name, value, arrayName, children = context.children,
-			attrs = context.attributes;
+			attrs = context.attributes, eventName, eventAttrPerfix = "event-";
 		for (i = 0; i < attrs.length; i++) {
 			name = attrs[i].name;
 			value = attrs[i].value;
 
-			if (/^event-/.test(name)) {
-				name = name.substr(6);
-				name = convertToCamelCase(name);
-				element.on(angular.lowercase(name), scope[value]);
+			if (name.startsWith(eventAttrPerfix)) {
+				name = name.substr(eventAttrPerfix.length).replace(/-/g, "").toLowerCase();
+				eventName = name.startsWith(nodeName.toLowerCase()) ? name : nodeName.toLowerCase() + name;
+				element.on(eventName, scope.$eval(value));
 			} else {
 				name = convertToCamelCase(name);
 				
