@@ -8,7 +8,8 @@
 	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
 	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
 	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="sample.css" />
 </head>
 <body class="container" ng-controller="SampleController">
@@ -26,19 +27,24 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="../index.html">Home</a></li>
-                    <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub</a></li>
+                    <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
 	<h1 class="push-down-md"><a href="http://igniteui.com/editors/overview" target="_blank">igEditors</a></h1>
-    <div class="row">
-        <div class="alert alert-info col-md-10">
-            <span class="h3">Try it out</span>
+    <div class="row description">
+        <div class="alert alert-info col-md-5 try-it-out">
+            <span class="h4">TRY IT OUT:</span>
+            <hr />
             <ul>
-                <li>Enter a Product ID in the textbox and see how the combos change</li>
-                <li>Change a product's name in the group of textboxes below and see how the names change in each combo</li>
+                <li>Enter a value in one of the editors</li>
+                <li>Try to enter values that don't make sense (e.g., alpha characters in a numeric field) and observe the results</li>
             </ul>
+        </div>
+        <div class="col-md-4">
+            <p class="lead">This sample demonstrates how create a number of different editors using AngularJS directives.</p>
+            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igEditors.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
         </div>
     </div>
 
