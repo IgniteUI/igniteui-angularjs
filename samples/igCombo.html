@@ -1,27 +1,45 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app="igniteui-sample">
 <head>
 	<title>Ignite UI Combo integration with AngularJS</title>
-
-	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
-	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
-	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
-	<link type="text/css" href="http://cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="sample.css" />
 </head>
 <body class="container" ng-controller="SampleController">
-    <nav class="pull-right well well-sm">
-        <a href="../index.html">Home</a>
-    </nav>
-	<h1>igCombo</h1>
-
-    <div class="well">
-        <span class="h3">Try it out</span>
-        <ul>
-            <li>Enter a Product ID in the textbox and see how the combos change</li>
-            <li>Change a product's name in the group of textboxes below and see how the names change in each combo</li>
-        </ul>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://github.com/IgniteUI/igniteui-angular">Ignite UI AngularJS Directives</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	<h1 class="push-down-md"><a href="http://igniteui.com/combo/overview" target="_blank">igCombo</a></h1>
+    <div class="row">
+        <div class="alert alert-info col-md-10">
+            <span class="h3">Try it out</span>
+            <ul>
+                <li>Enter a Product ID in the textbox and see how the combos change</li>
+                <li>Change a product's name in the group of textboxes below and see how the names change in each combo</li>
+            </ul>
+        </div>
     </div>
 
     <div class="row">
@@ -66,19 +84,25 @@
 	</div>
 
     <footer>
-        <small class="text-muted">For more information or to download a trial of Ignite UI, please visit: <a href="http://igniteui.com">http://igniteui.com</a></small>
+        <p>
+            <a href="../index.html">Home</a> |
+            <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
+            <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
+        </p>
+        <p class="small">For more information or to download a trial of Ignite UI, please visit: <a href="http://igniteui.com">http://igniteui.com</a></p>
     </footer>
 
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
 
-	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
-	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
-	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
-	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.combo.js"></script>
-	<script type="text/javascript" src="http://cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.validator.js"></script>
-	<script type="text/javascript" src="../src/igniteui-angular.js"></script>
-	<script type="text/javascript" src="js/igniteui-sample.js"></script>
+	<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+	<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
+	<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.combo.js"></script>
+	<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.validator.js"></script>
+	<script src="../src/igniteui-angular.js"></script>
+	<script src="js/igniteui-sample.js"></script>
 </body>
 </html>
