@@ -14,7 +14,7 @@
 		var controlName = attrs["data-ig-control-name"];
 		function setControlValue(value) {
 			element.data(controlName).value(value);
-			return value;
+			return element.data(controlName).text();
 		}
 		if (controlName) {
 			element.on(controlName.toLowerCase() + "textchanged", function (event, args) {
