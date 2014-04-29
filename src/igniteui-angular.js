@@ -1,4 +1,5 @@
 /*global jQuery, angular */
+'use strict';
 (function (angular, $) {
 	$.ig = $.ig || {};
 	$.ig.angular = $.ig.angular || {};
