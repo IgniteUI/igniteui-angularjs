@@ -6,6 +6,7 @@
 	// igCombo specific code for two way data binding
 	$.ig.angular.igCombo = $.ig.angular.igCombo || {};
 	$.ig.angular.igCombo.element = $.ig.angular.igCombo.element || "<input></input>";
+
 	// Two way data binding for the combo control
 	$.ig.angular.igCombo.bindEvents = $.ig.angular.igCombo.bindEvents || function (scope, element, attrs, model) {
 		if (!model) {
@@ -33,9 +34,9 @@
 	};
 
 	// igEditor specific code for two way data binding
-
 	$.ig.angular.igEditor = $.ig.angular.igEditor || {};
 	$.ig.angular.igEditor.element = $.ig.angular.igEditor.element || "<input></input>";
+
 	// Two way data binding for the editor controls
 	$.ig.angular.igEditor.bindEvents = $.ig.angular.igEditor.bindEvents || function (scope, element, attrs, model) {
 		if (!model) {
@@ -67,6 +68,7 @@
 	// igGrid specific code for two way data binding
 	$.ig.angular.igGrid = $.ig.angular.igGrid || {};
 	$.ig.angular.igGrid.element = $.ig.angular.igGrid.element || "<table></table>";
+
 	// Two way data binding for the grid control
 	$.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs, model) {
 		element.on("iggridupdatingeditcellended iggridupdatingeditrowended iggridupdatingrowdeleted iggridupdatingrowadded", function (event, args) {
@@ -153,6 +155,7 @@
 
 	// igTree specific code for two way data binding
 	$.ig.angular.igTree = $.ig.angular.igTree || {};
+
 	// Two way data binding for the tree control
 	$.ig.angular.igTree.bindEvents = $.ig.angular.igTree.bindEvents || function (scope, element, attrs) {
 		// rebind data source on changes
@@ -161,6 +164,7 @@
 		}, true);
 	};
 
+    // Utility functions
 	function convertToCamelCase(str) {
 		//convert hyphen to camelCase
 		return str.replace(/-([a-z])/g, function (group) {
@@ -295,18 +299,32 @@
 		return false;
 	}
 
+	function getWidgetName(attrs) {
+	    for (var a in attrs) {
+	        if (a.substring(0, 2) === "ig") {
+	            return a;
+	        }
+	    }
+	    return undefined;
+	}
+
+    // Interrogation functions
 	function isDate(value) {
 		return Object.prototype.toString.call(value) === "[object Date]";
 	}
+
 	function isRegExp(value) {
 		return Object.prototype.toString.call(value) === "[object RegExp]";
 	}
+
 	function isScope(obj) {
 		return obj && obj.$evalAsync && obj.$watch;
 	}
+
 	function isWindow(obj) {
 		return obj && obj.document && obj.location && obj.alert && obj.setInterval;
 	}
+
 	function isFunction(value) { return typeof value === "function"; }
 
 	function isArray(value) {
@@ -351,6 +369,7 @@
 			}
 		};
 	};
+
 	// directive constructor for data-* attribute initialization
 	var igniteAttributeDirectiveConstructor = function () {
 		return {
@@ -364,15 +383,6 @@
 			}
 		};
 	};
-
-	function getWidgetName(attrs) {
-		for (var a in attrs) {
-			if (a.substring(0,2) === "ig") {
-				return a;
-			}
-		}
-		return undefined;
-	}
 
 	for (var widget in $.ui) {
 		if (widget.substring(0, 2) === "ig") {
