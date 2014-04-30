@@ -1,6 +1,6 @@
 /*global jQuery, angular */
-'use strict';
 (function (angular, $) {
+	"use strict";
 	$.ig = $.ig || {};
 	$.ig.angular = $.ig.angular || {};
 
@@ -165,7 +165,7 @@
 		}, true);
 	};
 
-    // Utility functions
+	// Utility functions
 	function convertToCamelCase(str) {
 		//convert hyphen to camelCase
 		return str.replace(/-([a-z])/g, function (group) {
@@ -301,15 +301,15 @@
 	}
 
 	function getWidgetName(attrs) {
-	    for (var a in attrs) {
-	        if (a.substring(0, 2) === "ig") {
-	            return a;
-	        }
-	    }
-	    return undefined;
+		for (var a in attrs) {
+			if (a.substring(0, 2) === "ig") {
+				return a;
+			}
+		}
+		return undefined;
 	}
 
-    // Interrogation functions
+	// Interrogation functions
 	function isDate(value) {
 		return Object.prototype.toString.call(value) === "[object Date]";
 	}
