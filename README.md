@@ -9,10 +9,10 @@ Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igni
 
 #Building
 Build will produce an obfuscated and minified version of the `src/igniteui-angular.js` in the `dist/igniteui-angular.min.js`.  
-Build uses [Grunt](http://gruntjs.com/), so you need [Node.js](http://nodejs.org/) installed on your machine.  
+The build uses [Grunt](http://gruntjs.com/), so you need [Node.js](http://nodejs.org/) installed on your machine.  
 To build the project use the following steps:
 
-1. Open a console in the folder where the igniteui-angular project is located
+1. Open a console in the folder where the **igniteui-angular** project is located
 2. Run `npm install`
 3. Run `grunt build`
 
@@ -38,44 +38,43 @@ Reference the `igniteui-directives` in your AngularJS module:
 ## Initializing controls
 Controls can be initialized in two ways: 
 
-1. In markup - directly in an html page by using custom tags
-2. In controller - a control placehodler is located in an html page, but its initialization options are located in the page controller
+1. Markup Initialization: directly in an HTML page by using custom tags
+2. Controller Initialization: a control placeholder is located in an HTML page, but its initialization options are located in the page controller
 
-## In markup
+<a id="markup"></a>
+## Markup Initialization
 
 ### Custom tags
-Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard Angular normailzation process).
+Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard Angular normalization process).
 
-Examples:
+#### Examples:
 
-igCombo -> `<ig-combo>`  
-igGrid -> `<ig-grid>`  
-igDataChart -> `<ig-data-chart>`  
-igDialog -> `<ig-dialog>`  
-igDateEditor -> `<ig-date-editor>`  
-igEditor -> `<ig-editor>`  
-igMaskEditor -> `<ig-mask-editor>`  
-igNumericEditor -> `<ig-numeric-editor>`  
-igPercentEditor -> `<ig-percent-editor>`  
-igTextEditor -> `<ig-text-editor>`  
-igDatePicker -> `<ig-date-picker>`  
-igTree -> `<ig-tree>`  
-igMap -> `<ig-map>`  
-igUpload -> `<ig-upload>`  
-igVideoPlayer -> `<ig-video-player>`
+- igCombo -> `<ig-combo>`
+- igGrid -> `<ig-grid>`  
+- igDataChart -> `<ig-data-chart>`  
+- igDialog -> `<ig-dialog>`  
+- igDateEditor -> `<ig-date-editor>`  
+- igEditor -> `<ig-editor>`  
+- igMaskEditor -> `<ig-mask-editor>`  
+- igNumericEditor -> `<ig-numeric-editor>`  
+- igPercentEditor -> `<ig-percent-editor>`  
+- igTextEditor -> `<ig-text-editor>`  
+- igDatePicker -> `<ig-date-picker>`  
+- igTree -> `<ig-tree>`  
+- igMap -> `<ig-map>`  
+- igUpload -> `<ig-upload>`  
+- igVideoPlayer -> `<ig-video-player>`
 
+### Configuring Control Options
+Simple type control options (`string`, `number`, `bool` etc.) are configured as an attributes on the control element. The options follow the same naming convention logic as the tag name.
 
-### Configuring control options
-Simple type control options (string, number, bool) are configured as an attributes on the control tag. Naming convention follows the same logic as the tag name.
+#### Examples:
+- igGrid.options.localSchemaTransform -> `<ig-grid local-schema-transform="true">`  
+- igCombo.options.caseSensitive -> `<ig-combo case-sensitive="true">`  
 
-Examples:
+Defining complex type control options (`arrays` & `objects`) are configured as a child elements of the main control.
 
-igGrid.options.localSchemaTransform -> `<ig-grid local-schema-transform="true">`  
-igCombo.options.caseSensitive -> `<ig-combo case-sensitive="true">`  
-
-Complex type control options (arrays, objects) are configured as a child tags of the main control tag.
-
-Example:
+#### Example:
 
 	<ig-grid>
 		<features>
@@ -85,40 +84,50 @@ Example:
 	</ig-grid>
 
 ### Handling events
-Binding to control events is done again with attributes. Event attribute name is prefixed with "event-" string followed by the event name splitted with `-` symbol. Attribute value corresponds to a function name in the scope.
+Binding to control events is done again with attributes. Event attribute names are prefixed with the prefix `event-` followed by the event name delimited with the `-` symbol. Once defined the attribute values corresponds to a function name in the scope so you can gain access to the events.
 
-Examples:
+#### Examples:
 
-igGrid.events.dataBind -> `<ig-grid event-data-bind="dataBindHandler">`  
-igCombo.events.textChanged -> `<ig-combo event-text-changed="textChangedHandler">`  
-igDateEditor.events.keypress -> `<ig-date-editor event-keypress="keypressHandler">`  
+- igGrid.events.dataBind -> `<ig-grid event-data-bind="dataBindHandler">`  
+- igCombo.events.textChanged -> `<ig-combo event-text-changed="textChangedHandler">`  
+- igDateEditor.events.keypress -> `<ig-date-editor event-keypress="keypressHandler">`  
 
-## In controller
-Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard Angular normailzation process) and the attribute value corresponds to the scope object holding the control options.
+## Controller Initialization
+Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (this naming convention follows the standard Angular normalization process) and the attribute value corresponds to the scope object holding the control options.
 
-Examples:
+#### Examples:
 
-igCombo -> `<div id="combo" data-ig-combo="combo_options"></div>`  
-igGrid -> `<table id="grid" data-ig-grid="grid_options"></table>`  
-igDataChart -> `<div id="chart" data-ig-data-chart="data_chart_options"></div>`  
-igDialog -> `<div id="dialog" data-ig-dialog="dialog_options"></div>`  
-igDateEditor -> `<input id="dialog" data-ig-date-editor="date_editor_options"></input>`  
-igEditor -> `<input id="editor" data-ig-editor="editor_options"></input>`  
-igMaskEditor -> `<input id="editor" data-ig-mask-editor="mask_editor_options"></input>`  
-igNumericEditor -> `<input id="editor" data-ig-numeric-editor="numeric_editor_options"></input>`  
-igPercentEditor -> `<input id="editor" data-ig-percent-editor="precent_editor_options"></input>`  
-igTextEditor -> `<input id="editor" data-ig-text-editor="text_editor_options"></input>`  
-igDatePicker -> `<input id="editor" data-ig-date-picker="date_picker_options"></input>`  
-igTree -> `<ul id="tree" data-ig-tree="tree_options"></ul>`  
-igMap -> `<div id="map" data-ig-map="map_options"></div>`  
-igUpload -> `<div id="upload" data-ig-upload="upload_options"></div>`  
-igVideoPlayer -> `<div id="video" data-ig-video-player="video_options"></div>`
+- igCombo -> `<div id="combo" data-ig-combo="combo_options"></div>`  
+- igGrid -> `<table id="grid" data-ig-grid="grid_options"></table>`  
+- igDataChart -> `<div id="chart" data-ig-data-chart="data_chart_options"></div>`  
+- igDialog -> `<div id="dialog" data-ig-dialog="dialog_options"></div>`  
+- igDateEditor -> `<input id="dialog" data-ig-date-editor="date_editor_options"></input>`  
+- igEditor -> `<input id="editor" data-ig-editor="editor_options"></input>`  
+- igMaskEditor -> `<input id="editor" data-ig-mask-editor="mask_editor_options"></input>`  
+- igNumericEditor -> `<input id="editor" data-ig-numeric-editor="numeric_editor_options"></input>`  
+- igPercentEditor -> `<input id="editor" data-ig-percent-editor="precent_editor_options"></input>`  
+- igTextEditor -> `<input id="editor" data-ig-text-editor="text_editor_options"></input>`  
+- igDatePicker -> `<input id="editor" data-ig-date-picker="date_picker_options"></input>`  
+- igTree -> `<ul id="tree" data-ig-tree="tree_options"></ul>`  
+- igMap -> `<div id="map" data-ig-map="map_options"></div>`  
+- igUpload -> `<div id="upload" data-ig-upload="upload_options"></div>`  
+- igVideoPlayer -> `<div id="video" data-ig-video-player="video_options"></div>`
 
-
-## Two-way data binding
+## Two-way Data Binding
 The following controls currently support two-way data binding:
 
 1. igGrid
 2. igCombo
 3. igEditors
 4. igTree
+
+---------------------------------------
+
+##What is Ignite UI?
+[![Ignite UI Logo](http://infragistics-blogs.github.io/github-assets/logos/igniteui.png)](http://igniteui.com)
+
+[Ignite UI](http://igniteui.com/) is an advanced HTML5+ toolset that helps you create stunning, modern Web apps. Building on jQuery and jQuery UI, it primarily consists of feature rich, high-performing UI controls/widgets such as all kinds of charts, data visualization maps, (hierarchical, editable) data grids, pivot grids, enhanced editors (combo box, masked editors, HTML editor, date picker, to name a few), flexible data source connectors, and a whole lot more.  Too many to list here - check out [the site](http://igniteui.com/) for more info and to [download](https://igniteui.com/download) a trial.
+
+Ignite UI is not just another library created in someone's free time. It is commercial-ready, extremely well-tested, tuned for top performance, designed for good UX, and backed by [Infragistics](http://www.infragistics.com/), an experience-focused company with a track record of over 24 years of experience in providing enterprise-ready, high-performance user interface tools for web, windows and mobile environments.
+
+[![Infragistics Logo](http://infragistics-blogs.github.io/github-assets/logos/infragistics.png)](http://infragistics.com)
