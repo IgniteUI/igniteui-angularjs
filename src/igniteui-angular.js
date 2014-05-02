@@ -192,14 +192,29 @@
 	function extractOptions(nodeName, context, options, element, scope) {
 		//extract all options from the element
 		var i, name, value, arrayName, children = context.children,
-			attrs = context.attributes, eventName, eventAttrPerfix = "event-";
+			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
 		for (i = 0; i < attrs.length; i++) {
 			name = attrs[i].name;
 			value = attrs[i].value;
 
-			if (name.startsWith(eventAttrPerfix)) {
-				name = name.substr(eventAttrPerfix.length).replace(/-/g, "").toLowerCase();
-				eventName = name.startsWith(nodeName.toLowerCase()) ? name : nodeName.toLowerCase() + name;
+			if (name.startsWith(eventAttrPrefix)) {
+			    name = name.substr(eventAttrPrefix.length).replace(/-/g, "").toLowerCase();
+
+			    if (name.startsWith(nodeName.toLowerCase())) {
+			        eventName = name;
+			    } else {
+
+			        // ensure that the event name reflects the full api name
+			        // for instance: iggridselectionrowselectionchanged
+			        var apiName = '';
+
+			        if (attrs.name) {
+			            apiName = attrs.name.nodeValue.toLowerCase();
+			        }
+
+			        eventName = nodeName.toLowerCase() + apiName + name;
+			    }
+
 				element.on(eventName, scope.$eval(value));
 			} else {
 				name = convertToCamelCase(name);

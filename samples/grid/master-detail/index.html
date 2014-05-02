@@ -36,11 +36,37 @@
                      event-row-selection-changed="homesGridRowSelectionChanged"></feature>
             <feature name="Paging"
                      page-size="10"
-                     event-page-selection-changed="homesGridPageSelectionChanged"></feature>
+                     event-page-index-changed="homesGridPageSelectionChanged"></feature>
         </features>
     </ig-grid>
+    <hr>
+    <div class="row">
+        <div class="well col-sm-6" data-ng-show="selectedHome != null">
+        <p class="h2">{{selectedHome.streetAddress}}, {{selectedHome.city}}</p>
+        <span class="h3">{{selectedHome.price | currency}}</span>
+        
+        <table class="table table-striped table-hover">
+            <tbody>
+                <tr>
+                    <th>Bedrooms</th>
+                    <td>{{selectedHome.bedrooms}}</td>
+                </tr>
+                <tr>
+                    <th>Bathrooms</th>
+                    <td>{{selectedHome.bathrooms}}</td>
+                </tr>
+                <tr>
+                    <th>Square Feet</th>
+                    <td>{{selectedHome.squareFeet}}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p>{{selectedHome.notes}}</p>
+    </div>
+    </div>
     
-    <div class="alert alert-info" data-ng-show="message.length > 0">The grid is rendered.</div>
+    <div class="alert alert-info" data-ng-show="message.length > 0">{{message}}</div>
 
     <script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
     
@@ -55,7 +81,7 @@
     <script src="http://cdn-na.infragistics.com/jquery/20141/latest/js/infragistics.core.js"></script>
     <script src="http://cdn-na.infragistics.com/jquery/20141/latest/js/infragistics.lob.js"></script>
 
-	<script src="//igniteui.github.io/igniteui-angular/src/igniteui-angular.js"></script>
+	<script src="../../../src/igniteui-angular.js"></script>
     
     <script src="app/lib/Math.uuid.js"></script>
     <script src="app/app.js"></script>
