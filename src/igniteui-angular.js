@@ -87,6 +87,12 @@
 		// watch for changes from the data source to the view
 		scope.$watch(watchFn, function whatchGridDataSource(newValue, oldValue, currentValue) {
 			var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"), gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord, ds = scope.$eval(attrs.source);
+			// check for a change of the data source. In this case rebind the grid
+			if (ds !== grid.options.dataSource) {
+				grid.options.dataSource = ds;
+				grid.dataBind();
+				return;
+			}
 			// add/delete new rows
 			if (Array.isArray(newValue) && Array.isArray(oldValue)) {
 				// adding
@@ -198,22 +204,22 @@
 			value = attrs[i].value;
 
 			if (name.startsWith(eventAttrPrefix)) {
-			    name = name.substr(eventAttrPrefix.length).replace(/-/g, "").toLowerCase();
+				name = name.substr(eventAttrPrefix.length).replace(/-/g, "").toLowerCase();
 
-			    if (name.startsWith(nodeName.toLowerCase())) {
-			        eventName = name;
-			    } else {
+				if (name.startsWith(nodeName.toLowerCase())) {
+					eventName = name;
+				} else {
 
-			        // ensure that the event name reflects the full api name
-			        // for instance: iggridselectionrowselectionchanged
-			        var apiName = '';
+					// for grid features we also need to prefix the feature name to the event name
+					// for instance: iggridselectionrowselectionchanged
+					var featureName = "";
 
-			        if (attrs.name) {
-			            apiName = attrs.name.nodeValue.toLowerCase();
-			        }
+					if (attrs.name) {
+						featureName = attrs.name.nodeValue.toLowerCase();
+					}
 
-			        eventName = nodeName.toLowerCase() + apiName + name;
-			    }
+					eventName = nodeName.toLowerCase() + featureName + name;
+				}
 
 				element.on(eventName, scope.$eval(value));
 			} else {
