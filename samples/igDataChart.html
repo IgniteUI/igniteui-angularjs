@@ -54,25 +54,25 @@
 
             <ig-data-chart id="datachart1" data-source="dataChart">
                 <axes>
-                    <axe name="NameAxis"
+                    <axis name="NameAxis"
                          type="categoryX"
                          title="Country"
-                         label="CountryName"></axe>
+                         label="CountryName"></axis>
 
-                    <axe name="PopulationAxis"
+                    <axis name="PopulationAxis"
                          type="numericY"
                          minimumvalue="0"
-                         title="Milions of People"></axe>
+                         title="Milions of People"></axis>
                 </axes>
                 <series>
-                    <serie name="2015Population"
+                    <series name="2015Population"
                            type="column"
                            is-highlighting-enabled="true"
                            is-transition-in-enabled="true"
                            x-axis="NameAxis"
                            y-axis="PopulationAxis"
                            value-member-path="Pop2015">
-                    </serie>
+                    </series>
                 </series>
             </ig-data-chart>
 
