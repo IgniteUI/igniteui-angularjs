@@ -85,7 +85,7 @@
 			return currentData;
 		};
 		// watch for changes from the data source to the view
-		scope.$watch(watchFn, function whatchGridDataSource(newValue, oldValue, currentValue) {
+		scope.$watch(watchFn, function watchGridDataSource(newValue, oldValue, currentValue) {
 			var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"), gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord, ds = scope.$eval(attrs.source);
 			// check for a change of the data source. In this case rebind the grid
 			if (ds !== grid.options.dataSource) {
@@ -134,7 +134,7 @@
 					}
 					for (j = 0; j < diff[i].txlog.length; j++) {
 						// if updating in progress - cancel it
-						if (gridUpdating.isEditing()) {
+						if (gridUpdating && gridUpdating.isEditing()) {
 							gridUpdating.endEdit(false);
 						}
 
@@ -321,7 +321,7 @@
 		return false;
 	}
 
-	function getWidgetName(attrs) {
+	function getControlName(attrs) {
 		for (var a in attrs) {
 			if (a.substring(0, 2) === "ig") {
 				return a;
@@ -396,20 +396,26 @@
 	var igniteAttributeDirectiveConstructor = function () {
 		return {
 			restrict: "A",
-			link: function(scope, element, attrs) {
-				var widgetName = getWidgetName(attrs);
-				if (widgetName) {
-					var options = scope[attrs[widgetName]];
-					element[widgetName](options || {});
+			link: function(scope, element, attrs, ngModel) {
+				var controlName = getControlName(attrs);
+				if (controlName) {
+					var options = scope.$eval(attrs[controlName]);
+					attrs.source = attrs[controlName] + ".dataSource";
+					attrs.primaryKey = options.primaryKey;
+					// Two way data binding support using events from the controls
+					if ($.ig.angular[controlName] && $.ig.angular[controlName].bindEvents) {
+						$.ig.angular[controlName].bindEvents(scope, element, attrs, ngModel);
+					}
+					element[controlName](options || {});
 				}
 			}
 		};
 	};
 
-	for (var widget in $.ui) {
-		if (widget.substring(0, 2) === "ig") {
-			module.directive(widget, igniteElementDirectiveConstructor);
-			module.directive(widget, igniteAttributeDirectiveConstructor);
+	for (var control in $.ui) {
+		if (control.substring(0, 2) === "ig") {
+			module.directive(control, igniteElementDirectiveConstructor);
+			module.directive(control, igniteAttributeDirectiveConstructor);
 		}
 	}
 }(angular, jQuery));
