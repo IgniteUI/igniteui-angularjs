@@ -377,6 +377,10 @@
 				if (nodeName) {
 					if (element.context) {
 						var res = extractOptions(nodeName, element.context, {}, element, scope);
+						// removing the width and height attributes on the placeholder, because they affect the control dimensions
+						if (element.removeAttr) {
+							element.removeAttr("width").removeAttr("height");
+						}
 						if (attrs.source) {
 							var ds = scope.$eval(attrs.source);
 							res.dataSource = ds;
