@@ -47,6 +47,8 @@ Controls can be initialized in two ways:
 ### Custom tags
 Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard Angular normalization process).
 
+**Note**: It is recommended to use closing tags (`</ig-combo>`) over the self-closing tags (`<ig-combo/>`), because the latter are known to make issues on some browsers (depending on the used document mode).
+
 #### Examples:
 
 - igCombo &rarr; `<ig-combo>`
@@ -120,6 +122,8 @@ The following controls currently support two-way data binding:
 2. igCombo
 3. igEditors
 4. igTree
+
+**Note**: When using control API methods which modify the data source outside the Angular framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see Angular view updated.
 
 ---------------------------------------
 
