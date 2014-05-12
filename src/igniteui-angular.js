@@ -87,6 +87,12 @@
 		// watch for changes from the data source to the view
 		scope.$watch(watchFn, function whatchGridDataSource(newValue, oldValue, currentValue) {
 			var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"), gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord, ds = scope.$eval(attrs.source);
+			// check for a change of the data source. In this case rebind the grid
+			if (ds !== grid.options.dataSource) {
+				grid.options.dataSource = ds;
+				grid.dataBind();
+				return;
+			}
 			// add/delete new rows
 			if (Array.isArray(newValue) && Array.isArray(oldValue)) {
 				// adding
@@ -192,14 +198,29 @@
 	function extractOptions(nodeName, context, options, element, scope) {
 		//extract all options from the element
 		var i, name, value, arrayName, children = context.children,
-			attrs = context.attributes, eventName, eventAttrPerfix = "event-";
+			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
 		for (i = 0; i < attrs.length; i++) {
 			name = attrs[i].name;
 			value = attrs[i].value;
 
-			if (name.startsWith(eventAttrPerfix)) {
-				name = name.substr(eventAttrPerfix.length).replace(/-/g, "").toLowerCase();
-				eventName = name.startsWith(nodeName.toLowerCase()) ? name : nodeName.toLowerCase() + name;
+			if (name.startsWith(eventAttrPrefix)) {
+				name = name.substr(eventAttrPrefix.length).replace(/-/g, "").toLowerCase();
+
+				if (name.startsWith(nodeName.toLowerCase())) {
+					eventName = name;
+				} else {
+
+					// for grid features we also need to prefix the feature name to the event name
+					// for instance: iggridselectionrowselectionchanged
+					var featureName = "";
+
+					if (attrs.name) {
+						featureName = attrs.name.nodeValue.toLowerCase();
+					}
+
+					eventName = nodeName.toLowerCase() + featureName + name;
+				}
+
 				element.on(eventName, scope.$eval(value));
 			} else {
 				name = convertToCamelCase(name);

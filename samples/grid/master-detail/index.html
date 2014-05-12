@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>Master Detail - or trying to be ;)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
+</head>
+<body class="container" ng-app="app" ng-controller="masterDetailController">
+    
+    <div class="alert alert-danger" data-ng-show="error != null">Oops! There's been a problem: {{error}}</div>
+    
+    <ig-grid id="homesGrid" 
+             data-source="homes" 
+             width="100%"  
+             primary-key="id" 
+             auto-commit="true" 
+             auto-generate-columns="false"
+             event-rendered="homesGridRendered">
+        <columns>
+            <column key="streetAddress" header-text="Address" data-type="string"></column>
+            <column key="city" header-text="City" data-type="string"></column>
+            <column key="zipCode" header-text="Zip" data-type="string"></column>
+            <column key="price" header-text="Price" data-type="number"></column>
+            <column key="id" header-text="ID" data-type="string" hidden="true"></column>
+        </columns>
+        <features>
+            <feature name="Sorting" 
+                     event-column-sorted="homesGridColumnSorted"></feature>
+            <feature name="Selection" 
+                     event-row-selection-changed="homesGridRowSelectionChanged"></feature>
+            <feature name="Paging"
+                     page-size="10"
+                     event-page-index-changed="homesGridPageSelectionChanged"></feature>
+        </features>
+    </ig-grid>
+    <hr>
+    <div class="row">
+        <div class="well col-sm-6" data-ng-show="selectedHome != null">
+        <p class="h2">{{selectedHome.streetAddress}}, {{selectedHome.city}}</p>
+        <span class="h3">{{selectedHome.price | currency}}</span>
+        
+        <table class="table table-striped table-hover">
+            <tbody>
+                <tr>
+                    <th>Bedrooms</th>
+                    <td>{{selectedHome.bedrooms}}</td>
+                </tr>
+                <tr>
+                    <th>Bathrooms</th>
+                    <td>{{selectedHome.bathrooms}}</td>
+                </tr>
+                <tr>
+                    <th>Square Feet</th>
+                    <td>{{selectedHome.squareFeet}}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p>{{selectedHome.notes}}</p>
+    </div>
+    </div>
+    
+    <div class="alert alert-info" data-ng-show="message.length > 0">{{message}}</div>
+
+    <script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
+    
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-resource.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-mocks.js"></script>
+
+    <script src="http://cdn-na.infragistics.com/jquery/20141/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/jquery/20141/latest/js/infragistics.lob.js"></script>
+
+	<script src="../../../src/igniteui-angular.js"></script>
+    
+    <script src="app/lib/Math.uuid.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/services/fakeServerService.js"></script>
+    <script src="app/services/dataService.js"></script>
+	<script src="app/controllers/masterDetailController.js"></script>
+</body>
+</html>
