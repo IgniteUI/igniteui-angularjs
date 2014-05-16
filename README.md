@@ -125,6 +125,39 @@ The following controls currently support two-way data binding:
 
 **Note**: When using control API methods which modify the data source outside the Angular framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see Angular view updated.
 
+##Testing
+There are two kinds of tests in Igniteui-angular: Unit tests and End to End tests. All of them are written in [Jasmine](http://jasmine.github.io/).
+
+####Setup
+Simply do:
+
+	npm install
+
+The command is preconfigured and it will also call `bower install` behind the scenes.
+
+####Running Unit Tests
+The easiest way to run the unit tests is to use the npm script:
+
+	npm test
+
+This will start the [Karma](http://karma-runner.github.io/0.12/index.html) test runner and execute the tests.
+
+####End to end testing
+These tests are run with the [Protractor](https://github.com/angular/protractor) test runner, it simulates interaction.
+So first the web server should be brought up:
+
+	npm start
+
+So that Protractor can execute the tests against it. Starting the tests is done with:
+
+	npm run protractor
+
+**Note**: Protractor is built upon WebDriver and this should be installed:
+
+	npm run update-webdriver
+
+This will download and install the latest version of the stand-alone WebDriver tool.
+
 ---------------------------------------
 
 ##What is Ignite UI?
