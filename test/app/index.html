@@ -1,0 +1,164 @@
+﻿<!DOCTYPE HTML>
+<html ng-app="my-app">
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Jasmine Spec Runner v2.0.0</title>
+
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.tree.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
+
+	</head>
+
+	<body ng-controller="NorthwindCtrl">
+
+ 	<h1>igGrid</h1>	
+		
+		<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">
+			<columns>
+				<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>
+				<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>
+				<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="number"></column>
+			</columns>
+			<features>
+				<feature name="Updating">
+					<column-settings>
+						<column-setting column-key="ProductID" read-only="true"></column-settings>
+					</column-settings>
+				</feature>
+				<feature name="Filtering">
+				</feature>
+				<feature name="Sorting">
+				</feature>
+			</features>
+		</ig-grid>
+		
+		
+		<table id="gridmodel">
+			<tbody>
+				<tr>
+					<td>{{newProduct.ProductID = northwind.length + 1}}</td>
+					<td><input type="text" ng-model="newProduct.ProductName"></td>
+					<td><input type="text" ng-model="newProduct.QuantityPerUnit"></td>
+					<td><input type="text" ng-model="newProduct.UnitPrice"></td>
+					<td><input type="button" value="Add" ng-click="add($index)"/></td>
+				</tr>
+				<tr ng-repeat="product in northwind">
+					<td>{{product.ProductID}}</td>
+					<td><input type="text" ng-model="product.ProductName"></td>
+					<td>{{product.QuantityPerUnit}}</td>
+					<td>{{product.UnitPrice}}</td>
+					<td><input type="button" value="Delete" ng-click="delete($index)"/></td>
+				 </tr>
+			</tbody>
+		</table>
+
+		<h1>igTree</h1> 
+		<ig-tree id="tree1" data-source="dataObject">
+			<bindings>
+				<binding child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID">
+				</binding>
+			</binding>
+		</ig-tree>
+		<input type="button" ng-click="addNodeRootLevel()" value="Add Node" />
+		<input type="button" ng-click="removeSelectedNode()" value="Remove selected node" />
+		<table id="treemodel" class="borders">
+			<tbody>
+				<tr>
+					<td>{{newDataObject.ProductCategoryID = dataObject.length + 1}}</td>
+					<td><input type="text" ng-model="newDataObject.Name"></input></td>
+					<td><input type="button" value="Add" ng-click="addDo($index)"/></td>
+				</tr>
+				<tr ng-repeat="do in dataObject">
+					<td>{{do.ProductCategoryID}}</td>
+					<td><input type="text" ng-model="do.Name"></input></td>
+					<td><input type="button" value="Delete" ng-click="deleteDo($index)"/></td>
+					<td>
+						<div>{{newProductSubcategoriesObject.ProductSubcategoryID = do.ProductSubcategories.length + 1}}<input type="text" ng-model="newProductSubcategoriesObject.Name"></input><input type="button" value="Add" ng-click="addDoChild($index)"/></div>
+						<div ng-repeat="ps in do.ProductSubcategories"><input type="text" ng-model="ps.Name"></input><input type="button" value="Delete" ng-click="deleteDoChild($parent.$index, $index)"/></div>
+					</td>
+					
+				 </tr>
+			</tbody>
+		</table>
+
+		<h1>igCombo</h1> 
+		<input type="text" ng-model="combo.value1"/>
+		<ig-combo id="combo1" allow-custom-value="true" data-source="northwind" value-key-type="number" value-key="ProductID" text-key-type="string" text-Key="ProductName" ng-model="combo.value1">
+		</ig-combo>
+		<ig-combo id="combo2" data-source="northwind" value-key-type="number" value-key="ProductID" text-key-type="string" text-Key="ProductName" ng-model="combo.value1">
+		</ig-combo>
+		<br/>
+		<ul id="combomodel">
+			<li ng-repeat="record in northwind">
+				<input ng-model="record.ProductName">
+			</li>
+		</ul>
+
+		<h1>igEditors</h1>
+		<table id="igEditors">
+			<tbody>
+				<tr>
+					<td>igCurrencyEditor</td>
+					<td><ig-currency-editor id="currency1" ng-model="editors.currency"></ig-currency-editor></td>
+				</tr>
+				<tr>
+					<td>igDateEditor</td>
+					<td><ig-date-editor id="date1" ng-model="editors.date"></ig-date-editor></td>
+				</tr>
+				<tr>
+					<td>igEditor</td>
+					<td><ig-editor id="editor1" ng-model="editors.editor"></ig-editor></td>
+				</tr>
+				<tr>
+					<td>igMaskEditor</td>
+					<td><ig-mask-editor id="mask1" ng-model="editors.mask" input-mask="999-999-999"></ig-mask-editor></td>
+				</tr>
+				<tr>
+					<td>igNumericEditor</td>
+					<td><ig-numeric-editor id="numeric1" ng-model="editors.currency"></ig-numeric-editor></td>
+				</tr>
+				<tr>
+					<td>igPercentEditor</td>
+					<td><ig-percent-editor id="percent1" ng-model="editors.percent"></ig-percent-editor></td>
+				</tr>
+				<tr>
+					<td>igTextEditor</td>
+					<td><ig-text-editor id="text1" ng-model="editors.text"></ig-text-editor></td>
+				</tr>
+				<tr>
+					<td>igDatePicker</td>
+					<td><ig-date-picker id="datePicker1" ng-model="editors.date"></ig-date-picker></td>
+				</tr>
+			</tbody>
+		</table>
+		<input id="numert">
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="../../bower_components/angular/angular.js"></script>
+		<script src="../../bower_components/angular-route/angular-route.js"></script>
+
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.framework.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.editors.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.updating.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.sorting.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.popover.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.featurechooser.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.filtering.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.templating.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.tree.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.combo.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.validator.js"></script>
+		<script type="text/javascript" src="../../src/igniteui-angular.js"></script>
+		<script type="text/javascript" src="js/my-app.js"></script>
+	</body>
+</html>
