@@ -199,6 +199,7 @@
 		//extract all options from the element
 		var i, name, value, arrayName, children = context.children,
 			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
+			
 		for (i = 0; i < attrs.length; i++) {
 			name = attrs[i].name;
 			value = attrs[i].value;
@@ -362,14 +363,19 @@
 			restrict: "E",
 			require: "?ngModel",
 			template: function (element, attrs) {
-				var nodeName = element.context.nodeName.toLowerCase();
+				var nodeName = element.context.nodeName.toLowerCase(), content, template, templateParts;
 				nodeName = convertToCamelCase(nodeName);
 				attrs.$set("data-ig-control-name", nodeName);
-				// igDialog is a special case which needs to hold its contents
-				if (nodeName === "igDialog") {
-					return "<div>" + element.html() + "</div>";
+				content = element.find("content").html();
+				template = $.ig.angular[nodeName] && $.ig.angular[nodeName].element || "<div></div>";
+				// In case there is a content tag in the directive manually construct the template by concatenating start tag + content + end tag
+				if (content) {
+					templateParts = template.match("(<[^/][\\w]+>)(</[\\w]+>)");
+					if (templateParts.length === 3) {
+						template = templateParts[1] + content + templateParts[2];
+					}
 				}
-				return $.ig.angular[nodeName] && $.ig.angular[nodeName].element || "<div></div>";
+				return template;
 			},
 			replace: true,
 			link: function (scope, element, attrs, ngModel) {
