@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html ng-app="igniteui-sample">
+<head>
+    <title>Ignite UI Tile Manager integration with AngularJS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+    <link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.splitter.css" rel="stylesheet" />
+    <link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.layout.css" rel="stylesheet" />
+    <link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.tilemanager.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="sample.css" />
+    <style type="text/css">
+        .dashboard {
+            position: relative;
+            width: 100%;
+            height: 550px;
+        }
+
+        #dashboard h4 {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #dashboard h3 {
+            text-align: center;
+        }
+
+        #dashboard img {
+            width: 150px;
+            height: 175px;
+            margin-left: -75px;
+            margin-top: 15px;
+            position: absolute;
+            left: 50%;
+        }
+
+        #dashboard .ui-igtile-maximized img {
+            width: 200px;
+            height: 250px;
+            position: static;
+            float: left;
+            margin: 20px 20px 20px 0;
+        }
+
+        #dashboard .ui-igtilemanager-right img {
+            width: 60px;
+            height: 80px;
+            margin-left: -30px;
+            margin-top: 15px;
+        }
+
+        .ui-igtile-maximized .text {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ui-igtile-maximized div {
+            text-align: left;
+        }
+
+        .linkedIn, .skills {
+            word-wrap: break-word;
+        }
+        div.ui-igtile-inner-container h4 {
+            margin-bottom: 0.1em;
+        }
+    </style>
+</head>
+<body class="container" ng-controller="tileManagerController">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://github.com/IgniteUI/igniteui-angular">Ignite UI AngularJS Directives <span class="badge alert-info">Preview</span></a> 
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="push-down-md"><a href="http://igniteui.com/tile-manager/overview" target="_blank">igTileManager</a></h1>
+    
+    <div class="row description">
+        <div class="col-md-12">
+            <p class="lead">This sample demonstrates how AngularJS directives are used to instantiate igTileManager.</p>
+            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igTileManager.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ig-tile-manager 
+            id="dashboard" 
+            data-source="candidates" 
+            margin-left="10" 
+            margin-top="10" 
+            right-panel-tiles-width="200"
+            right-panel-tiles-height="156"
+            class="dashboard"
+            maximized-state='<h3>${name}</h3><img src="${picture}" title="${name}" alt="error" /><p class="text">${text}</p><div style="clear: both"><span class="color">Skills:</span></div><ul class="skills"></ul><div class="linkedIn"><span class="color">LinkedIn:</span> <a href="${linkedin}" target="_blank">http://www.linkedin.com/profile</a></div>'
+            minimized-state='<h4>${name}</h4><img src="${picture}" class="minimized" title="${name}" alt="error" />'
+            >
+            </ig-tile-manager>
+        </div>
+    </div>
+    <footer>
+        <p>
+            <a href="../index.html">Home</a> |
+            <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
+            <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
+        </p>
+        <p class="small">For more information or to download a trial of Ignite UI, please visit: <a href="http://igniteui.com">http://igniteui.com</a></p>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+
+    <script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
+    <script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
+    <script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.splitter.js"></script>
+    <script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.templating.js"></script>
+    <script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.layoutmanager.js"></script>
+    <script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.tilemanager.js"></script>
+    <script src="../src/igniteui-angular.js"></script>
+    <script src="js/igniteui-sample.js"></script>
+    <script src="js/data/candidates.js"></script>
+</body>
+</html>
