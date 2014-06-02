@@ -45,6 +45,36 @@ app.controller('gridController',
             $scope.newProduct = createNewProduct();
         };
 
+        $scope.gridOptions = {
+            dataSource: $scope.northwind,
+            width: "100%",
+            height: "400px",
+            primaryKey: "ProductID",
+            autoCommit: true,
+            autoGenerateColumns: false,
+            columns: [
+                   { "headerText": "Product ID", "key": "ProductID", "dataType": "number", "width": "50px" },
+                   { "headerText": "Name", "key": "ProductName", "dataType": "string", "width": "250px" },
+                   { "headerText": "Quantity per unit", "key": "QuantityPerUnit", "dataType": "string", "width": "200px" },
+                   { "headerText": "Unit Price", "key": "UnitPrice", "dataType": "string", "width": "100px" }
+            ],
+            features: [{
+                name: "Updating",
+                columnSettings: [{
+                    columnKey: "ProductID",
+                    readOnly: true
+                }]
+            }, {
+                name: "Paging",
+                pageSize: 10
+            }, {
+                name: "Filtering"
+            }, {
+                name: "Sorting"
+            }]
+
+        };
+
     }]);
 
 app.controller('comboController',
