@@ -227,8 +227,8 @@
 				name = convertToCamelCase(name);
 				
 				/* if somewhere in the controls there is floting point number use this one /^-?\d+\.?\d*$/ */
-				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) ) {
-					value = scope.$eval(value);
+				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{(.)+}}$/.test(value)) {
+					value = scope.$eval(value.replace("{{","").replace("}}",""));
 				}
 				options[name] = value;
 			}
@@ -354,6 +354,10 @@
 		return Object.prototype.toString.call(value) === "[object Array]";
 	}
 
+	function getHtml(selector){
+		return $(selector).html();
+	};
+
 	// define modules and directives
 	var module = angular.module("igniteui-directives", []);
 
@@ -379,6 +383,7 @@
 			},
 			replace: true,
 			link: function (scope, element, attrs, ngModel) {
+				scope.getHtml = scope.getHtml || getHtml;
 				var nodeName = attrs["data-ig-control-name"];
 				if (nodeName) {
 					if (element.context) {
@@ -405,8 +410,10 @@
 	// directive constructor for data-* attribute initialization
 	var igniteAttributeDirectiveConstructor = function () {
 		return {
-			restrict: "A",
+		    restrict: "A",
+		    require: "?ngModel",
 			link: function(scope, element, attrs, ngModel) {
+				scope.getHtml = scope.getHtml || getHtml;
 				var controlName = getControlName(attrs);
 				if (controlName) {
 					var options = scope.$eval(attrs[controlName]);
