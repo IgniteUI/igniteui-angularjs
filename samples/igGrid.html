@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="sample.css" />
+    <script id="colTmpl" type="text/template" ng-non-bindable>
+        $ ${UnitPrice} 
+        {{if parseInt(${UnitPrice}) >= (Math.random()+0.5)*parseInt(${UnitPrice}) }} 
+        <img width='10' height='15' src= 'images/arrowUp.gif' />
+        {{else}}
+        <img width='10' height='15' src= 'images/arrowDown.gif' />
+        {{/if}}
+    </script>
 </head>
 <body class="container" ng-controller="gridController">
 
@@ -66,7 +74,7 @@
                     <column key="ProductID" header-text="Product ID" width="50px" data-type="number"></column>
                     <column key="ProductName" header-text="Name"  width="250px"  data-type="string"></column>
                     <column key="QuantityPerUnit" header-text="Quantity per unit"  width="200px" data-type="string"></column>
-                    <column key="UnitPrice" header-text="Unit Price"  width="100px" data-type="string"></column>
+                    <column key="UnitPrice" header-text="Unit Price"  width="100px" data-type="string" template="{{getHtml('#colTmpl')}}"></column>
                 </columns>
                 <features>
                     <feature name="Updating">
