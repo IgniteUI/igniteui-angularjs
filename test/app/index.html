@@ -5,39 +5,41 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Jasmine Spec Runner v2.0.0</title>
 
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.tree.css" rel="stylesheet" />
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
-		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/structure/modules/infragistics.ui.tree.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/jquery/20141/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
 
 	</head>
 
 	<body ng-controller="NorthwindCtrl">
 
  	<h1>igGrid</h1>	
-		
-		<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">
-			<columns>
-				<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>
-				<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>
-				<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="number"></column>
-			</columns>
-			<features>
-				<feature name="Updating">
-					<column-settings>
-						<column-setting column-key="ProductID" read-only="true"></column-settings>
-					</column-settings>
-				</feature>
-				<feature name="Filtering">
-				</feature>
-				<feature name="Sorting">
-				</feature>
-			</features>
-		</ig-grid>
-		
+		<div id="grid_placeholder">
+			<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">
+				<columns>
+					<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>
+					<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>
+					<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="string"></column>
+					<column key="UnitsOnOrder" header-text="UnitsOnOrder" width="200px" data-type="number"></column>
+				</columns>
+				<features>
+					<feature name="Updating">
+						<column-settings>
+							<column-setting column-key="ProductID" read-only="true">
+						</column-settings>
+						</column-settings>
+					</feature>
+					<feature name="Filtering">
+					</feature>
+					<feature name="Sorting">
+					</feature>
+				</features>
+			</ig-grid>
+		</div>
 		
 		<table id="gridmodel">
 			<tbody>
@@ -144,20 +146,26 @@
 		<script src="../../bower_components/angular/angular.js"></script>
 		<script src="../../bower_components/angular-route/angular-route.js"></script>
 
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.framework.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.editors.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.updating.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.sorting.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.popover.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.featurechooser.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.grid.filtering.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.templating.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.tree.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.combo.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.validator.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.util.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.datasource.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.shared.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.framework.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.editors.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.updating.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.sorting.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.selection.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.rowselectors.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.popover.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.featurechooser.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.filtering.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.groupby.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.columnmoving.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.hiding.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.grid.paging.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.templating.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.tree.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.combo.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/jquery/20141/latest/js/modules/infragistics.ui.validator.js"></script>
 		<script type="text/javascript" src="../../src/igniteui-angular.js"></script>
 		<script type="text/javascript" src="js/my-app.js"></script>
 	</body>
