@@ -415,6 +415,7 @@
 			link: function(scope, element, attrs, ngModel) {
 				scope.getHtml = scope.getHtml || getHtml;
 				var controlName = getControlName(attrs);
+				attrs.$set("data-ig-control-name", controlName);
 				if (controlName) {
 					var options = scope.$eval(attrs[controlName]);
 					attrs.source = attrs[controlName] + ".dataSource";
