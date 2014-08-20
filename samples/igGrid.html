@@ -120,9 +120,9 @@
         <tbody>
 			<tr ng-repeat="product in northwind">
 				<td>{{product.ProductID}}</td>
-				<td><input type="text" ng-model="product.ProductName" class="form-control"></td>
+				<td><input type="text" ng-model="product.ProductName" class="form-control" /></td>
 				<td>{{product.QuantityPerUnit}}</td>
-				<td>{{product.UnitPrice}}</td>
+				<td> <input type="text" ng-model="product.UnitPrice" class="form-control" /> </td>
 				<td><input type="button" value="Delete" ng-click="deleteProduct($index)" class="btn btn-default"/></td>
 			 </tr>
 		</tbody>
