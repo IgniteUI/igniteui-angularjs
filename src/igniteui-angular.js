@@ -109,7 +109,9 @@
 						}
 						existingRow = grid.dataSource.findRecordByKey(newValue[i][pkKey]);
 						if (!existingRow) {
-							grid.dataSource.addRow(newValue[i][pkKey], newValue[i], true);
+							// add the row without affecting the original DS (scope source) 
+							// TODO: trigger rowAdded event?
+							grid.dataSource._addRow(newValue[i], -1);
 						}
 					}
 				}
