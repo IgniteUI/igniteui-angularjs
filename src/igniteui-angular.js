@@ -145,7 +145,7 @@
 						record = ds[diff[i].index];
 						colIndex = grid._getCellIndexByColumnKey(diff[i].txlog[j].key);
 						td = element.find("tr[data-id='" + record[pkKey] + "']").children().get(colIndex);
-						if (grid.options.rowTemplate && grid.options.rowTemplate.length > 0) {
+						if (column.template || (grid.options.rowTemplate && grid.options.rowTemplate.length > 0)) {
 							newFormattedVal = grid._renderTemplatedCell(diff[i].txlog[j].newVal, column).substring(1);
 						} else {
 							newFormattedVal = grid._renderCell(diff[i].txlog[j].newVal, column, record);
