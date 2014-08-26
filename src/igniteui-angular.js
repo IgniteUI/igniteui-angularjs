@@ -145,7 +145,7 @@
 						record = ds[diff[i].index];
 						colIndex = grid._getCellIndexByColumnKey(diff[i].txlog[j].key);
 						td = element.find("tr[data-id='" + record[pkKey] + "']").children().get(colIndex);
-						if (column.template || (grid.options.rowTemplate && grid.options.rowTemplate.length > 0)) {
+						if (column.template || grid.options.rowTemplate) {
 							newFormattedVal = grid._renderTemplatedCell(diff[i].txlog[j].newVal, column).substring(1);
 						} else {
 							newFormattedVal = grid._renderCell(diff[i].txlog[j].newVal, column, record);
@@ -172,6 +172,52 @@
 			$(element).igTree("option", "dataSource", newValue);
 		}, true);
 	};
+
+	// igDataChart specific code for data binding
+	$.ig.angular.igDataChart = $.ig.angular.igDataChart || {};
+
+	// Data binding (one-way) for the data chart control
+	$.ig.angular.igDataChart.bindEvents = $.ig.angular.igDataChart.bindEvents || function (scope, element, attrs) {
+		var diff = [], ds = scope.$eval(attrs.source);
+		var changeHandler = function (newValue, oldValue, currentValue) {
+			if (newValue.length == oldValue.length) {
+				//attempt to optimize for value changes
+				var equals = equalsDiff(newValue, oldValue, diff);
+				if ((diff.length > 0) && !equals) {
+					for (var i = 0; i < diff.length; i++) {
+						$(element).igDataChart("notifySetItem", newValue, diff[i].index, newValue[diff[i].index], oldValue[diff[i].index]);
+					}
+					return;
+				}
+			}	
+			$(element).igDataChart("notifyClearItems", newValue);
+		};
+
+		//handle push to track added data points, unbind and rebind watcher after.
+		ds.push = function (){
+			unbinder();
+			var res = Array.prototype.push.apply(this,arguments);
+		    $(element).igDataChart("notifyInsertItem", this, this.length-1, arguments[0]);
+		    unbinder = scope.$watch(attrs.source, changeHandler, true);
+		    return res;
+		};
+
+		var unbinder = scope.$watch(attrs.source, changeHandler, true);
+	};
+
+	// igBaseChart specific code for data binding
+	$.ig.angular.igBaseChart = $.ig.angular.igBaseChart || {};
+	$.ig.angular.igBaseChart.element = $.ig.angular.igBaseChart.element || "<div></div>";
+
+	// Data binding (one-way) for the igBaseChart-s
+	$.ig.angular.igBaseChart.bindEvents = $.ig.angular.igBaseChart.bindEvents || function (scope, element, attrs, model) {
+		var controlName = attrs["data-ig-control-name"];
+		scope.$watch(attrs.source, function (newValue, oldValue, currentValue) {
+			$(element)[controlName]("notifyClearItems", newValue);
+		}, true);
+	};
+	$.ig.angular.igSparkline = angular.extend($.ig.angular.igSparkline || {}, $.ig.angular.igBaseChart);
+	$.ig.angular.igFunnelChart = angular.extend($.ig.angular.igFunnelChart || {}, $.ig.angular.igBaseChart);
 
 	// Utility functions
 	function convertToCamelCase(str) {
@@ -239,6 +285,7 @@
 		for (i = 0; i < children.length; i++) {
 			if (!children[i].hasAttributes()) {
 				arrayName = children[i].nodeName.toLowerCase();
+				if(arrayName === "content") continue;
 				arrayName = convertToCamelCase(arrayName);
 				if (getPropertyType($.ui[nodeName].prototype.options, arrayName) === "object") {
 					options[arrayName] = {};
@@ -363,6 +410,30 @@
 	// define modules and directives
 	var module = angular.module("igniteui-directives", []);
 
+
+	function linkWithDeclarativeOptions(scope, element, attrs, ngModel) {
+		scope.getHtml = scope.getHtml || getHtml;
+		var nodeName = attrs["data-ig-control-name"];
+		if (nodeName) {
+			if (element.context) {
+				var res = extractOptions(nodeName, element.context, {}, element, scope);
+				// removing the width and height attributes on the placeholder, because they affect the control dimensions
+				if (element.removeAttr) {
+					element.removeAttr("width").removeAttr("height");
+				}
+				if (attrs.source) {
+					var ds = scope.$eval(attrs.source);
+					res.dataSource = ds;
+				}
+				// Two way data binding support using events from the controls
+				if ($.ig.angular[nodeName] && $.ig.angular[nodeName].bindEvents) {
+					$.ig.angular[nodeName].bindEvents(scope, element, attrs, ngModel);
+				}
+				element[nodeName](res);
+			}
+		}
+	}
+
 	// directive constructor for custom tags initialization
 	var igniteElementDirectiveConstructor = function () {
 		return {
@@ -384,42 +455,33 @@
 				return template;
 			},
 			replace: true,
-			link: function (scope, element, attrs, ngModel) {
-				scope.getHtml = scope.getHtml || getHtml;
-				var nodeName = attrs["data-ig-control-name"];
-				if (nodeName) {
-					if (element.context) {
-						var res = extractOptions(nodeName, element.context, {}, element, scope);
-						// removing the width and height attributes on the placeholder, because they affect the control dimensions
-						if (element.removeAttr) {
-							element.removeAttr("width").removeAttr("height");
-						}
-						if (attrs.source) {
-							var ds = scope.$eval(attrs.source);
-							res.dataSource = ds;
-						}
-						// Two way data binding support using events from the controls
-						if ($.ig.angular[nodeName] && $.ig.angular[nodeName].bindEvents) {
-							$.ig.angular[nodeName].bindEvents(scope, element, attrs, ngModel);
-						}
-						element[nodeName](res);
-					}
-				}
-			}
+			link: linkWithDeclarativeOptions
 		};
 	};
 
 	// directive constructor for data-* attribute initialization
 	var igniteAttributeDirectiveConstructor = function () {
 		return {
-		    restrict: "A",
+		    restrict: "AC",
 		    require: "?ngModel",
+		    template: function (element, attrs) {
+		    	var content = element.find("content").html(), template = element.html(), templateParts;
+				// use content for the directive if available, before linking
+				if (content)  template = content;
+				return template;
+		    },
+		    replace: false,
 			link: function(scope, element, attrs, ngModel) {
 				scope.getHtml = scope.getHtml || getHtml;
 				var controlName = getControlName(attrs);
 				attrs.$set("data-ig-control-name", controlName);
 				if (controlName) {
 					var options = scope.$eval(attrs[controlName]);
+					if(!options) {
+						// attribute definition AND declarative options
+						linkWithDeclarativeOptions(scope, element, attrs, ngModel);
+						return;
+					}
 					attrs.source = attrs[controlName] + ".dataSource";
 					attrs.primaryKey = options.primaryKey;
 					// Two way data binding support using events from the controls
