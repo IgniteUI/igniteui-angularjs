@@ -245,7 +245,7 @@
 
 	function extractOptions(nodeName, context, options, element, scope) {
 		//extract all options from the element
-		var i, name, value, arrayName, children = context.children,
+		var i, name, value, optionName, children = context.children,
 			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
 			
 		for (i = 0; i < attrs.length; i++) {
@@ -281,27 +281,71 @@
 				options[name] = value;
 			}
 		}
-		//extract options from the nested element
+		//extract options from the nested elements
 		for (i = 0; i < children.length; i++) {
-			if (!children[i].hasAttributes()) {
-				arrayName = children[i].nodeName.toLowerCase();
-				if(arrayName === "content") continue;
-				arrayName = convertToCamelCase(arrayName);
-				if (getPropertyType($.ui[nodeName].prototype.options, arrayName) === "object") {
-					options[arrayName] = {};
-				} else if (children[i].childElementCount === 0 &&
-							children[i].nextSibling.textContent.trim() !== "") {
-					options.push(children[i].nextSibling.textContent.trim());
+
+			if (!context.optionsPath) {
+				context.optionsPath = []; //top level
+			}
+			optionName = children[i].nodeName.toLowerCase();
+			if(optionName === "content") continue;
+			optionName = convertToCamelCase(optionName);
+
+			
+			var opts = $.ui[nodeName].prototype.options;
+
+			if (context.optionsPath[0] == "features" && options.name) {
+				//grid feature, proto options come from feature widget:
+				opts = $.ui[nodeName + options.name].prototype.options;
+				context.optionsPath = [];
+			};
+
+
+
+			for (var j = 0; j < context.optionsPath.length; j++) {
+				if(opts[context.optionsPath[j]] && context.optionsPath[j] != "columnLayouts")
+					opts = opts[context.optionsPath[j]];
+			}
+
+			if (children[i].childElementCount > 0) {
+				var option;
+				if (!children[i].hasAttributes() && getPropertyType(opts, optionName) === "array") {
+					option = [];
 				} else {
-					options[arrayName] = [];
+					// object nodes (can have attributes) and default:
+					option = {};
 				}
-				extractOptions(nodeName, children[i], options[arrayName], element, scope);
-			} else {
-				if (!context.hasAttributes() && $.type(options) === "array") {
-					options.push({});
+				if ($.type(options) === "array") {
+					options.push(option);
+					children[i].optionsPath = context.optionsPath;
 					extractOptions(nodeName, children[i], options[options.length - 1], element, scope);
+				}
+				else{
+					options[optionName] = option;
+					children[i].optionsPath = context.optionsPath.concat(optionName);
+					extractOptions(nodeName, children[i], options[optionName], element, scope);
+				}
+			}
+			else {
+				// single options to evaluate against the parent object:
+				if (!context.hasAttributes() && $.type(options) === "array") {
+					if (children[i].nextSibling && children[i].nextSibling.textContent.trim() !== "") {
+						//child with text content, e.g. video source
+						options.push(children[i].nextSibling.textContent.trim());
+					} else {
+						//child with attributes
+						options.push({});
+						extractOptions(nodeName, children[i], options[options.length - 1], element, scope);
+					}
 				} else {
-					extractOptions(nodeName, children[i], options, element, scope);
+					if (children[i].nextSibling && children[i].nextSibling.textContent.trim() !== "") {
+						//child with text content
+						options[optionName] = children[i].nextSibling.textContent.trim();
+					} else {
+						//child with attributes
+						options[optionName] = {};
+						extractOptions(nodeName, children[i], options[optionName], element, scope);
+					}
 				}
 			}
 		}
