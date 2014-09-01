@@ -275,8 +275,8 @@
 				name = convertToCamelCase(name);
 				
 				/* if somewhere in the controls there is floting point number use this one /^-?\d+\.?\d*$/ */
-				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{(.)+}}$/.test(value)) {
-					value = scope.$eval(value.replace("{{","").replace("}}",""));
+				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{[^}]+}}$/.test(value)) {
+					value = scope.$eval(value.replace(/([{}:])\1/g, ""));
 				}
 				options[name] = value;
 			}
