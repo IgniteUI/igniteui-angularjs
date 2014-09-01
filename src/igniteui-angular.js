@@ -415,15 +415,6 @@
 		return false;
 	}
 
-	function getControlName(attrs) {
-		for (var a in attrs) {
-			if (a.substring(0, 2) === "ig") {
-				return a;
-			}
-		}
-		return undefined;
-	}
-
 	// Interrogation functions
 	function isDate(value) {
 		return Object.prototype.toString.call(value) === "[object Date]";
@@ -454,41 +445,16 @@
 	// define modules and directives
 	var module = angular.module("igniteui-directives", []);
 
-
-	function linkWithDeclarativeOptions(scope, element, attrs, ngModel) {
-		scope.getHtml = scope.getHtml || getHtml;
-		var nodeName = attrs["data-ig-control-name"];
-		if (nodeName) {
-			if (element.context) {
-				var res = extractOptions(nodeName, element.context, {}, element, scope);
-				// removing the width and height attributes on the placeholder, because they affect the control dimensions
-				if (element.removeAttr) {
-					element.removeAttr("width").removeAttr("height");
-				}
-				if (attrs.source) {
-					var ds = scope.$eval(attrs.source);
-					res.dataSource = ds;
-				}
-				// Two way data binding support using events from the controls
-				if ($.ig.angular[nodeName] && $.ig.angular[nodeName].bindEvents) {
-					$.ig.angular[nodeName].bindEvents(scope, element, attrs, ngModel);
-				}
-				element[nodeName](res);
-			}
-		}
-	}
-
-	// directive constructor for custom tags initialization
+	// directive constructor for custom tags,  data-* attribute and class initialization
 	var igniteElementDirectiveConstructor = function () {
 		return {
-			restrict: "E",
+			restrict: "EAC",
 			require: "?ngModel",
 			template: function (element, attrs) {
-				var nodeName = element.context.nodeName.toLowerCase(), content, template, templateParts;
-				nodeName = convertToCamelCase(nodeName);
-				attrs.$set("data-ig-control-name", nodeName);
+				var content, template, templateParts;
+				attrs.$set("data-ig-control-name", this.name);
 				content = element.find("content").html();
-				template = $.ig.angular[nodeName] && $.ig.angular[nodeName].element || "<div></div>";
+				template = $.ig.angular[this.name] && $.ig.angular[this.name].element || "<div></div>";
 				// In case there is a content tag in the directive manually construct the template by concatenating start tag + content + end tag
 				if (content) {
 					templateParts = template.match("(<[^/][\\w]+>)(</[\\w]+>)");
@@ -499,40 +465,30 @@
 				return template;
 			},
 			replace: true,
-			link: linkWithDeclarativeOptions
-		};
-	};
-
-	// directive constructor for data-* attribute initialization
-	var igniteAttributeDirectiveConstructor = function () {
-		return {
-		    restrict: "AC",
-		    require: "?ngModel",
-		    template: function (element, attrs) {
-		    	var content = element.find("content").html(), template = element.html(), templateParts;
-				// use content for the directive if available, before linking
-				if (content)  template = content;
-				return template;
-		    },
-		    replace: false,
-			link: function(scope, element, attrs, ngModel) {
+			link: function (scope, element, attrs, ngModel) {
 				scope.getHtml = scope.getHtml || getHtml;
-				var controlName = getControlName(attrs);
-				attrs.$set("data-ig-control-name", controlName);
+				var controlName = attrs["data-ig-control-name"];
 				if (controlName) {
-					var options = scope.$eval(attrs[controlName]);
-					if(!options) {
-						// attribute definition AND declarative options
-						linkWithDeclarativeOptions(scope, element, attrs, ngModel);
-						return;
+					if (element.context) {
+						var options = scope.$eval(attrs[controlName]) || extractOptions(controlName, element.context, {}, element, scope);
+						// removing the width and height attributes on the placeholder, because they affect the control dimensions
+						if (element.removeAttr) {
+							element.removeAttr("width").removeAttr("height");
+						}
+
+						if (attrs.source) {
+							options.dataSource = scope.$eval(attrs.source);
+						} else{
+							attrs.source = attrs[controlName] + ".dataSource";
+							attrs.primaryKey = options.primaryKey;
+						}
+
+						// Two way data binding support using events from the controls
+						if ($.ig.angular[controlName] && $.ig.angular[controlName].bindEvents) {
+							$.ig.angular[controlName].bindEvents(scope, element, attrs, ngModel);
+						}
+						element[controlName](options);
 					}
-					attrs.source = attrs[controlName] + ".dataSource";
-					attrs.primaryKey = options.primaryKey;
-					// Two way data binding support using events from the controls
-					if ($.ig.angular[controlName] && $.ig.angular[controlName].bindEvents) {
-						$.ig.angular[controlName].bindEvents(scope, element, attrs, ngModel);
-					}
-					element[controlName](options || {});
 				}
 			}
 		};
@@ -541,7 +497,6 @@
 	for (var control in $.ui) {
 		if (control.substring(0, 2) === "ig") {
 			module.directive(control, igniteElementDirectiveConstructor);
-			module.directive(control, igniteAttributeDirectiveConstructor);
 		}
 	}
 }(angular, jQuery));
