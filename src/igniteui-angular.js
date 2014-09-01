@@ -245,7 +245,7 @@
 
 	function extractOptions(nodeName, context, options, element, scope) {
 		//extract all options from the element
-		var i, name, value, arrayName, children = context.children,
+		var i, name, value, optionName, children = context.children,
 			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
 			
 		for (i = 0; i < attrs.length; i++) {
@@ -275,33 +275,77 @@
 				name = convertToCamelCase(name);
 				
 				/* if somewhere in the controls there is floting point number use this one /^-?\d+\.?\d*$/ */
-				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{(.)+}}$/.test(value)) {
-					value = scope.$eval(value.replace("{{","").replace("}}",""));
+				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{[^}]+}}$/.test(value)) {
+					value = scope.$eval(value.replace(/([{}:])\1/g, ""));
 				}
 				options[name] = value;
 			}
 		}
-		//extract options from the nested element
+		//extract options from the nested elements
 		for (i = 0; i < children.length; i++) {
-			if (!children[i].hasAttributes()) {
-				arrayName = children[i].nodeName.toLowerCase();
-				if(arrayName === "content") continue;
-				arrayName = convertToCamelCase(arrayName);
-				if (getPropertyType($.ui[nodeName].prototype.options, arrayName) === "object") {
-					options[arrayName] = {};
-				} else if (children[i].childElementCount === 0 &&
-							children[i].nextSibling.textContent.trim() !== "") {
-					options.push(children[i].nextSibling.textContent.trim());
+
+			if (!context.optionsPath) {
+				context.optionsPath = []; //top level
+			}
+			optionName = children[i].nodeName.toLowerCase();
+			if(optionName === "content") continue;
+			optionName = convertToCamelCase(optionName);
+
+			
+			var opts = $.ui[nodeName].prototype.options;
+
+			if (context.optionsPath[0] == "features" && options.name) {
+				//grid feature, proto options come from feature widget:
+				opts = $.ui[nodeName + options.name].prototype.options;
+				context.optionsPath = [];
+			};
+
+
+
+			for (var j = 0; j < context.optionsPath.length; j++) {
+				if(opts[context.optionsPath[j]] && context.optionsPath[j] != "columnLayouts")
+					opts = opts[context.optionsPath[j]];
+			}
+
+			if (children[i].childElementCount > 0) {
+				var option;
+				if (!children[i].hasAttributes() && getPropertyType(opts, optionName) === "array") {
+					option = [];
 				} else {
-					options[arrayName] = [];
+					// object nodes (can have attributes) and default:
+					option = {};
 				}
-				extractOptions(nodeName, children[i], options[arrayName], element, scope);
-			} else {
-				if (!context.hasAttributes() && $.type(options) === "array") {
-					options.push({});
+				if ($.type(options) === "array") {
+					options.push(option);
+					children[i].optionsPath = context.optionsPath;
 					extractOptions(nodeName, children[i], options[options.length - 1], element, scope);
+				}
+				else{
+					options[optionName] = option;
+					children[i].optionsPath = context.optionsPath.concat(optionName);
+					extractOptions(nodeName, children[i], options[optionName], element, scope);
+				}
+			}
+			else {
+				// single options to evaluate against the parent object:
+				if (!context.hasAttributes() && $.type(options) === "array") {
+					if (children[i].nextSibling && children[i].nextSibling.textContent.trim() !== "") {
+						//child with text content, e.g. video source
+						options.push(children[i].nextSibling.textContent.trim());
+					} else {
+						//child with attributes
+						options.push({});
+						extractOptions(nodeName, children[i], options[options.length - 1], element, scope);
+					}
 				} else {
-					extractOptions(nodeName, children[i], options, element, scope);
+					if (children[i].nextSibling && children[i].nextSibling.textContent.trim() !== "") {
+						//child with text content
+						options[optionName] = children[i].nextSibling.textContent.trim();
+					} else {
+						//child with attributes
+						options[optionName] = {};
+						extractOptions(nodeName, children[i], options[optionName], element, scope);
+					}
 				}
 			}
 		}
@@ -371,15 +415,6 @@
 		return false;
 	}
 
-	function getControlName(attrs) {
-		for (var a in attrs) {
-			if (a.substring(0, 2) === "ig") {
-				return a;
-			}
-		}
-		return undefined;
-	}
-
 	// Interrogation functions
 	function isDate(value) {
 		return Object.prototype.toString.call(value) === "[object Date]";
@@ -410,41 +445,16 @@
 	// define modules and directives
 	var module = angular.module("igniteui-directives", []);
 
-
-	function linkWithDeclarativeOptions(scope, element, attrs, ngModel) {
-		scope.getHtml = scope.getHtml || getHtml;
-		var nodeName = attrs["data-ig-control-name"];
-		if (nodeName) {
-			if (element.context) {
-				var res = extractOptions(nodeName, element.context, {}, element, scope);
-				// removing the width and height attributes on the placeholder, because they affect the control dimensions
-				if (element.removeAttr) {
-					element.removeAttr("width").removeAttr("height");
-				}
-				if (attrs.source) {
-					var ds = scope.$eval(attrs.source);
-					res.dataSource = ds;
-				}
-				// Two way data binding support using events from the controls
-				if ($.ig.angular[nodeName] && $.ig.angular[nodeName].bindEvents) {
-					$.ig.angular[nodeName].bindEvents(scope, element, attrs, ngModel);
-				}
-				element[nodeName](res);
-			}
-		}
-	}
-
-	// directive constructor for custom tags initialization
+	// directive constructor for custom tags,  data-* attribute and class initialization
 	var igniteElementDirectiveConstructor = function () {
 		return {
-			restrict: "E",
+			restrict: "EAC",
 			require: "?ngModel",
 			template: function (element, attrs) {
-				var nodeName = element.context.nodeName.toLowerCase(), content, template, templateParts;
-				nodeName = convertToCamelCase(nodeName);
-				attrs.$set("data-ig-control-name", nodeName);
+				var content, template, templateParts;
+				attrs.$set("data-ig-control-name", this.name);
 				content = element.find("content").html();
-				template = $.ig.angular[nodeName] && $.ig.angular[nodeName].element || "<div></div>";
+				template = $.ig.angular[this.name] && $.ig.angular[this.name].element || "<div></div>";
 				// In case there is a content tag in the directive manually construct the template by concatenating start tag + content + end tag
 				if (content) {
 					templateParts = template.match("(<[^/][\\w]+>)(</[\\w]+>)");
@@ -455,40 +465,30 @@
 				return template;
 			},
 			replace: true,
-			link: linkWithDeclarativeOptions
-		};
-	};
-
-	// directive constructor for data-* attribute initialization
-	var igniteAttributeDirectiveConstructor = function () {
-		return {
-		    restrict: "AC",
-		    require: "?ngModel",
-		    template: function (element, attrs) {
-		    	var content = element.find("content").html(), template = element.html(), templateParts;
-				// use content for the directive if available, before linking
-				if (content)  template = content;
-				return template;
-		    },
-		    replace: false,
-			link: function(scope, element, attrs, ngModel) {
+			link: function (scope, element, attrs, ngModel) {
 				scope.getHtml = scope.getHtml || getHtml;
-				var controlName = getControlName(attrs);
-				attrs.$set("data-ig-control-name", controlName);
+				var controlName = attrs["data-ig-control-name"];
 				if (controlName) {
-					var options = scope.$eval(attrs[controlName]);
-					if(!options) {
-						// attribute definition AND declarative options
-						linkWithDeclarativeOptions(scope, element, attrs, ngModel);
-						return;
+					if (element.context) {
+						var options = scope.$eval(attrs[controlName]) || extractOptions(controlName, element.context, {}, element, scope);
+						// removing the width and height attributes on the placeholder, because they affect the control dimensions
+						if (element.removeAttr) {
+							element.removeAttr("width").removeAttr("height");
+						}
+
+						if (attrs.source) {
+							options.dataSource = scope.$eval(attrs.source);
+						} else{
+							attrs.source = attrs[controlName] + ".dataSource";
+							attrs.primaryKey = options.primaryKey;
+						}
+
+						// Two way data binding support using events from the controls
+						if ($.ig.angular[controlName] && $.ig.angular[controlName].bindEvents) {
+							$.ig.angular[controlName].bindEvents(scope, element, attrs, ngModel);
+						}
+						element[controlName](options);
 					}
-					attrs.source = attrs[controlName] + ".dataSource";
-					attrs.primaryKey = options.primaryKey;
-					// Two way data binding support using events from the controls
-					if ($.ig.angular[controlName] && $.ig.angular[controlName].bindEvents) {
-						$.ig.angular[controlName].bindEvents(scope, element, attrs, ngModel);
-					}
-					element[controlName](options || {});
 				}
 			}
 		};
@@ -497,7 +497,6 @@
 	for (var control in $.ui) {
 		if (control.substring(0, 2) === "ig") {
 			module.directive(control, igniteElementDirectiveConstructor);
-			module.directive(control, igniteAttributeDirectiveConstructor);
 		}
 	}
 }(angular, jQuery));

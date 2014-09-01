@@ -105,7 +105,7 @@ describe('Ignite directives', function() {
 
 	it('should create tree', inject(function($compile, $rootScope) {
 		var treeTpl ='<ig-tree id="tree1" data-source="ProductCategories">';
-		'<bindings><binding child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID"></binding></bindings>' +
+		'<bindings child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID"></bindings>' +
 		'</ig-tree>';
 		var tree = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + treeTpl + '</div>');
 		var scope = $rootScope.$new();
