@@ -312,11 +312,11 @@
 
 			if (children[i].childElementCount > 0) {
 				var option;
-				if (!children[i].hasAttributes() && getPropertyType(opts, optionName) === "array") {
-					option = [];
-				} else {
-					// object nodes (can have attributes) and default:
+				if (children[i].hasAttributes() || getPropertyType(opts, optionName) === "object") {
+					// object nodes (can have attributes) 
 					option = {};
+				} else {
+					option = [];
 				}
 				if ($.type(options) === "array") {
 					options.push(option);

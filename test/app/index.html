@@ -62,9 +62,7 @@
 
 		<h1>igTree</h1> 
 		<ig-tree id="tree1" data-source="dataObject">
-			<bindings>
-				<binding child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID">
-				</binding>
+			<bindings child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID">
 			</binding>
 		</ig-tree>
 		<input type="button" ng-click="addNodeRootLevel()" value="Add Node" />
