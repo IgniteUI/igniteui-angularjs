@@ -26,7 +26,7 @@
 			});
 			model.$formatters.push(setControlValue);
 		}
-		scope.$watch(attrs.source, function (newValue, oldValue, currentValue) {
+		scope.$watch(attrs.source, function (newValue) {
 			var value = element.data(controlName).value(), newDataSource = [];
 			angular.copy(newValue, newDataSource);
 			element.data(controlName)._setOption("dataSource", newDataSource);
@@ -71,8 +71,8 @@
 	$.ig.angular.igGrid.element = $.ig.angular.igGrid.element || "<table></table>";
 
 	// Two way data binding for the grid control
-	$.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs, model) {
-		element.on("iggridupdatingeditcellended iggridupdatingeditrowended iggridupdatingrowdeleted iggridupdatingrowadded", function (event, args) {
+	$.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs) {
+		element.on("iggridupdatingeditcellended iggridupdatingeditrowended iggridupdatingrowdeleted iggridupdatingrowadded", function () {
 			angular.element(element).scope().$apply();
 		});
 		var diff = [], currentData = $.extend(true, [], scope.$eval(attrs.source)),
@@ -85,7 +85,7 @@
 			return currentData;
 		};
 		// watch for changes from the data source to the view
-		scope.$watch(watchFn, function watchGridDataSource(newValue, oldValue, currentValue) {
+		scope.$watch(watchFn, function watchGridDataSource(newValue, oldValue) {
 			var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"), gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord, ds = scope.$eval(attrs.source);
 			// check for a change of the data source. In this case rebind the grid
 			if (ds !== grid.options.dataSource) {
@@ -168,7 +168,7 @@
 	// Two way data binding for the tree control
 	$.ig.angular.igTree.bindEvents = $.ig.angular.igTree.bindEvents || function (scope, element, attrs) {
 		// rebind data source on changes
-		scope.$watch(attrs.source, function (newValue, oldValue, currentValue) {
+		scope.$watch(attrs.source, function (newValue) {
 			$(element).igTree("option", "dataSource", newValue);
 		}, true);
 	};
@@ -179,8 +179,8 @@
 	// Data binding (one-way) for the data chart control
 	$.ig.angular.igDataChart.bindEvents = $.ig.angular.igDataChart.bindEvents || function (scope, element, attrs) {
 		var diff = [], ds = scope.$eval(attrs.source);
-		var changeHandler = function (newValue, oldValue, currentValue) {
-			if (newValue.length == oldValue.length) {
+		var changeHandler = function (newValue, oldValue) {
+			if (newValue.length === oldValue.length) {
 				//attempt to optimize for value changes
 				var equals = equalsDiff(newValue, oldValue, diff);
 				if ((diff.length > 0) && !equals) {
@@ -189,17 +189,17 @@
 					}
 					return;
 				}
-			}	
+			}
 			$(element).igDataChart("notifyClearItems", newValue);
 		};
 
 		//handle push to track added data points, unbind and rebind watcher after.
-		ds.push = function (){
+		ds.push = function () {
 			unbinder();
-			var res = Array.prototype.push.apply(this,arguments);
-		    $(element).igDataChart("notifyInsertItem", this, this.length-1, arguments[0]);
-		    unbinder = scope.$watch(attrs.source, changeHandler, true);
-		    return res;
+			var res = Array.prototype.push.apply(this, arguments);
+			$(element).igDataChart("notifyInsertItem", this, this.length - 1, arguments[0]);
+			unbinder = scope.$watch(attrs.source, changeHandler, true);
+			return res;
 		};
 
 		var unbinder = scope.$watch(attrs.source, changeHandler, true);
@@ -210,9 +210,9 @@
 	$.ig.angular.igBaseChart.element = $.ig.angular.igBaseChart.element || "<div></div>";
 
 	// Data binding (one-way) for the igBaseChart-s
-	$.ig.angular.igBaseChart.bindEvents = $.ig.angular.igBaseChart.bindEvents || function (scope, element, attrs, model) {
+	$.ig.angular.igBaseChart.bindEvents = $.ig.angular.igBaseChart.bindEvents || function (scope, element, attrs) {
 		var controlName = attrs["data-ig-control-name"];
-		scope.$watch(attrs.source, function (newValue, oldValue, currentValue) {
+		scope.$watch(attrs.source, function (newValue) {
 			$(element)[controlName]("notifyClearItems", newValue);
 		}, true);
 	};
@@ -247,7 +247,7 @@
 		//extract all options from the element
 		var i, name, value, optionName, children = context.children,
 			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
-			
+
 		for (i = 0; i < attrs.length; i++) {
 			name = attrs[i].name;
 			value = attrs[i].value;
@@ -273,7 +273,7 @@
 				element.on(eventName, scope.$eval(value));
 			} else {
 				name = convertToCamelCase(name);
-				
+
 				/* if somewhere in the controls there is floting point number use this one /^-?\d+\.?\d*$/ */
 				if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{[^}]+}}$/.test(value)) {
 					value = scope.$eval(value.replace(/([{}:])\1/g, ""));
@@ -288,23 +288,26 @@
 				context.optionsPath = []; //top level
 			}
 			optionName = children[i].nodeName.toLowerCase();
-			if(optionName === "content") continue;
+			if (optionName === "content") {
+				continue;
+			}
 			optionName = convertToCamelCase(optionName);
 
-			
+
 			var opts = $.ui[nodeName].prototype.options;
 
-			if (context.optionsPath[0] == "features" && options.name) {
+			if (context.optionsPath[0] === "features" && options.name) {
 				//grid feature, proto options come from feature widget:
 				opts = $.ui[nodeName + options.name].prototype.options;
 				context.optionsPath = [];
-			};
+			}
 
 
 
 			for (var j = 0; j < context.optionsPath.length; j++) {
-				if(opts[context.optionsPath[j]] && context.optionsPath[j] != "columnLayouts")
+				if (opts[context.optionsPath[j]] && context.optionsPath[j] !== "columnLayouts") {
 					opts = opts[context.optionsPath[j]];
+				}
 			}
 
 			if (children[i].childElementCount > 0) {
@@ -320,7 +323,7 @@
 					children[i].optionsPath = context.optionsPath;
 					extractOptions(nodeName, children[i], options[options.length - 1], element, scope);
 				}
-				else{
+				else {
 					options[optionName] = option;
 					children[i].optionsPath = context.optionsPath.concat(optionName);
 					extractOptions(nodeName, children[i], options[optionName], element, scope);
@@ -353,15 +356,15 @@
 	}
 
 	function equalsDiff(o1, o2, diff) {
-		if (o1 === o2) return true;
-		if (o1 === null || o2 === null) return false;
-		if (o1 !== o1 && o2 !== o2) return true; // NaN === NaN
+		if (o1 === o2) { return true; }
+		if (o1 === null || o2 === null) { return false; }
+		if (o1 !== o1 && o2 !== o2) { return true; }// NaN === NaN
 		var t1 = typeof o1, t2 = typeof o2, length, key, keySet, dirty, skipDiff = false, changedVals = [];
-		if (t1 == t2) {
-			if (t1 == "object") {
+		if (t1 === t2) {
+			if (t1 === "object") {
 				if (isArray(o1)) {
-					if (!isArray(o2)) return false;
-					if ((length = o1.length) == o2.length) {
+					if (!isArray(o2)) { return false; }
+					if ((length = o1.length) === o2.length) {
 						if (!isArray(diff)) {
 							skipDiff = true;
 						}
@@ -380,17 +383,17 @@
 						return true;
 					}
 				} else if (isDate(o1)) {
-					return isDate(o2) && o1.getTime() == o2.getTime();
+					return isDate(o2) && o1.getTime() === o2.getTime();
 				} else if (isRegExp(o1) && isRegExp(o2)) {
-					return o1.toString() == o2.toString();
+					return o1.toString() === o2.toString();
 				} else {
-					if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) || isArray(o2)) return false;
+					if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) || isArray(o2)) { return false; }
 					keySet = {};
 					if (!isArray(diff)) {
 						skipDiff = true;
 					}
 					for (key in o1) {
-						if (key.charAt(0) === "$" || isFunction(o1[key])) continue;
+						if (key.charAt(0) === "$" || isFunction(o1[key])) { continue; }
 						if (!equalsDiff(o1[key], o2[key])) {
 							dirty = true;
 							if (!skipDiff) {
@@ -403,7 +406,7 @@
 						if (!keySet.hasOwnProperty(key) &&
 							key.charAt(0) !== "$" &&
 							o2[key] !== undefined &&
-							!isFunction(o2[key])) return false;
+							!isFunction(o2[key])) { return false; }
 					}
 					if (dirty) {
 						return false;
@@ -438,9 +441,9 @@
 		return Object.prototype.toString.call(value) === "[object Array]";
 	}
 
-	function getHtml(selector){
+	function getHtml(selector) {
 		return $(selector).html();
-	};
+	}
 
 	// define modules and directives
 	var module = angular.module("igniteui-directives", []);
@@ -478,7 +481,7 @@
 
 						if (attrs.source) {
 							options.dataSource = scope.$eval(attrs.source);
-						} else{
+						} else {
 							attrs.source = attrs[controlName] + ".dataSource";
 							attrs.primaryKey = options.primaryKey;
 						}
