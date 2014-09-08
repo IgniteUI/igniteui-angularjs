@@ -75,24 +75,18 @@
 		element.on("iggridupdatingeditcellended iggridupdatingeditrowended iggridupdatingrowdeleted iggridupdatingrowadded", function () {
 			angular.element(element).scope().$apply();
 		});
-		var diff = [], currentData = $.extend(true, [], scope.$eval(attrs.source)),
-		watchFn = function () {
-			var equals, newData = scope.$eval(attrs.source);
-			equals = equalsDiff(newData, currentData, diff);
-			if ((diff.length > 0) || !equals) {
-				currentData = $.extend(true, [], newData);
-			}
-			return currentData;
-		};
 		// watch for changes from the data source to the view
-		scope.$watch(watchFn, function watchGridDataSource(newValue, oldValue) {
-			var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"), gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord, ds = scope.$eval(attrs.source);
+		scope.$watch(attrs.source, function watchGridDataSource(newValue, oldValue) {
+			var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"), 
+				gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord, 
+				ds = scope.$eval(attrs.source), diff = [];
 			// check for a change of the data source. In this case rebind the grid
 			if (ds !== grid.options.dataSource) {
 				grid.options.dataSource = ds;
 				grid.dataBind();
 				return;
 			}
+			equalsDiff(newValue, oldValue, diff);
 			// add/delete new rows
 			if (Array.isArray(newValue) && Array.isArray(oldValue)) {
 				// adding
@@ -157,7 +151,6 @@
 						dsRecord[column.key] = diff[i].txlog[j].newVal;
 					}
 				}
-				diff = [];
 			}
 		}, true);
 	};
