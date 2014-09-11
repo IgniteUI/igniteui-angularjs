@@ -6,6 +6,8 @@ var NorthwindCtrl = function ($scope, $element, $compile) {
 		var grid = angular.element("<div>" + gridConfiguration + "</div>");
 		var el = $compile(grid)($scope);
 		angular.element("#grid_placeholder").append(el);
+		// trigger one digest cycle to init watcher values for last
+		$scope.$digest();
 	}
 
 	$scope.add = function () {
