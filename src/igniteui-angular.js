@@ -98,7 +98,7 @@
         });
 
         function watchGridDataSource(newValue, oldValue) {
-            var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"),
+            var i, j, existingDomRow, existingRow, grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
 				gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord,
 				ds = scope.$eval(attrs.source), diff = [];
             // check for a change of the data source. In this case rebind the grid
