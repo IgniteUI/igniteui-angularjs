@@ -89,12 +89,15 @@
     $.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs) {
     	var unbinder;
         element.on($.ig.angular.igGrid.events.join(' '), function () {
-            angular.element(element).scope().$apply();
+        	unbinder();
+            scope.$apply();
+            unbinder = scope.$watch(attrs.source, watchGridDataSource, true);
+           	markWatcher(scope, "igGrid", attrs);
         }).one('$destroy', function() {
         	unbinder();
         });
-        // watch for changes from the data source to the view
-        unbinder = scope.$watch(attrs.source, function watchGridDataSource(newValue, oldValue) {
+
+        function watchGridDataSource(newValue, oldValue) {
             var i, j, pkKey = attrs.primaryKey, existingDomRow, existingRow, grid = element.data("igGrid"),
 				gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord,
 				ds = scope.$eval(attrs.source), diff = [];
@@ -170,7 +173,9 @@
                     }
                 }
             }
-        }, true);
+        }
+        // watch for changes from the data source to the view
+        unbinder = scope.$watch(attrs.source, watchGridDataSource, true);
 		markWatcher(scope, "igGrid", attrs);
     };
 
