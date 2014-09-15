@@ -14,7 +14,17 @@ app.factory('dataService',
                 $http.get('/api/homes').success(deferred.resolve).error(deferred.reject);
                 
                 return deferred.promise;
-            }
+            },
+             
+            save: function (home) {
+                    var deferred = $q.defer();
+
+                    $http.post('/api/homes', home).success(function (result) {
+                        deferred.resolve(result);
+                    }).error(deferred.reject);
+
+                    return deferred.promise;
+                },
          };
          
          return svc;

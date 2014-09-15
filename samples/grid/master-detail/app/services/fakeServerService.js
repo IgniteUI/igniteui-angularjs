@@ -60,7 +60,17 @@ app.service('fakeServerService',
                         "Three car garage",
                         "Close-knit block",
                         "Swimming pool with a diving board",
-                        "Includes furniture and appliances"
+                        "Includes furniture and appliances",
+                        "Close to local grocery store",
+                        "Active home owner's association",
+                        "Lots of kids on the block",
+                        "Amazing view",
+                        "Circle driveway",
+                        "On the top of the hill",
+                        "Around the corner from the school",
+                        "Rock-themed landscape",
+                        "Near the freeway",
+                        "Beautiful stained glass windows"
                     ];
                     
                     var cities = [
@@ -200,6 +210,8 @@ app.config(['$provide',
 app.run(
             ['$httpBackend', 'fakeServerService',
     function ($httpBackend, fakeServerService) {
+        
+        var apiRegex = /\/api\/homes\//;
 
         $httpBackend.whenGET('/api/homes').respond(fakeServerService.data);
 
@@ -214,23 +226,19 @@ app.run(
             return [200, { success: true }];
         });
 
-        fakeServerService.data.forEach(function (home) {
-            $httpBackend.whenDELETE('/api/homes/' + home.id).respond(function (method, uri, data) {
-                var parts = uri.split('/');
-                var id = parts[parts.length - 1];
-                fakeServerService.delete(id);
-                return [200, { success: true }];
-            });
+        $httpBackend.whenDELETE(apiRegex).respond(function (method, uri, data) {
+            var parts = uri.split('/');
+            var id = parts[parts.length - 1];
+            fakeServerService.delete(id);
+            return [200, { success: true }];
         });
 
-        fakeServerService.data.forEach(function (home) {
-            $httpBackend.whenGET('/api/homes/' + home.id).respond(function (method, uri, data) {
-                var parts = uri.split('/');
-                var id = parts[parts.length - 1];
+        $httpBackend.whenGET(apiRegex).respond(function (method, uri, data) {
+            var parts = uri.split('/');
+            var id = parts[parts.length - 1];
 
-                var home = fakeServerService.getById(id);
-                return [200, home];
-            });
+            var home = fakeServerService.getById(id);
+            return [200, home];
         });
 
     }]);

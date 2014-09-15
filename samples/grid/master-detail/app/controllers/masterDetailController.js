@@ -11,43 +11,18 @@ app.controller('masterDetailController',
 
         $scope.selectedHome = null;
         
-        $scope.homesGridRendered = function(e){
-            $scope.message = 'Grid is rendered';
-        };
-        
-        $scope.homesGridColumnSorted = function(e, u){
-            $scope.$apply(function () {
-                $scope.message = 'column sorted';
+        $scope.save = function(){
+            dataService.save($scope.selectedHome).then(function(){
+                $scope.selectedHome = null;
+                $scope.message = 'Home saved';
+            }, 
+            function(error){
+                $scope.error = error;
             });
         };
         
-        $scope.homesGridRowSelectionChanged = function (e, u) {
-            var
-                grid = u.owner.grid,
-                index = u.row.index;
-
-            grid.options.features.forEach(function (feature) {
-                if (feature.name.toLowerCase() === 'paging') {
-
-                    // ?? is there a more 'Angular' way to get at these 
-                    // behaviors other than having to do direct DOM selection?
-                    var pageIndex = $('#' + grid.id()).igGridPaging('option', 'currentPageIndex');
-                    var pageSize = $('#' + grid.id()).igGridPaging('option', 'pageSize');
-                    if (pageIndex > 0) {
-                        index += (pageIndex * pageSize);
-                    }
-                }
-            });
-
-            $scope.$apply(function () {
-                $scope.selectedHome = $scope.homes[index];
-            });
-        };
-        
-        $scope.homesGridPageSelectionChanged = function(e, u){
-            $scope.$apply(function () {
-                $scope.message = 'page index changed';
-            });
+        $scope.cancel = function(){
+            $scope.selectedHome = null;
         };
         
         dataService.getAll().then(function(homes){
@@ -55,5 +30,43 @@ app.controller('masterDetailController',
         }, function(error){
             $scope.error = error;
         });
+        
+        // **** Grid-related event handlers ********
+        $scope.homesGridRendered = function(e){
+            $scope.message = 'Grid is rendered';
+        };
+        
+        $scope.homesGridColumnSorted = function(e, u){
+            $scope.$apply(function () {
+                $scope.message = 'Column sorted';
+            });
+        };
+        
+        $scope.homesGridPageSelectionChanged = function(e, u){
+            $scope.$apply(function () {
+                $scope.message = 'Page index changed';
+            });
+        };
+        
+        $scope.homesGridPageSizeChanged = function(e, u){
+            $scope.$apply(function () {
+                $scope.message = 'Page size changed';
+            });
+        };
+        
+        $scope.homesGridRowSelectionChanged = function (e, ui) {
+        
+            var id = ui.row.id;
+            
+            $scope.homes.forEach(function(home){
+                if(home.id === id){
+                    $scope.$apply(function () {
+                        $scope.selectedHome = home;
+                        $scope.message = "'" + $scope.selectedHome.streetAddress + "' is selected";
+                    });
+                }
+            });
+        };
+        // *****************************************
 
     }]);
