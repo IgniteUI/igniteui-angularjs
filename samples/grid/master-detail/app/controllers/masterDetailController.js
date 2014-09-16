@@ -55,17 +55,19 @@ app.controller('masterDetailController',
         };
         
         $scope.homesGridRowSelectionChanged = function (e, ui) {
-        
+            
             var id = ui.row.id;
             
-            $scope.homes.forEach(function(home){
-                if(home.id === id){
+            for(var i = 0, len = $scope.homes.length; i < len;i++){
+                if($scope.homes[i].id === id){
                     $scope.$apply(function () {
-                        $scope.selectedHome = home;
+                        debugger;
+                        $scope.selectedHome = $scope.homes[i];
                         $scope.message = "'" + $scope.selectedHome.streetAddress + "' is selected";
                     });
+                    break;
                 }
-            });
+            }
         };
         // *****************************************
 
