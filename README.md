@@ -72,8 +72,11 @@ igVideoPlayer	| `<ig-video-player>`
 Simple type control options (`string`, `number`, `bool` etc.) are configured as an attributes on the control element. The options follow the same naming convention logic as the tag name.
 
 #### Examples:
-- igGrid.options.localSchemaTransform &rarr; `<ig-grid local-schema-transform="true">`  
-- igCombo.options.caseSensitive &rarr; `<ig-combo case-sensitive="true">`  
+
+Option | Markup
+--- | ---
+igGrid.options.localSchemaTransform | `<ig-grid local-schema-transform="true">`  
+igCombo.options.caseSensitive | `<ig-combo case-sensitive="true">`  
 
 Defining complex type control options (`arrays` & `objects`) are configured as a child elements of the main control.
 
@@ -91,9 +94,11 @@ Binding to control events is done again with attributes. Event attribute names a
 
 #### Examples:
 
-- igGrid.events.dataBind &rarr; `<ig-grid event-data-bind="dataBindHandler">`  
-- igCombo.events.textChanged &rarr; `<ig-combo event-text-changed="textChangedHandler">`  
-- igDateEditor.events.keypress &rarr; `<ig-date-editor event-keypress="keypressHandler">`  
+Event 	| Markup
+--- 	| --- 
+igGrid.events.dataBind 			| `<ig-grid event-data-bind="dataBindHandler">`  
+igCombo.events.textChanged		| `<ig-combo event-text-changed="textChangedHandler">`  
+igDateEditor.events.keypress 	| `<ig-date-editor event-keypress="keypressHandler">`  
 
 ## Controller Initialization
 Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (this naming convention follows the standard Angular normalization process) and the attribute value corresponds to the scope object holding the control options.
