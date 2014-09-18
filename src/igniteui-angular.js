@@ -289,40 +289,23 @@
     function extractOptions(nodeName, context, options, element, scope) {
         //extract all options from the element
         var i, name, value, optionName, children = context.children,
-			attrs = context.attributes, eventName, eventAttrPrefix = "event-";
+			attrs = context.attributes, eventAttrPrefix = "event-";
 
         for (i = 0; i < attrs.length; i++) {
             name = attrs[i].name;
             value = attrs[i].value;
 
             if (name.startsWith(eventAttrPrefix)) {
-                name = name.substr(eventAttrPrefix.length).replace(/-/g, "").toLowerCase();
-
-                if (name.startsWith(nodeName.toLowerCase())) {
-                    eventName = name;
-                } else {
-
-                    // for grid features we also need to prefix the feature name to the event name
-                    // for instance: iggridselectionrowselectionchanged
-                    var featureName = "";
-
-                    if (attrs.name) {
-                        featureName = attrs.name.nodeValue.toLowerCase();
-                    }
-
-                    eventName = nodeName.toLowerCase() + featureName + name;
-                }
-
-                element.on(eventName, scope.$eval(value));
-            } else {
-                name = convertToCamelCase(name);
-
-                /* if somewhere in the controls there is floting point number use this one /^-?\d+\.?\d*$/ */
-                if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{[^}]+}}$/.test(value)) {
-                    value = scope.$eval(value.replace(/([{}:])\1/g, ""));
-                }
-                options[name] = value;
+                name = name.substr(eventAttrPrefix.length);
+                value = scope.$eval(value) || value;
             }
+            name = convertToCamelCase(name);
+
+            /* if somewhere in the controls there is floting point number use this one /^-?\d+\.?\d*$/ */
+            if (value === "true" || value === "false" || /^-?\d+\.?\d*$/.test(value) || /^{{[^}]+}}$/.test(value)) {
+                value = scope.$eval(value.replace(/([{}:])\1/g, ""));
+            }
+            options[name] = value;
         }
         //extract options from the nested elements
         for (i = 0; i < children.length; i++) {
