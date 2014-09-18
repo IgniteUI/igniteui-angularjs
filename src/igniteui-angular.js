@@ -90,8 +90,8 @@
     	var unbinder;
         element.on($.ig.angular.igGrid.events.join(' '), function () {
         	unbinder();
-            scope.$apply();
             unbinder = scope.$watch(attrs.source, watchGridDataSource, true);
+            scope.$apply();
            	markWatcher(scope, "igGrid", attrs);
         }).one('$destroy', function() {
         	unbinder();
