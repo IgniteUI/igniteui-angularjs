@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "igniteui-angular-samples", "igniteui-angular-samples.njsproj", "{67F9E854-0DD9-45A9-9253-5079166B847F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67F9E854-0DD9-45A9-9253-5079166B847F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67F9E854-0DD9-45A9-9253-5079166B847F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67F9E854-0DD9-45A9-9253-5079166B847F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67F9E854-0DD9-45A9-9253-5079166B847F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
