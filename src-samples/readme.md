@@ -14,5 +14,5 @@ Sample HTML files are available under the `src` folder and require that you use 
 - `|content|`: Used to add the main markup of the page
 - `|scripts|`: Used to add scripts at the end of the page 
 
-**Note:** In order for relative links to work on your machine the same way they work on the server ([github.io](igniteui.github.io/igniteui-angular/)) you need to run the samples from a root directory named `igniteui-angular`.  
+**Note:** In order for relative links to work on your machine the same way they work on the server ([github.io](http://igniteui.github.io/igniteui-angular/)) you need to run the samples from a root directory named `igniteui-angular`.  
 
