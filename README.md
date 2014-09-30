@@ -1,4 +1,4 @@
-﻿#Ignite UI directives for AngularJS (Preview) 
+#Ignite UI directives for AngularJS (Preview) 
 Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular).
 
 #Requirements
@@ -6,6 +6,8 @@ Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igni
 - [jQuery](http://www.jquery.com) v1.7 and later
 - [AngularJS](http://www.angularjs.org) v1.0 and later
 - [Ignite UI](http://www.igniteui.com) 13.1 and later
+
+> **Note:** The Ignite UI Angular directives *do not* work with the Ignite UI ASP.NET MVC Helpers
 
 #Building
 Build will produce an obfuscated and minified version of the `src/igniteui-angular.js` in the `dist/igniteui-angular.min.js`.  
