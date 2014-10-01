@@ -17,7 +17,10 @@ app.controller('gridController',
 
             ['$scope', 'northwind',
     function ($scope,   northwind) {
-
+        // only needed until https://github.com/angular/angular.js/issues/6683 is resolved
+        for (var i = 0; i < northwind.data.length; i++) {
+            northwind.data[i].UnitPrice = parseFloat(northwind.data[i].UnitPrice);
+        };
         $scope.northwind = northwind.data;
 
         var createNewProduct = function () {

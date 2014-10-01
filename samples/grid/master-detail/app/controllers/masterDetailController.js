@@ -10,6 +10,7 @@ app.controller('masterDetailController',
         $scope.message = '';
 
         $scope.selectedHome = null;
+        $scope.selectedHomeOriginal = null;
         
         $scope.save = function(){
             dataService.save($scope.selectedHome).then(function(){
@@ -18,10 +19,12 @@ app.controller('masterDetailController',
             }, 
             function(error){
                 $scope.error = error;
+            angular.copy($scope.selectedHomeOriginal, $scope.selectedHome);
             });
         };
         
         $scope.cancel = function(){
+            angular.copy($scope.selectedHomeOriginal, $scope.selectedHome);
             $scope.selectedHome = null;
         };
         
@@ -62,6 +65,8 @@ app.controller('masterDetailController',
                 if($scope.homes[i].id === id){
                     $scope.$apply(function () {
                         debugger;
+                        $scope.selectedHomeOriginal = {};
+                        angular.copy($scope.homes[i], $scope.selectedHomeOriginal);
                         $scope.selectedHome = $scope.homes[i];
                         $scope.message = "'" + $scope.selectedHome.streetAddress + "' is selected";
                     });

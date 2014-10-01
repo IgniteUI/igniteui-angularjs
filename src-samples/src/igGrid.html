@@ -39,7 +39,7 @@
                     <column key="ProductID" header-text="Product ID" width="50px" data-type="number"></column>
                     <column key="ProductName" header-text="Name"  width="250px"  data-type="string"></column>
                     <column key="QuantityPerUnit" header-text="Quantity per unit"  width="200px" data-type="string"></column>
-                    <column key="UnitPrice" header-text="Unit Price"  width="100px" data-type="string" template="{{getHtml('#colTmpl')}}"></column>
+                    <column key="UnitPrice" header-text="Unit Price"  width="100px" data-type="number" template="{{getHtml('#colTmpl')}}"></column>
                 </columns>
                 <features>
                     <feature name="Updating">
@@ -63,7 +63,7 @@
             <div class="well well-sm">
                 <input type="text" ng-model="newProduct.ProductName" class="form-control" placeholder="name">
                 <input type="text" ng-model="newProduct.QuantityPerUnit" class="form-control" placeholder="quantity per unit">
-                <input type="text" ng-model="newProduct.UnitPrice" class="form-control" placeholder="unit price">
+                <input type="number" ng-model="newProduct.UnitPrice" class="form-control" placeholder="unit price">
                 <input type="button" value="Add" ng-click="addProduct()" class="btn btn-default"/>
             </div>
             
@@ -87,17 +87,18 @@
 				<td>{{product.ProductID}}</td>
 				<td><input type="text" ng-model="product.ProductName" class="form-control" /></td>
 				<td>{{product.QuantityPerUnit}}</td>
-				<td> <input type="text" ng-model="product.UnitPrice" class="form-control" /> </td>
+				<td> <input type="number" ng-model="product.UnitPrice" class="form-control" /> </td>
 				<td><input type="button" value="Delete" ng-click="deleteProduct($index)" class="btn btn-default"/></td>
 			 </tr>
 		</tbody>
 	</table>
     <script id="colTmpl" type="text/template" ng-non-bindable>
-        $ ${UnitPrice} 
-        {{if parseInt(${UnitPrice}) >= (Math.random()+0.5)*parseInt(${UnitPrice}) }} 
-        <img width='10' height='15' src= 'images/arrowUp.gif' />
+        {{if ${UnitPrice} == null }}
+            N/A
+        {{elseif ${UnitPrice} >= (Math.random()+0.5)*${UnitPrice} }} 
+            $ ${UnitPrice}  <img width='10' height='15' src= 'images/arrowUp.gif' />
         {{else}}
-        <img width='10' height='15' src= 'images/arrowDown.gif' />
+            $ ${UnitPrice}  <img width='10' height='15' src= 'images/arrowDown.gif' />
         {{/if}}
     </script>
 </div>
