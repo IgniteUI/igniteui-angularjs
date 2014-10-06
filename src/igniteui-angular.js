@@ -1,3 +1,12 @@
+/*
+ * Ignite UI directives for AngularJS   1.0.0
+ * https://github.com/IgniteUI/igniteui-angular
+ *
+ * Copyright (c) 2014 Infragistics, Inc.
+ * Licensed under the MIT license.
+ * https://github.com/IgniteUI/igniteui-angular/blob/master/license.txt
+ */
+
 /*global jQuery, angular */
 (function (angular, $) {
     "use strict";
