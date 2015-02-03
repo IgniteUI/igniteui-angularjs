@@ -186,3 +186,11 @@ app.controller('tileManagerController',
         $scope.candidates = candidates.data;
 
     }]);
+app.controller('treeGridController',
+
+            ['$scope', 'tasks',
+    function ($scope,   tasks) {
+
+        $scope.tasks = tasks.data;
+
+    }]);
