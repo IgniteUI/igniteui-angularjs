@@ -30,7 +30,7 @@
         }
         element.on($.ig.angular.igCombo.events.join(' '), function (event, args) {
             scope.$apply(function () {
-                model.$setViewValue(args.owner.value());
+                model.$setViewValue(args.owner.values());
             });
         }).one('$destroy', function() {
         	var index = $.inArray(setControlValue, model.$formatters);
