@@ -531,7 +531,7 @@
 					        if (element.data(controlName)) {
 					        	element[controlName]("destroy");
 					        }
-					        if($.ig.angular[controlName].events && $.ig.angular[controlName].events.length) {
+					        if($.ig.angular[controlName] && $.ig.angular[controlName].events && $.ig.angular[controlName].events.length) {
                         		element.off($.ig.angular[controlName].events.join(' '));
 					        }
 						});
