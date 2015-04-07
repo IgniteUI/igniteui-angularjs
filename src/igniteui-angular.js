@@ -265,10 +265,25 @@
     $.ig.angular.igSparkline = angular.extend($.ig.angular.igSparkline || {}, $.ig.angular.igBaseChart);
     $.ig.angular.igFunnelChart = angular.extend($.ig.angular.igFunnelChart || {}, $.ig.angular.igBaseChart);
 
+    // igHtmlEditor specific code for one way data binding
+    $.ig.angular.igHtmlEditor = $.ig.angular.igHtmlEditor || {};
+    $.ig.angular.igHtmlEditor.element = $.ig.angular.igHtmlEditor.element || "<div></div>";
+
+    $.ig.angular.igHtmlEditor.bindEvents = $.ig.angular.igHtmlEditor.bindEvents || function (scope, element, attrs) {
+        var controlName = attrs["data-ig-control-name"], unbinder;
+        unbinder = scope.$watch(attrs.value, function (newValue) {
+            $(element)[controlName]("setContent", newValue, "html");
+        }, true);
+        markWatcher(scope, controlName, attrs);
+        element.one('$destroy', function() {
+            unbinder();
+        });
+    };
+
     // Mark watchers for discoverability
     function markWatcher (scope, controlName, attrs) {
-    	// Angular uses unshift(), so the last watcher is at 0:
-    	scope.$$watchers[0][controlName] = attrs.id || controlName + scope.$$watchers.length; 
+        // Angular uses unshift(), so the last watcher is at 0:
+        scope.$$watchers[0][controlName] = attrs.id || controlName + scope.$$watchers.length; 
     }
 
     // Utility functions

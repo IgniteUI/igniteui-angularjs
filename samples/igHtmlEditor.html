@@ -4,19 +4,27 @@
 	<title>HTML Editor - Ignite UI Grid integration with AngularJS</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
-	<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="/igniteui-angular/samples/sample.css" />
     
-<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
-<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.dialog.css" rel="stylesheet" />
-<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.popover.css" rel="stylesheet" />
-<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
-<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.toolbar.css" rel="stylesheet" />
-<link type="text/css" href="//cdn-na.infragistics.com/jquery/20132/latest/css/structure/modules/infragistics.ui.htmleditor.css" rel="stylesheet" />
-
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.dialog.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.popover.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.toolbar.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.colorpicker.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.splitbutton.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.toolbarbutton.css" rel="stylesheet" />
+	<link type="text/css" href="//cdn-na.infragistics.com/igniteui/2014.2/latest/css/structure/modules/infragistics.ui.htmleditor.css" rel="stylesheet" />
+	<style type="text/css">
+		textarea {
+			width: 100%;
+			height: 400px;
+		}
+	</style>
 </head>
 <body class="container">
 
@@ -40,16 +48,29 @@
         </div>
     </div>
     
-<div ng-app="igniteui-sample">
+<div ng-app="igniteui-sample" ng-controller="htmlEditorController">
 	<h1 class="push-down-md"><a href="http://igniteui.com/html-editor/overview" target="_blank">igHtmlEditor</a></h1> 
     <div class="row description">
-        <div class="col-md-12">
-            <p class="lead">This sample demonstrates how to create an igHtmlEditor using an AngularJS directive.</p>
+        <div class="alert alert-info col-md-5 try-it-out">
+            <span class="h4">TRY IT OUT:</span>
+            <hr />
+            <ul>
+                <li>Change the content in the TEXTAREA on the right to see igHtmlEditor on the left updated</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <p class="lead">This sample demonstrates how AngularJS directives are used with the igHtmlEditor to allow for one-way binding.</p>
             <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igHtmlEditor.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
         </div>
     </div>
-
-	<ig-html-editor id="htmlEditor" height="400px" width="700px"></ig-html-editor>
+    <div class="row">
+        <div class="col-md-8">
+			<ig-html-editor id="htmlEditor" height="400px" width="700px" value="data"></ig-html-editor>
+        </div>
+        <div class="col-md-4">
+			<textarea ng-model="data"></textarea>
+        </div>
+    </div>
 </div>
 
 	<footer>
@@ -61,22 +82,25 @@
         <p class="small">For more information or to download a trial of Ignite UI, please visit: <a href="http://igniteui.com">http://igniteui.com</a></p>
     </footer>
 
-	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
-    
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.util.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.datasource.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.shared.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.templating.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.editors.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.popover.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.combo.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.dialog.js"></script>
-<script src="//cdn-na.infragistics.com/jquery/20132/latest/js/modules/infragistics.ui.htmleditor.js"></script>
-<script src="../src/igniteui-angular.js"></script>
-<script src="js/igniteui-sample.js"></script>
-
+   
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.util.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.datasource.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.toolbarbutton.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.toolbar.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.splitbutton.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.colorpicker.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.colorpickersplitbutton.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.editors.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.popover.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.combo.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.dialog.js"></script>
+	<script src="//cdn-na.infragistics.com/igniteui/2014.2/latest/js/modules/infragistics.ui.htmleditor.js"></script>
+	<script src="../src/igniteui-angular.js"></script>
+	<script src="js/igniteui-sample.js"></script>
 </body>
 </html>

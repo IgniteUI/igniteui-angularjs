@@ -268,3 +268,8 @@ app.controller('pivotGridXmlaController',
                 measures: "[Measures].[Product Gross Profit Margin Status],[Measures].[Product Gross Profit Margin Goal]",
             });
     }]);
+app.controller('htmlEditorController',
+            ['$scope',
+    function ($scope) {
+       $scope.data = "<p>Ignite UI controls:</p><p><ul><li>igEditors</li><li>igHtmlEditor</li><li>igGrid</li><li>igDataChart</li><li>etc.</li></ul></p>";
+    }]);
