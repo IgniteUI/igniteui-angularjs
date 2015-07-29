@@ -9,9 +9,9 @@ module.exports = function(config){
 			'bower_components/angular/angular.js',
 			'bower_components/angular-route/angular-route.js',
 			'bower_components/angular-mocks/angular-mocks.js',
-		'http://cdn-na.infragistics.com/jquery/20132/latest/js/infragistics.core.js',
-			'http://cdn-na.infragistics.com/jquery/20132/latest/js/infragistics.dv.js',
-			'http://cdn-na.infragistics.com/jquery/20132/latest/js/infragistics.lob.js',
+		'http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.core.js',
+			'http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.dv.js',
+			'http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.lob.js',
 			'src/igniteui-angular.js',
 		'test/app/js/my-app.js',
 			'test/unit/**/*.js'
