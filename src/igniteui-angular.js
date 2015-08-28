@@ -528,7 +528,10 @@
                         if (element.removeAttr) {
                             element.removeAttr("width").removeAttr("height");
                         }
-
+						// support for variable binding for the id attribute of the control
+						if (attrs["id"]) {
+							element.attr("id", attrs["id"]);
+						}
                         if (attrs.source) {
                             options.dataSource = scope.$eval(attrs.source);
                         } else {
