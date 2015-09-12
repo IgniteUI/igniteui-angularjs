@@ -112,8 +112,11 @@
 				ds = scope.$eval(attrs.source), diff = [];
             // check for a change of the data source. In this case rebind the grid
             if (ds !== grid.options.dataSource) {
-                grid.options.dataSource = ds;
-                grid.dataBind();
+                 //Setting a timeout 0 pushes the slow databind event to the end of the stack, letting the digest cycle finish, improving the overall responsivness of the page
+                setTimeout(function () {
+                    grid.options.dataSource = ds;
+                    grid.dataBind();
+                }, 0);
                 return;
             }
             equalsDiff(newValue, oldValue, diff);
