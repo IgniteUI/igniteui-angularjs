@@ -96,10 +96,13 @@
 
     // Two way data binding for the grid control
     $.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs) {
-    	var unbinder;
+    	var unbinder,
+            collectionWatchMode = attrs && attrs.collectionWatch && attrs.collectionWatch === "true";
         element.on($.ig.angular.igGrid.events.join(' '), function () {
         	unbinder();
-            unbinder = scope.$watch(attrs.source, watchGridDataSource, true);
+              // When in collection watch mode, a change is detected only when the collection changes - a element is inserted or removed or the whole collection reference changes. 
+            //     Changes in a specific element inside collection are not detected. This provides huge performance boost when such change detection is not required
+            unbinder = collectionWatchMode ? scope.$watchCollection(attrs.source, watchGridDataSource) : scope.$watch(attrs.source, watchGridDataSource, true);
             scope.$apply();
            	markWatcher(scope, "igGrid", attrs);
         }).one('$destroy', function() {
@@ -187,7 +190,7 @@
             }
         }
         // watch for changes from the data source to the view
-        unbinder = scope.$watch(attrs.source, watchGridDataSource, true);
+         unbinder = collectionWatchMode ? scope.$watchCollection(attrs.source, watchGridDataSource) : scope.$watch(attrs.source, watchGridDataSource, true);
 		markWatcher(scope, "igGrid", attrs);
     };
 
