@@ -194,6 +194,20 @@
 		markWatcher(scope, "igGrid", attrs);
     };
 
+	// igHierarchicalGrid specific code for one way data binding
+    $.ig.angular.igHierarchicalGrid = $.ig.angular.igHierarchicalGrid || {};
+    $.ig.angular.igHierarchicalGrid.bindEvents = $.ig.angular.igHierarchicalGrid.bindEvents || function (scope, element, attrs) {
+        var unbinder;
+        // rebind data source on changes
+        unbinder = scope.$watch(attrs.source, function (newValue) {
+            $(element).igHierarchicalGrid("option", "dataSource", newValue);
+        }, true);
+        markWatcher(scope, "igHierarchicalGrid", attrs);
+        element.one('$destroy', function () {
+            unbinder();
+        });
+    }
+	
     // igTree specific code for two way data binding
     $.ig.angular.igTree = $.ig.angular.igTree || {};
 
@@ -354,7 +368,7 @@
 
             if (context.optionsPath[0] === "features" && options.name) {
                 //grid feature, proto options come from feature widget:
-                opts = $.ui[nodeName + options.name].prototype.options;
+                opts = $.ui[nodeName.replace("Hierarchical", "") + options.name].prototype.options;
                 context.optionsPath = [];
             }
 
