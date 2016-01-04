@@ -1,11 +1,12 @@
-/*
- * Ignite UI directives for AngularJS   1.0.0
+/*!@license
+ * Ignite UI directives for AngularJS   1.1.3
  * https://github.com/IgniteUI/igniteui-angular
  *
- * Copyright (c) 2014 Infragistics, Inc.
+ * Copyright (c) 2014-2016 Infragistics, Inc.
  * Licensed under the MIT license.
  * https://github.com/IgniteUI/igniteui-angular/blob/master/license.txt
  */
+
 
 /*global jQuery, angular */
 (function (angular, $) {
@@ -16,7 +17,7 @@
     // igCombo specific code for two way data binding
     $.ig.angular.igCombo = $.ig.angular.igCombo || {};
     $.ig.angular.igCombo.element = $.ig.angular.igCombo.element || "<input></input>";
-    $.ig.angular.igCombo.events = ["igcombotextchanged"];
+    $.ig.angular.igCombo.events = ["igcombotextchanged", "igcomboselectionchanged"];
 
     // Two way data binding for the combo control
     $.ig.angular.igCombo.bindEvents = $.ig.angular.igCombo.bindEvents || function (scope, element, attrs, model) {
@@ -30,24 +31,51 @@
         }
         element.on($.ig.angular.igCombo.events.join(' '), function (event, args) {
             scope.$apply(function () {
-                model.$setViewValue(args.owner.values());
+                var items = [];
+                if (args.owner.values) {
+                    items = args.owner.values();
+                }
+                if (args.owner.selectedItems) {
+                    var selectedItems = args.owner.selectedItems(), i, valueKey = args.owner.options.valueKey;
+                    if (valueKey && selectedItems) {
+                        for (i = 0; i < selectedItems.length; i++) {
+                            items.push(selectedItems[i].data[valueKey]);
+                        }
+                    } else {
+                        items = selectedItems;
+                    }
+                }
+                model.$setViewValue(items);
             });
         }).one('$destroy', function() {
-        	var index = $.inArray(setControlValue, model.$formatters);
-        	unbinder();
-        	if (index >=0) {
-        		model.$formatters.splice(index, 1);
-        	}
+            var index = $.inArray(setControlValue, model.$formatters);
+            unbinder();
+            if (index >=0) {
+                model.$formatters.splice(index, 1);
+            }
         });
         model.$formatters.push(setControlValue);
 
         unbinder = scope.$watch(attrs.source, function (newValue) {
-            var value = element.data(controlName).value(), newDataSource = [];
+            var items = [], newDataSource = [], combo = element.data(controlName);
+            if (combo.values) {
+                items = combo.values();
+            }
+            if (combo.selectedItems) {
+                var selectedItems = combo.selectedItems(), i, valueKey = combo.options.valueKey;
+                if (valueKey) {
+                    for (i = 0; i < selectedItems.length; i++) {
+                        items.push(selectedItems[i].data[valueKey]);
+                    }
+                } else {
+                    items = selectedItems;
+                }
+            }
             angular.copy(newValue, newDataSource);
-            element.data(controlName)._setOption("dataSource", newDataSource);
-            element.data(controlName).value(value);
+            combo._setOption("dataSource", newDataSource);
+            combo.value(items);
         }, true);
-		markWatcher(scope, controlName, attrs);
+        markWatcher(scope, controlName, attrs);
     };
 
     // igEditor specific code for two way data binding
@@ -64,21 +92,26 @@
 
         function setControlValue(value) {
             element.data(controlName).value(value);
-            return element.data(controlName).text();
+            return element.data(controlName).displayValue();
+        }
+        function parseValue() {
+            // parse value off of DOM through the control value
+            return element.data(controlName).value();
         }
         if (controlName) {
-        	$.ig.angular[controlName].events = [controlName.toLowerCase() + "textchanged"];
+            $.ig.angular[controlName].events = [controlName.toLowerCase() + "valuechanged"];
             element.on($.ig.angular[controlName].events.join(' '), function (event, args) {
                 scope.$apply(function () {
                     model.$setViewValue(args.owner.value());
                 });
-            }).one('$destroy', function() {
-            	var index = $.inArray(setControlValue, model.$formatters);
-	        	if (index >=0) {
-	        		model.$formatters.splice(index, 1);
-	        	}
-	        });
+            }).one('$destroy', function () {
+                var index = $.inArray(setControlValue, model.$formatters);
+                if (index >= 0) {
+                    model.$formatters.splice(index, 1);
+                }
+            });
             model.$formatters.push(setControlValue);
+            model.$parsers.push(parseValue);
         }
     };
     $.ig.angular.igCurrencyEditor = angular.extend($.ig.angular.igCurrencyEditor || {}, $.ig.angular.igEditor);
@@ -96,23 +129,23 @@
 
     // Two way data binding for the grid control
     $.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs) {
-    	var unbinder,
+        var unbinder,
             collectionWatchMode = attrs && attrs.collectionWatch && attrs.collectionWatch === "true";
         element.on($.ig.angular.igGrid.events.join(' '), function () {
-        	unbinder();
+            unbinder();
               // When in collection watch mode, a change is detected only when the collection changes - a element is inserted or removed or the whole collection reference changes. 
             //     Changes in a specific element inside collection are not detected. This provides huge performance boost when such change detection is not required
             unbinder = collectionWatchMode ? scope.$watchCollection(attrs.source, watchGridDataSource) : scope.$watch(attrs.source, watchGridDataSource, true);
             scope.$apply();
-           	markWatcher(scope, "igGrid", attrs);
-        }).one('$destroy', function() {
-        	unbinder();
+               markWatcher(scope, "igGrid", attrs);
+        }).one('$destroy', function () {
+            unbinder();
         });
 
         function watchGridDataSource(newValue, oldValue) {
             var i, j, existingDomRow, existingRow, grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
-				gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord,
-				ds = scope.$eval(attrs.source), diff = [];
+                gridUpdating = element.data("igGridUpdating"), column, record, td, colIndex, newFormattedVal, dsRecord,
+                ds = scope.$eval(attrs.source), diff = [];
             // check for a change of the data source. In this case rebind the grid
             if (ds !== grid.options.dataSource) {
                  //Setting a timeout 0 pushes the slow databind event to the end of the stack, letting the digest cycle finish, improving the overall responsivness of the page
@@ -191,10 +224,10 @@
         }
         // watch for changes from the data source to the view
          unbinder = collectionWatchMode ? scope.$watchCollection(attrs.source, watchGridDataSource) : scope.$watch(attrs.source, watchGridDataSource, true);
-		markWatcher(scope, "igGrid", attrs);
+        markWatcher(scope, "igGrid", attrs);
     };
 
-	// igHierarchicalGrid specific code for one way data binding
+    // igHierarchicalGrid specific code for one way data binding
     $.ig.angular.igHierarchicalGrid = $.ig.angular.igHierarchicalGrid || {};
     $.ig.angular.igHierarchicalGrid.bindEvents = $.ig.angular.igHierarchicalGrid.bindEvents || function (scope, element, attrs) {
         var unbinder;
@@ -207,20 +240,20 @@
             unbinder();
         });
     }
-	
+    
     // igTree specific code for two way data binding
     $.ig.angular.igTree = $.ig.angular.igTree || {};
 
     // Two way data binding for the tree control
     $.ig.angular.igTree.bindEvents = $.ig.angular.igTree.bindEvents || function (scope, element, attrs) {
-    	var unbinder;
+        var unbinder;
         // rebind data source on changes
         unbinder = scope.$watch(attrs.source, function (newValue) {
             $(element).igTree("option", "dataSource", newValue);
         }, true);
-		markWatcher(scope, "igTree", attrs);
-        element.one('$destroy', function() {
-        	unbinder();
+        markWatcher(scope, "igTree", attrs);
+        element.one('$destroy', function () {
+            unbinder();
         });
     };
 
@@ -231,9 +264,9 @@
     $.ig.angular.igDataChart.bindEvents = $.ig.angular.igDataChart.bindEvents || function (scope, element, attrs) {
         var diff = [], ds = scope.$eval(attrs.source), unbinder;
         var changeHandler = function (newValue, oldValue) {
-        	var $chartElem = $(element), chart = $chartElem.data('igDataChart');
- 			// check for a change of the data source. In this case rebind
-        	if (chart.dataSources[chart._containerSourceID].data() !== newValue) {
+            var $chartElem = $(element), chart = $chartElem.data('igDataChart');
+             // check for a change of the data source. In this case rebind
+            if (chart.dataSources[chart._containerSourceID].data() !== newValue) {
                 $chartElem.igDataChart("option", "dataSource", newValue);
                 return;
             }
@@ -256,14 +289,14 @@
             var res = Array.prototype.push.apply(this, arguments);
             $(element).igDataChart("notifyInsertItem", this, this.length - 1, arguments[0]);
             unbinder = scope.$watch(attrs.source, changeHandler, true);
-			markWatcher(scope, "igDataChart", attrs);
+            markWatcher(scope, "igDataChart", attrs);
             return res;
         };
 
         unbinder = scope.$watch(attrs.source, changeHandler, true);
-		markWatcher(scope, "igDataChart", attrs);
-        element.one('$destroy', function() {
-        	unbinder();
+        markWatcher(scope, "igDataChart", attrs);
+        element.one('$destroy', function () {
+            unbinder();
         });
     };
 
@@ -277,9 +310,9 @@
         unbinder = scope.$watch(attrs.source, function (newValue) {
             $(element)[controlName]("notifyClearItems", newValue);
         }, true);
-		markWatcher(scope, controlName, attrs);
-        element.one('$destroy', function() {
-        	unbinder();
+        markWatcher(scope, controlName, attrs);
+        element.one('$destroy', function () {
+            unbinder();
         });
     };
     $.ig.angular.igSparkline = angular.extend($.ig.angular.igSparkline || {}, $.ig.angular.igBaseChart);
@@ -295,7 +328,7 @@
             $(element)[controlName]("setContent", newValue, "html");
         }, true);
         markWatcher(scope, controlName, attrs);
-        element.one('$destroy', function() {
+        element.one('$destroy', function () {
             unbinder();
         });
     };
@@ -333,7 +366,7 @@
     function extractOptions(nodeName, context, options, element, scope) {
         //extract all options from the element
         var i, name, value, optionName, children = context.children,
-			attrs = context.attributes, eventAttrPrefix = "event-";
+            attrs = context.attributes, eventAttrPrefix = "event-";
 
         for (i = 0; i < attrs.length; i++) {
             name = attrs[i].name;
@@ -474,9 +507,9 @@
                     }
                     for (key in o2) {
                         if (!keySet.hasOwnProperty(key) &&
-							key.charAt(0) !== "$" &&
-							o2[key] !== undefined &&
-							!isFunction(o2[key])) { return false; }
+                            key.charAt(0) !== "$" &&
+                            o2[key] !== undefined &&
+                            !isFunction(o2[key])) { return false; }
                     }
                     if (dirty) {
                         return false;
@@ -562,14 +595,14 @@
                         }
                         
                         // cleanup
-                        scope.$on('$destroy', function() {
-					        if (element.data(controlName)) {
-					        	element[controlName]("destroy");
-					        }
-					        if($.ig.angular[controlName] && $.ig.angular[controlName].events && $.ig.angular[controlName].events.length) {
-                        		element.off($.ig.angular[controlName].events.join(' '));
-					        }
-						});
+                        scope.$on('$destroy', function () {
+                            if (element.data(controlName)) {
+                                element[controlName]("destroy");
+                            }
+                            if ($.ig.angular[controlName] && $.ig.angular[controlName].events && $.ig.angular[controlName].events.length) {
+                                element.off($.ig.angular[controlName].events.join(' '));
+                            }
+                        });
 
                         element[controlName](options);
                     }
