@@ -63,7 +63,7 @@
             }
             if (combo.selectedItems) {
                 var selectedItems = combo.selectedItems(), i, valueKey = combo.options.valueKey;
-                if (valueKey) {
+                if (valueKey && selectedItems) {
                     for (i = 0; i < selectedItems.length; i++) {
                         items.push(selectedItems[i].data[valueKey]);
                     }
