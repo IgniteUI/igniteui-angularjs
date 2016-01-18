@@ -7,7 +7,6 @@
  * https://github.com/IgniteUI/igniteui-angular/blob/master/license.txt
  */
 
-
 /*global jQuery, angular */
 (function (angular, $) {
     "use strict";
@@ -25,27 +24,33 @@
             return;
         }
         var controlName = attrs["data-ig-control-name"], unbinder;
+        /**
+         * Support both versions igCombo value methods before and after 15.1 
+         */
+        function comboValue (widget, value) {
+            if (widget.values) {
+                return widget.values(value);
+            } else {
+                // for 15.1 make sure you update to latest SR for value method
+                return widget.value(value);
+            }
+        }
         function setControlValue(value) {
-            element.data(controlName).value(value);
+            if (typeof value === "string") {
+                // in case view value is changed from text field (default Array.toString representation is comma separated)
+                value = value.split(",");
+            }
+            comboValue(element.data(controlName), value);
             return element.data(controlName).text();
+        }
+        function parseValue() {
+            //"parse" through the control value, ensure no-flicker with formatted values
+            //model controller will attempt to set the edit text (not actual value) to the model. Only allow the actual control value to update.
+            return comboValue(element.data(controlName));
         }
         element.on($.ig.angular.igCombo.events.join(' '), function (event, args) {
             scope.$apply(function () {
-                var items = [];
-                if (args.owner.values) {
-                    items = args.owner.values();
-                }
-                if (args.owner.selectedItems) {
-                    var selectedItems = args.owner.selectedItems(), i, valueKey = args.owner.options.valueKey;
-                    if (valueKey && selectedItems) {
-                        for (i = 0; i < selectedItems.length; i++) {
-                            items.push(selectedItems[i].data[valueKey]);
-                        }
-                    } else {
-                        items = selectedItems;
-                    }
-                }
-                model.$setViewValue(items);
+                model.$setViewValue(comboValue(args.owner));
             });
         }).one('$destroy', function() {
             var index = $.inArray(setControlValue, model.$formatters);
@@ -55,22 +60,11 @@
             }
         });
         model.$formatters.push(setControlValue);
+        model.$parsers.push(parseValue);
 
         unbinder = scope.$watch(attrs.source, function (newValue) {
             var items = [], newDataSource = [], combo = element.data(controlName);
-            if (combo.values) {
-                items = combo.values();
-            }
-            if (combo.selectedItems) {
-                var selectedItems = combo.selectedItems(), i, valueKey = combo.options.valueKey;
-                if (valueKey && selectedItems) {
-                    for (i = 0; i < selectedItems.length; i++) {
-                        items.push(selectedItems[i].data[valueKey]);
-                    }
-                } else {
-                    items = selectedItems;
-                }
-            }
+            items = comboValue(combo);
             angular.copy(newValue, newDataSource);
             combo._setOption("dataSource", newDataSource);
             combo.value(items);
@@ -239,7 +233,7 @@
         element.one('$destroy', function () {
             unbinder();
         });
-    }
+    };
     
     // igTree specific code for two way data binding
     $.ig.angular.igTree = $.ig.angular.igTree || {};
