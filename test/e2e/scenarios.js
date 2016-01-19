@@ -572,9 +572,6 @@ describe('my app', function() {
 	});
 
 	describe("Editor", function() {
-		it("should be initialized", function() {
-			util.isInitialized("editor1", "igEditor");
-		});
 		it("Datepicker should be initialized", function() {
 			util.isInitialized("datePicker1", "igDatePicker");
 		});
@@ -589,9 +586,9 @@ describe('my app', function() {
 			expect(util.getResult('$("#currency1").val()')).toBe("$123,456.00");
 		});
 		it("Currency should be changing its model when the view is changed", function() {
-			util.executeScript('$("#currency1").val("12.1").trigger("input");');
+			util.executeScript('$("#currency1").trigger("focus").val("12.1").trigger("blur");');
 			var currencyInModel = 'angular.element("#currency1").scope().editors.currency;';
-			expect(util.getResult(currencyInModel)).toBe("12.1");
+			expect(util.getResult(currencyInModel)).toBe(12.1);
 		});
 		it("Date should be initialized", function() {
 			util.isInitialized("date1","igDateEditor");
@@ -610,9 +607,9 @@ describe('my app', function() {
 			expect(util.getResult('$("#numeric1").val()')).toBe("742.4");
 		});
 		it("Numeric should be changing its model when the view is changed", function() {
-			util.executeScript('$("#numeric1").val("123").trigger("input");');
+			util.executeScript('$("#numeric1").trigger("focus").val("123").trigger("blur");');
 			var currencyInModel = 'angular.element("#numeric1").scope().editors.currency;';
-			expect(util.getResult(currencyInModel)).toBe("123");
+			expect(util.getResult(currencyInModel)).toBe(123);
 		});
 		it("Percent should be initialized", function() {
 			util.isInitialized("percent1", "igPercentEditor");

@@ -5,7 +5,7 @@ exports.config = {
 	specs: [
 		'e2e/*.js'
 	],
-
+	chromeOnly: true, //https://github.com/angular/protractor/issues/187
 	capabilities: {
 		'browserName': 'chrome'
 	},
