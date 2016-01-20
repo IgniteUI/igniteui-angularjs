@@ -1,5 +1,5 @@
 /*!@license
- * Ignite UI directives for AngularJS   1.1.3
+ * Ignite UI directives for AngularJS   1.1.4
  * https://github.com/IgniteUI/igniteui-angular
  *
  * Copyright (c) 2014-2016 Infragistics, Inc.
@@ -85,17 +85,24 @@
         var controlName = attrs["data-ig-control-name"];
 
         function setControlValue(value) {
-            element.data(controlName).value(value);
-            return element.data(controlName).displayValue();
+            var editor = element.data(controlName),
+                displayFunc = editor.displayValue || editor.text;
+
+            editor.value(value);
+            return displayFunc.call(editor);
         }
         function parseValue() {
-            // parse value off of DOM through the control value
+            //"parse" through the control value, ensure no-flicker with formatted values
+            //model controller will attempt to set the edit text (not actual value) to the model. Only allow the actual control value to update.
+            //Can be extended in the future with "immediate" update mode and attempt to provide the to-be value
             return element.data(controlName).value();
         }
         if (controlName) {
             $.ig.angular[controlName].events = [controlName.toLowerCase() + "valuechanged"];
             element.on($.ig.angular[controlName].events.join(' '), function (event, args) {
                 scope.$apply(function () {
+                    // force newer versions of ngModelController(1.3.0+) to update, since we kept the control value while in input was changing
+                    model.$$lastCommittedViewValue = null;
                     model.$setViewValue(args.owner.value());
                 });
             }).one('$destroy', function () {

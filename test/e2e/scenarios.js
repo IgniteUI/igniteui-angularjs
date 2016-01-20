@@ -617,5 +617,12 @@ describe('my app', function() {
 		it("Text should be initialized", function() {
 			util.isInitialized("text1", "igTextEditor");
 		});
+		it("Text should updated model correctly", function() {
+			var textInModel = 'angular.element("#text1").scope().editors.text;';
+			util.executeScript('$("#text1").trigger("focus").val("newText").trigger("input");');// kickstart ngModel, editor is still in edit mode though
+			expect(util.getResult(textInModel)).toBe("some more text"); // should remain unchanged
+			util.executeScript('$("#text1").trigger("blur");');
+			expect(util.getResult(textInModel)).toBe("newText");
+		});
 	});
 });
