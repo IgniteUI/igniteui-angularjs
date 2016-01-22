@@ -10,8 +10,14 @@
 		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
 		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
 		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.tree.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.popover.css" rel="stylesheet" />
 		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
 		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.htmleditor.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.toolbar.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.toolbarbutton.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.splitbutton.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.colorpicker.css" rel="stylesheet" />
 
 	</head>
 
@@ -101,36 +107,39 @@
 			</li>
 		</ul>
 
+		<ig-html-editor id="htmlEditor1" event-action-executed="triggerEvent">
+		</ig-html-editor>
+
 		<h1>igEditors</h1>
 		<table id="igEditors">
 			<tbody>
 				<tr>
 					<td>igCurrencyEditor</td>
-					<td><ig-currency-editor id="currency1" ng-model="editors.currency"></ig-currency-editor></td>
+					<td><ig-currency-editor id="currency1" ng-model="editors.currency" event-mouseover="triggerEvent"></ig-currency-editor></td>
 				</tr>
 				<tr>
 					<td>igDateEditor</td>
-					<td><ig-date-editor id="date1" ng-model="editors.date"></ig-date-editor></td>
+					<td><ig-date-editor id="date1" ng-model="editors.date" event-mouseover="triggerEvent"></ig-date-editor></td>
 				</tr>
 				<tr>
 					<td>igMaskEditor</td>
-					<td><ig-mask-editor id="mask1" ng-model="editors.mask" input-mask="999-999-999"></ig-mask-editor></td>
+					<td><ig-mask-editor id="mask1" ng-model="editors.mask" input-mask="999-999-999" event-mouseover="triggerEvent"></ig-mask-editor></td>
 				</tr>
 				<tr>
 					<td>igNumericEditor</td>
-					<td><ig-numeric-editor id="numeric1" ng-model="editors.currency"></ig-numeric-editor></td>
+					<td><ig-numeric-editor id="numeric1" ng-model="editors.currency" event-mouseover="triggerEvent"></ig-numeric-editor></td>
 				</tr>
 				<tr>
 					<td>igPercentEditor</td>
-					<td><ig-percent-editor id="percent1" ng-model="editors.percent"></ig-percent-editor></td>
+					<td><ig-percent-editor id="percent1" ng-model="editors.percent" event-mouseover="triggerEvent"></ig-percent-editor></td>
 				</tr>
 				<tr>
 					<td>igTextEditor</td>
-					<td><ig-text-editor id="text1" ng-model="editors.text"></ig-text-editor></td>
+					<td><ig-text-editor id="text1" ng-model="editors.text" event-mouseover="triggerEvent"></ig-text-editor></td>
 				</tr>
 				<tr>
 					<td>igDatePicker</td>
-					<td><ig-date-picker id="datePicker1" ng-model="editors.date"></ig-date-picker></td>
+					<td><ig-date-picker id="datePicker1" ng-model="editors.date" event-mouseover="triggerEvent"></ig-date-picker></td>
 				</tr>
 			</tbody>
 		</table>
@@ -161,7 +170,13 @@
 		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.templating.js"></script>
 		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.tree.js"></script>
 		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.combo.js"></script>
-		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.validator.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.validator.js"></script>		
+	    <script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.toolbarbutton.js"></script>
+	    <script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.toolbar.js"></script>
+	    <script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.splitbutton.js"></script>
+	    <script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.colorpicker.js"></script>
+	    <script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.colorpickersplitbutton.js"></script>
+		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.htmleditor.js"></script>
 		<script type="text/javascript" src="../../src/igniteui-angular.js"></script>
 		<script type="text/javascript" src="js/my-app-utils.js"></script>
 		<script type="text/javascript" src="js/my-app.js"></script>

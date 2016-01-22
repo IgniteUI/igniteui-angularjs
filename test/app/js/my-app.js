@@ -1247,7 +1247,7 @@ var NorthwindCtrl = function ($scope, $element, $compile) {
 	];
 	$scope.editors = {
 		currency: 12.1,
-		date: new Date(),
+		date: new Date(2016, 0, 20),
 		editor: "some text",
 		mask: "134-134-134",
 		numeric: 123,

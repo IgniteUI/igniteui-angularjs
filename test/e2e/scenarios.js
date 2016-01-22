@@ -610,12 +610,22 @@ describe('my app', function() {
 		});
 	});
 
+	describe("HTML Editor", function() {
+		it("should be initialized and have event handler", function() {
+			util.isInitialized("htmlEditor1", "igHtmlEditor");
+			expect(util.getResult('testEventListener("igHtmlEditor", "htmlEditor1", "actionExecuted")')).toBe(true);
+		});
+	});
+
 	describe("Editor", function() {
-		it("Datepicker should be initialized", function() {
+		it("Datepicker should be initialized and should be with a value from the scope", function() {
 			util.isInitialized("datePicker1", "igDatePicker");
+			expect(util.getResult('testEventListener("igDatePicker", "datePicker1", "mouseover")')).toBe(true);
+			expect(util.getResult('$("#datePicker1").igDatePicker("value").getTime()')).toBe(new Date(2016, 0, 20).getTime());
 		});
 		it("Currency should be initialized and should be with a value from the scope", function() {
 			util.isInitialized("currency1", "igCurrencyEditor");
+			expect(util.getResult('testEventListener("igCurrencyEditor", "currency1", "mouseover")')).toBe(true);
 			expect(util.getResult('$("#currency1").val()')).toBe("$12.10");
 		});
 		it("Currency should be changing its view when the model is changed", function() {
@@ -629,15 +639,35 @@ describe('my app', function() {
 			var currencyInModel = 'angular.element("#currency1").scope().editors.currency;';
 			expect(util.getResult(currencyInModel)).toBe(12.1);
 		});
-		it("Date should be initialized", function() {
+		it("Date should be initialized and should be with a value from the scope", function() {
 			util.isInitialized("date1","igDateEditor");
+			expect(util.getResult('testEventListener("igDateEditor", "date1", "mouseover")')).toBe(true);
+			expect(util.getResult('$("#date1").igDateEditor("value").getTime()')).toBe(new Date(2016, 0, 20).getTime());
 		});
-		it("Mask should be initialized", function() {
+		it("Date should be changing its view when the model is changed", function() {
+			var newTime = new Date(2016, 0, 20).getTime(),
+				scope = 'angular.element("#currency1").scope()';
+			util.executeScript(scope + '.editors.date = new Date('+ newTime +');');
+			util.executeScript(scope + '.$apply();');
+			expect(util.getResult('$("#date1").igDateEditor("value").getTime()')).toBe(newTime);
+			expect(util.getResult('$("#datePicker1").igDatePicker("value").getTime()')).toBe(newTime);
+		});
+		it("Date should update model on value change", function() {
+			var newDateString = "11/11/2016",
+				dateInModel = 'angular.element("#date1").scope().editors.date.getTime();';
+			util.executeScript('$("#date1").trigger("focus").val("' + newDateString + '").trigger("paste").trigger("blur")');
+			expect(util.getResult(dateInModel)).toBe(new Date(newDateString).getTime());
+			expect(util.getResult('$("#datePicker1").igDatePicker("value").getTime()')).toBe(new Date(newDateString).getTime());
+		});
+		it("Mask should be initialized and should be with a value from the scope", function() {
 			util.isInitialized("mask1", "igMaskEditor");
+			expect(util.getResult('testEventListener("igMaskEditor", "mask1", "mouseover")')).toBe(true);
+			expect(util.getResult('$("#mask1").igMaskEditor("value")')).toBe("134-134-134");
 		});
 		it("Numeric should be initialized and should be with a value from the scope", function() {
 			util.isInitialized("numeric1", "igNumericEditor");
-			expect(util.getResult('$("#numeric1").val()')).toBe("12.1");
+			expect(util.getResult('testEventListener("igNumericEditor", "numeric1", "mouseover")')).toBe(true);
+			expect(util.getResult('$("#numeric1").igNumericEditor("value")')).toBe(12.1);
 		});
 		it("Numeric should be changing its view when the model is changed", function() {
 			var scope = 'angular.element("#numeric1").scope()';
@@ -650,11 +680,14 @@ describe('my app', function() {
 			var currencyInModel = 'angular.element("#numeric1").scope().editors.currency;';
 			expect(util.getResult(currencyInModel)).toBe(123);
 		});
-		it("Percent should be initialized", function() {
+		it("Percent should be initialized and should be with a value from the scope", function() {
 			util.isInitialized("percent1", "igPercentEditor");
+			expect(util.getResult('testEventListener("igPercentEditor", "percent1", "mouseover")')).toBe(true);
+			expect(util.getResult('$("#percent1").igPercentEditor("value")')).toBe(12);
 		});
 		it("Text should be initialized", function() {
 			util.isInitialized("text1", "igTextEditor");
+			expect(util.getResult('testEventListener("igTextEditor", "text1", "mouseover")')).toBe(true);
 		});
 		it("Text should updated model correctly", function() {
 			var textInModel = 'angular.element("#text1").scope().editors.text;';
