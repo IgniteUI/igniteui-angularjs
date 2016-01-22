@@ -1256,7 +1256,7 @@ var NorthwindCtrl = function ($scope, $element, $compile) {
 	};
 	$scope.combo = {
 		value1: 20,
-		value2: "Chang"
+		value2: []
 	};
 	$scope.deleteDo = function (ix) {
 		$scope.dataObject.splice(ix, 1);

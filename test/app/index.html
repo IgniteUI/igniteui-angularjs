@@ -91,7 +91,8 @@
 		<input type="text" ng-model="combo.value1"/>
 		<ig-combo id="combo1" allow-custom-value="true" data-source="northwind" value-key-type="number" value-key="ProductID" text-key-type="string" text-Key="ProductName" ng-model="combo.value1">
 		</ig-combo>
-		<ig-combo id="combo2" data-source="northwind" value-key-type="number" value-key="ProductID" text-key-type="string" text-Key="ProductName" ng-model="combo.value1">
+		<ig-combo id="combo2" data-source="northwind" value-key-type="number" value-key="ProductID" text-key-type="string" text-Key="ProductName" ng-model="combo.value2">
+            <multi-selection enabled="true"></multi-selection>
 		</ig-combo>
 		<br/>
 		<ul id="combomodel">
@@ -162,6 +163,7 @@
 		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.combo.js"></script>
 		<script type="text/javascript" src="//cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.validator.js"></script>
 		<script type="text/javascript" src="../../src/igniteui-angular.js"></script>
+		<script type="text/javascript" src="js/my-app-utils.js"></script>
 		<script type="text/javascript" src="js/my-app.js"></script>
 	</body>
 </html>

@@ -559,15 +559,54 @@ describe('my app', function() {
 	});
 
 	describe("Combo", function() {
+		var scope = 'angular.element("#combo1").scope()',
+		combo = '$("#combo1")',
+		combo2 = '$("#combo2")';
+
 		it("should be initialized", function () {
 			util.resetNorthwindScope();
 			util.isInitialized('combo1', 'igCombo');
 			util.isInitialized('combo2', 'igCombo');
 		});
 		
-		it("should update its view when model is changed", function() {
+		it("should be initialized with a value from the scope", function() {
+			expect(util.getResult(combo + '.igCombo("value")')).toBe(20);
+			expect(util.getResult(combo2 + '.igCombo("value").length')).toBe(0);
+		});
+
+		it("should update its value when model is changed", function() {
+			util.executeScript(scope + '.combo.value1 = 2;');
+			util.executeScript(scope + '.$apply();');
+			expect(util.getResult(combo + '.igCombo("value")')).toBe(2);
+            expect(util.getResult('$("#combo1").val()')).toBe("Chang");
 			util.executeScript('$("input[ng-model=\'combo.value1\']:eq(0)").val("5").trigger("input");');
 			expect(util.getResult('$("#combo1").val()')).toBe("Chef Anton's Gumbo Mix");
+
+			util.executeScript(scope + '.combo.value2 = [1];');
+            util.executeScript(scope + '.$apply();');
+            expect(util.getResult(combo2 + '.igCombo("value")[0]')).toBe(1);
+            expect(util.getResult('$("#combo2").val()')).toBe('Chai');
+		});
+
+		it("should set model on clear", function() {
+			util.executeScript(combo2 + ".igCombo('comboWrapper').find('.ui-igcombo-clear').click();");
+        	expect(util.getResult(scope + '.combo.value2.length')).toBe(0);
+		});
+
+		it("should update model on change with multi selection", function() {
+			util.executeScript(combo2 + ".igCombo('comboWrapper').find('.ui-igcombo-button').click();");
+			util.executeScript(combo2 + ".igCombo('dropDown').find('li').not('.ui-helper-hidden').eq(0).trigger($.Event('mousedown', { which: 1 })).trigger($.Event('mouseup', { which: 1 }));");
+			util.executeScript(combo2 + ".igCombo('dropDown').find('li').not('.ui-helper-hidden').eq(1).trigger($.Event('mousedown', { which: 1 })).trigger($.Event('mouseup', { which: 1 }));");
+        	expect(util.getResult(scope + '.combo.value2.toString()')).toBe('1,2');
+		});
+
+		it("should update model on change of combo input", function() {
+			util.executeScript(combo + ".focus();");
+			//check scope value remains unchanged during search entry
+			expect(util.getResult('typeInInputWrap("Chang", ' + combo + ', "combo.value1");')).toBe(false);
+			// wait for sleep resolve:
+			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
+        	expect(util.getResult(scope + '.combo.value1')).toBe(2);
 		});
 	});
 
