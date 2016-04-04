@@ -1,13 +1,13 @@
 {
   "name": "igniteui-angular",
   "description": "IgniteUI controls for AngularJS",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "homepage": "http://igniteui.com",
   "dependencies": {
-    "angular": "1.4.x",
-    "angular-route": "1.2.x",
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "html5-boilerplate": "~4.3.0"
+    "angular": "",
+    "angular-route": "",
+    "angular-loader": "",
+    "angular-mocks": "",
+    "html5-boilerplate": ""
   }
 }
