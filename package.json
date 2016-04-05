@@ -4,16 +4,17 @@
   "devDependencies": {
     "grunt": "",
     "grunt-contrib-jshint": "",
-    "grunt-contrib-concat": "",
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
-    "grunt-contrib-requirejs": "",
     "jshint-stylish": "",
-    "karma": "",
     "protractor": "",
     "http-server": "",
     "bower": "",
     "shelljs": "",
+    "karma": "",
+    "karma-jasmine": "",
+    "karma-chrome-launcher": "",
+    "karma-firefox-launcher": "",
     "karma-junit-reporter": ""
   },
   "scripts": {
@@ -24,13 +25,14 @@
 
     "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
-    "test-single-run": "karma start test/karma.conf.js  --single-run",
+    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots",
+    "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
 
     "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor test/protractor-conf.js",
+    "protractor": "npm start | protractor test/protractor-conf.js",
 
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   }
