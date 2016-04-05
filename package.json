@@ -14,7 +14,11 @@
     "http-server": "",
     "bower": "",
     "shelljs": "",
-    "karma-junit-reporter": ""
+	"karma": "",
+	"karma-jasmine": "",
+	"karma-chrome-launcher": "",
+	"karma-firefox-launcher": "",
+	"karma-junit-reporter": ""
   },
   "scripts": {
     "postinstall": "bower install",
@@ -24,7 +28,8 @@
 
     "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
-    "test-single-run": "karma start test/karma.conf.js  --single-run",
+    "test-chrome-single": "karma start test/karma.conf.js --browsers Chrome --single-run",
+    "test-firefox-single": "karma start test/karma.conf.js --browsers Firefox --single-run",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",

@@ -1,6 +1,6 @@
 describe('Ignite directives', function() {
-
-	beforeEach(module('igniteui-directives'));
+	
+	beforeEach(module('my-app'));
 
 	//these can go into html files
 	var gridTpl = '<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">' +
