@@ -154,23 +154,38 @@ The easiest way to run the unit tests is to use the npm script:
 
 	npm test
 
-This will start the [Karma](http://karma-runner.github.io/0.12/index.html) test runner and execute the tests.
+This will start the [Karma](http://karma-runner.github.io/0.12/index.html) test runner and execute the tests. By default the browser is Chrome.
 
-####End to end testing
+To run the tests for a single run you can use:
+
+	npm run test-single
+
+To run the tests on Firefox you can use:
+
+	npm run test-single-firefox
+	
+###End to end testing
 These tests are run with the [Protractor](https://github.com/angular/protractor) test runner, it simulates interaction.
-So first the web server should be brought up:
+
+####Setup
+
+Before proceeding you need to download and install the latest version of the stand-alone WebDriver tool:
+
+	npm run update-webdriver
+	
+After that make sure you have [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed on your machine. It is required for the Standalone Selenium Server.
+
+####Running tests
+
+So first the web server should be brought up so that Protractor can execute the tests against it:
 
 	npm start
 
-So that Protractor can execute the tests against it. Starting the tests is done with:
+Running the tests is done with:
 
 	npm run protractor
 
-**Note**: Protractor is built upon WebDriver and this should be installed:
-
-	npm run update-webdriver
-
-This will download and install the latest version of the stand-alone WebDriver tool.
+**Note:** You will need to run the protractor on a separate bash
 
 ---------------------------------------
 

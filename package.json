@@ -4,21 +4,18 @@
   "devDependencies": {
     "grunt": "",
     "grunt-contrib-jshint": "",
-    "grunt-contrib-concat": "",
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
-    "grunt-contrib-requirejs": "",
     "jshint-stylish": "",
-    "karma": "",
     "protractor": "",
     "http-server": "",
     "bower": "",
     "shelljs": "",
-	"karma": "",
-	"karma-jasmine": "",
-	"karma-chrome-launcher": "",
-	"karma-firefox-launcher": "",
-	"karma-junit-reporter": ""
+    "karma": "",
+    "karma-jasmine": "",
+    "karma-chrome-launcher": "",
+    "karma-firefox-launcher": "",
+    "karma-junit-reporter": ""
   },
   "scripts": {
     "postinstall": "bower install",
@@ -28,8 +25,8 @@
 
     "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
-    "test-chrome-single": "karma start test/karma.conf.js --browsers Chrome --single-run",
-    "test-firefox-single": "karma start test/karma.conf.js --browsers Firefox --single-run",
+    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots",
+    "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
