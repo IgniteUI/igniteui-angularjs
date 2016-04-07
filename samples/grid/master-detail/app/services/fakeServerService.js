@@ -1,13 +1,13 @@
-app.service('fakeServerService',
-            ['localStorage',
+app.service("fakeServerService",
+            ["localStorage",
     function (localStorage) {
         
-        'use strict';
+        "use strict";
 
         var svc = {
             data: [],
 
-            key: 'homes.data',
+            key: "homes.data",
 
             serializeData: function () {
                 localStorage[svc.key] = JSON.stringify(svc.data);
@@ -74,9 +74,9 @@ app.service('fakeServerService',
                     ];
                     
                     var cities = [
-                        'Mayberry',
-                        'Anytown',
-                        'Riverdale'
+                        "Mayberry",
+                        "Anytown",
+                        "Riverdale"
                     ];
                     
                     var zipCodes = [
@@ -101,7 +101,7 @@ app.service('fakeServerService',
                             streetAddress: addresses[i],
                             city: cities[counter-1],
                             zipCode: zipCodes[counter-1],
-                            imageName: counter + '.jpg',
+                            imageName: counter + ".jpg",
                             price: getRandomNumber(220000, 345000),
                             bedrooms: getRandomNumber(3, 4),
                             bathrooms: getRandomNumber(2, 3),
@@ -126,7 +126,7 @@ app.service('fakeServerService',
 
             insert: function (home) {
 
-                if (typeof home != 'object') throw new Error('A home object is required to do an insert.');
+                if (typeof home != "object") throw new Error("A home object is required to do an insert.");
 
                 home.id = Math.uuidCompact();
                 svc.data.unshift(home);
@@ -135,7 +135,7 @@ app.service('fakeServerService',
 
             update: function (home) {
                 
-                if (typeof home != 'object') throw new Error('A home object is required to do an update.');
+                if (typeof home != "object") throw new Error("A home object is required to do an update.");
 
                 var 
                     len = svc.data.length,
@@ -167,11 +167,11 @@ app.service('fakeServerService',
                 return returnValue;
             },
 
-            'delete': function (id) {
+            "delete": function (id) {
                 
                 var lengthOfUUID = 36;
                 
-                if (id.length != lengthOfUUID) throw new Error('A valid UUID value is required as an ID.');
+                if (id.length != lengthOfUUID) throw new Error("A valid UUID value is required as an ID.");
 
                 var 
                     len = svc.data.length,
@@ -195,27 +195,27 @@ app.service('fakeServerService',
         return {
             data: svc.data,
             insert: svc.insert,
-            'delete': svc.delete,
+            "delete": svc.delete,
             update: svc.update,
             getById: svc.getById
         };
 
     }]);
 
-app.config(['$provide',
+app.config(["$provide",
     function ($provide) {
-        $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
+        $provide.decorator("$httpBackend", angular.mock.e2e.$httpBackendDecorator);
     }]);
 
 app.run(
-            ['$httpBackend', 'fakeServerService',
+            ["$httpBackend", "fakeServerService",
     function ($httpBackend, fakeServerService) {
         
         var apiRegex = /\/api\/homes\//;
 
-        $httpBackend.whenGET('/api/homes').respond(fakeServerService.data);
+        $httpBackend.whenGET("/api/homes").respond(fakeServerService.data);
 
-        $httpBackend.whenPOST('/api/homes').respond(function (method, uri, data) {
+        $httpBackend.whenPOST("/api/homes").respond(function (method, uri, data) {
             var home = angular.fromJson(data);
 
             if (home.id === null) {
