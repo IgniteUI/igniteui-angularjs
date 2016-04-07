@@ -1,11 +1,11 @@
-exports.config = {
+var cfg = {
 	
 	allScriptsTimeout: 11000,
 	
 	specs: [
 		"e2e/*.js"
 	],
-	chromeOnly: true, //https://github.com/angular/protractor/issues/187
+	//chromeOnly: true, //https://github.com/angular/protractor/issues/187
 	capabilities: {
 		"browserName": "chrome"
 	},
@@ -18,3 +18,11 @@ exports.config = {
 		defaultTimeoutInterval: 30000
 	}
 };
+
+if (process.env.TRAVIS) {
+	cfg.capabilities.chromeOptions = {
+			'args': ['--no-sandbox']
+		};
+}
+
+exports.config = cfg;
