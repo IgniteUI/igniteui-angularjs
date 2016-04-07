@@ -2,6 +2,7 @@
   "name": "igniteui-angular",
   "dependencies": {},
   "devDependencies": {
+    "coveralls": "",
     "grunt": "",
     "grunt-contrib-jshint": "",
     "grunt-contrib-uglify": "",
@@ -13,9 +14,11 @@
     "shelljs": "",
     "karma": "",
     "karma-jasmine": "",
+    "karma-coverage": "",
     "karma-chrome-launcher": "",
     "karma-firefox-launcher": "",
     "karma-junit-reporter": ""
+
   },
   "scripts": {
     "postinstall": "bower install",
@@ -25,7 +28,7 @@
 
     "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
-    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots",
+    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots,coverage",
     "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
 
     "preupdate-webdriver": "npm install",
