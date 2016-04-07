@@ -2,6 +2,7 @@
   "name": "igniteui-angular",
   "dependencies": {},
   "devDependencies": {
+    "coveralls": "",
     "grunt": "",
     "grunt-contrib-jshint": "",
     "grunt-contrib-uglify": "",
@@ -13,26 +14,28 @@
     "shelljs": "",
     "karma": "",
     "karma-jasmine": "",
+    "karma-coverage": "",
     "karma-chrome-launcher": "",
     "karma-firefox-launcher": "",
     "karma-junit-reporter": ""
+
   },
   "scripts": {
     "postinstall": "bower install",
 
     "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000",
+    "start": "http-server -a localhost -p 8000 &",
 
     "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
-    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots",
+    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots,coverage",
     "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
 
     "preprotractor": "npm run update-webdriver",
-    "protractor": "npm start | protractor test/protractor-conf.js",
+    "protractor": "protractor test/protractor-conf.js",
 
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   }
