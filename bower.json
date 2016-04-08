@@ -1,8 +1,38 @@
 {
   "name": "igniteui-angular",
-  "description": "IgniteUI controls for AngularJS",
-  "version": "1.0.0",
+  "description": "Ignite UI controls for AngularJS",
   "homepage": "http://igniteui.com",
+  "main": "src/igniteui-angular.js",
+  "keywords": [
+    "ui",
+	"controls",
+    "components",
+	"infragistics",
+    "angular"
+  ],
+  "repository": {
+	"type": "git",
+	"url": "git://github.com/IgniteUI/igniteui-angular.git"
+  },
+  "moduleType": [
+	"amd",
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "samples",
+	"src-samples",
+	"images",
+	"index.html",
+	"indexController.js",
+	"bower.json",
+	"package.json",
+	"Gruntfile.js"
+  ],
   "dependencies": {
     "angular": "",
     "angular-route": "",
