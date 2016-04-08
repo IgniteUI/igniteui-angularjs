@@ -126,19 +126,23 @@ app.service("fakeServerService",
 
             insert: function (home) {
 
-                if (typeof home != "object") throw new Error("A home object is required to do an insert.");
+                if (typeof home != "object") {
+					throw new Error("A home object is required to do an insert.");
+				}
 
                 home.id = Math.uuidCompact();
                 svc.data.unshift(home);
                 svc.serializeData();
+
             },
 
             update: function (home) {
                 
-                if (typeof home != "object") throw new Error("A home object is required to do an update.");
+                if (typeof home != "object") {
+					throw new Error("A home object is required to do an update.");
+				}
 
-                var 
-                    len = svc.data.length,
+                var len = svc.data.length,
                     index = 0;
 
                 while (len--) {
@@ -171,10 +175,11 @@ app.service("fakeServerService",
                 
                 var lengthOfUUID = 36;
                 
-                if (id.length != lengthOfUUID) throw new Error("A valid UUID value is required as an ID.");
+                if (id.length != lengthOfUUID) {
+					throw new Error("A valid UUID value is required as an ID.");
+				}
 
-                var 
-                    len = svc.data.length,
+                var len = svc.data.length,
                     index = 0;
 
                 while (len--) {
