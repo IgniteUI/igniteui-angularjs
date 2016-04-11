@@ -3,7 +3,7 @@ function executeScript(script) {
 }
 
 function getResult(script) {
-	return browser.driver.executeScript('return ' + script);
+	return browser.driver.executeScript("return " + script);
 }
 
 function getAll(locatior) {

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var app = angular.module("app", ["ngResource", "igniteui-directives"]);
 

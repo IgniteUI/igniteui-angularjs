@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-describe('my app', function() {
+describe("my app", function() {
 
-	browser.get('index.html');
+	browser.get("index.html");
 
-	var util = require('../app/js/util');
+	var util = require("../app/js/util");
 	var scopeNorthwind = 'angular.toJson(angular.element("#grid1").scope().northwind)';
 	var scopeLength = 'angular.element("#grid1").scope().northwind.length';
 	var gridData = 'angular.toJson($("#grid1").igGrid("option", "dataSource"))';
@@ -12,7 +12,7 @@ describe('my app', function() {
 	describe("Grid", function() {
 
 		it("should be initialized", function() {
-			util.isInitialized('grid1', 'igGrid');
+			util.isInitialized("grid1", "igGrid");
 		});
 
 		it("should support binding through model", function () {
@@ -68,10 +68,10 @@ describe('my app', function() {
 			util.executeScript('$("input[ng-model=\'newProduct.UnitPrice\']").val("75.00").trigger("input");');
 			util.executeScript('$("input[ng-click=\'add($index)\']").click();');
 			var northwindScope = 'angular.element("#grid1").scope().northwind';
-			expect(util.getResult(northwindScope + '.length')).toBe(21);
-			expect(util.getResult(northwindScope + '[20].ProductName')).toBe("Small bag");
-			expect(util.getResult(northwindScope + '[20].QuantityPerUnit')).toBe("23");
-			expect(util.getResult(northwindScope + '[20].UnitPrice')).toBe("75.00");
+			expect(util.getResult(northwindScope + ".length")).toBe(21);
+			expect(util.getResult(northwindScope + "[20].ProductName")).toBe("Small bag");
+			expect(util.getResult(northwindScope + "[20].QuantityPerUnit")).toBe("23");
+			expect(util.getResult(northwindScope + "[20].UnitPrice")).toBe("75.00");
 		});
 
 		//test pop, slice, push from scope
@@ -531,7 +531,7 @@ describe('my app', function() {
 	describe("Tree", function() {
 		it("should be initialized", function () {
 			util.resetNorthwindScope();
-			util.isInitialized('tree1', 'igTree');
+			util.isInitialized("tree1", "igTree");
 		});
 		it("should set correctly option textKey", function() {
 			var textKey = util.getResult('$("#tree1").data("igTree").options.bindings.textKey;');
@@ -565,8 +565,8 @@ describe('my app', function() {
 
 		it("should be initialized", function () {
 			util.resetNorthwindScope();
-			util.isInitialized('combo1', 'igCombo');
-			util.isInitialized('combo2', 'igCombo');
+			util.isInitialized("combo1", "igCombo");
+			util.isInitialized("combo2", "igCombo");
 		});
 		
 		it("should be initialized with a value from the scope", function() {
@@ -575,29 +575,29 @@ describe('my app', function() {
 		});
 
 		it("should update its value when model is changed", function() {
-			util.executeScript(scope + '.combo.value1 = 2;');
-			util.executeScript(scope + '.$apply();');
+			util.executeScript(scope + ".combo.value1 = 2;");
+			util.executeScript(scope + ".$apply();");
 			expect(util.getResult(combo + '.igCombo("value")')).toBe(2);
             expect(util.getResult('$("#combo1").val()')).toBe("Chang");
 			util.executeScript('$("input[ng-model=\'combo.value1\']:eq(0)").val("5").trigger("input");');
 			expect(util.getResult('$("#combo1").val()')).toBe("Chef Anton's Gumbo Mix");
 
-			util.executeScript(scope + '.combo.value2 = [1];');
-            util.executeScript(scope + '.$apply();');
+			util.executeScript(scope + ".combo.value2 = [1];");
+            util.executeScript(scope + ".$apply();");
             expect(util.getResult(combo2 + '.igCombo("value")[0]')).toBe(1);
-            expect(util.getResult('$("#combo2").val()')).toBe('Chai');
+            expect(util.getResult('$("#combo2").val()')).toBe("Chai");
 		});
 
 		it("should set model on clear", function() {
 			util.executeScript(combo2 + ".igCombo('comboWrapper').find('.ui-igcombo-clear').click();");
-        	expect(util.getResult(scope + '.combo.value2.length')).toBe(0);
+        	expect(util.getResult(scope + ".combo.value2.length")).toBe(0);
 		});
 
 		it("should update model on change with multi selection", function() {
 			util.executeScript(combo2 + ".igCombo('comboWrapper').find('.ui-igcombo-button').click();");
 			util.executeScript(combo2 + ".igCombo('dropDown').find('li').not('.ui-helper-hidden').eq(0).trigger($.Event('mousedown', { which: 1 })).trigger($.Event('mouseup', { which: 1 }));");
 			util.executeScript(combo2 + ".igCombo('dropDown').find('li').not('.ui-helper-hidden').eq(1).trigger($.Event('mousedown', { which: 1 })).trigger($.Event('mouseup', { which: 1 }));");
-        	expect(util.getResult(scope + '.combo.value2.toString()')).toBe('1,2');
+        	expect(util.getResult(scope + ".combo.value2.toString()")).toBe("1,2");
 		});
 
 		it("should update model on change of combo input", function() {
@@ -606,7 +606,7 @@ describe('my app', function() {
 			expect(util.getResult('typeInInputWrap("Chang", ' + combo + ', "combo.value1");')).toBe(false);
 			// wait for sleep resolve:
 			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
-        	expect(util.getResult(scope + '.combo.value1')).toBe(2);
+        	expect(util.getResult(scope + ".combo.value1")).toBe(2);
 		});
 	});
 
@@ -630,8 +630,8 @@ describe('my app', function() {
 		});
 		it("Currency should be changing its view when the model is changed", function() {
 			var scope = 'angular.element("#currency1").scope()';
-			util.executeScript(scope + '.editors.currency = 123456;');
-			util.executeScript(scope + '.$apply();');
+			util.executeScript(scope + ".editors.currency = 123456;");
+			util.executeScript(scope + ".$apply();");
 			expect(util.getResult('$("#currency1").val()')).toBe("$123,456.00");
 		});
 		it("Currency should be changing its model when the view is changed", function() {
@@ -647,8 +647,8 @@ describe('my app', function() {
 		it("Date should be changing its view when the model is changed", function() {
 			var newTime = new Date(2016, 0, 20).getTime(),
 				scope = 'angular.element("#currency1").scope()';
-			util.executeScript(scope + '.editors.date = new Date('+ newTime +');');
-			util.executeScript(scope + '.$apply();');
+			util.executeScript(scope + ".editors.date = new Date("+ newTime +");");
+			util.executeScript(scope + ".$apply();");
 			expect(util.getResult('$("#date1").igDateEditor("value").getTime()')).toBe(newTime);
 			expect(util.getResult('$("#datePicker1").igDatePicker("value").getTime()')).toBe(newTime);
 		});
@@ -671,8 +671,8 @@ describe('my app', function() {
 		});
 		it("Numeric should be changing its view when the model is changed", function() {
 			var scope = 'angular.element("#numeric1").scope()';
-			util.executeScript(scope + '.editors.currency = 742.4;');
-			util.executeScript(scope + '.$apply();');
+			util.executeScript(scope + ".editors.currency = 742.4;");
+			util.executeScript(scope + ".$apply();");
 			expect(util.getResult('$("#numeric1").val()')).toBe("742.4");
 		});
 		it("Numeric should be changing its model when the view is changed", function() {
