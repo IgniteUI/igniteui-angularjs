@@ -12,7 +12,7 @@ var cfg = {
 	],
 	//chromeOnly: true, //https://github.com/angular/protractor/issues/187
 	capabilities: { 
-		'browserName': "chrome"
+		"browserName": "chrome"
 	},
 
 	baseUrl: "http://localhost:8000/test/app/",
@@ -26,7 +26,7 @@ var cfg = {
 
 if (process.env.TRAVIS) {
 	cfg.capabilities.chromeOptions = {
-			'args': ["--no-sandbox"]
+			"args": ["--no-sandbox"]
 		};
 }
 
