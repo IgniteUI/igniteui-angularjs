@@ -48,11 +48,11 @@
             //model controller will attempt to set the edit text (not actual value) to the model. Only allow the actual control value to update.
             return comboValue(element.data(controlName));
         }
-        element.on($.ig.angular.igCombo.events.join(' '), function (event, args) {
+        element.on($.ig.angular.igCombo.events.join(" "), function (event, args) {
             scope.$apply(function () {
                 model.$setViewValue(comboValue(args.owner));
             });
-        }).one('$destroy', function() {
+        }).one("$destroy", function() {
             var index = $.inArray(setControlValue, model.$formatters);
             unbinder();
             if (index >=0) {
@@ -99,13 +99,13 @@
         }
         if (controlName) {
             $.ig.angular[controlName].events = [controlName.toLowerCase() + "valuechanged"];
-            element.on($.ig.angular[controlName].events.join(' '), function (event, args) {
+            element.on($.ig.angular[controlName].events.join(" "), function (event, args) {
                 scope.$apply(function () {
                     // force newer versions of ngModelController(1.3.0+) to update, since we kept the control value while in input was changing
                     model.$$lastCommittedViewValue = null;
                     model.$setViewValue(args.owner.value());
                 });
-            }).one('$destroy', function () {
+            }).one("$destroy", function () {
                 var index = $.inArray(setControlValue, model.$formatters);
                 if (index >= 0) {
                     model.$formatters.splice(index, 1);
@@ -132,14 +132,14 @@
     $.ig.angular.igGrid.bindEvents = $.ig.angular.igGrid.bindEvents || function (scope, element, attrs) {
         var unbinder,
             collectionWatchMode = attrs && attrs.collectionWatch && attrs.collectionWatch === "true";
-        element.on($.ig.angular.igGrid.events.join(' '), function () {
+        element.on($.ig.angular.igGrid.events.join(" "), function () {
             unbinder();
               // When in collection watch mode, a change is detected only when the collection changes - a element is inserted or removed or the whole collection reference changes. 
             //     Changes in a specific element inside collection are not detected. This provides huge performance boost when such change detection is not required
             unbinder = collectionWatchMode ? scope.$watchCollection(attrs.source, watchGridDataSource) : scope.$watch(attrs.source, watchGridDataSource, true);
             scope.$apply();
                markWatcher(scope, "igGrid", attrs);
-        }).one('$destroy', function () {
+        }).one("$destroy", function () {
             unbinder();
         });
 
@@ -237,7 +237,7 @@
             $(element).igHierarchicalGrid("option", "dataSource", newValue);
         }, true);
         markWatcher(scope, "igHierarchicalGrid", attrs);
-        element.one('$destroy', function () {
+        element.one("$destroy", function () {
             unbinder();
         });
     };
@@ -253,7 +253,7 @@
             $(element).igTree("option", "dataSource", newValue);
         }, true);
         markWatcher(scope, "igTree", attrs);
-        element.one('$destroy', function () {
+        element.one("$destroy", function () {
             unbinder();
         });
     };
@@ -265,7 +265,7 @@
     $.ig.angular.igDataChart.bindEvents = $.ig.angular.igDataChart.bindEvents || function (scope, element, attrs) {
         var diff = [], ds = scope.$eval(attrs.source), unbinder;
         var changeHandler = function (newValue, oldValue) {
-            var $chartElem = $(element), chart = $chartElem.data('igDataChart');
+            var $chartElem = $(element), chart = $chartElem.data("igDataChart");
              // check for a change of the data source. In this case rebind
             if (chart.dataSources[chart._containerSourceID].data() !== newValue) {
                 $chartElem.igDataChart("option", "dataSource", newValue);
@@ -296,7 +296,7 @@
 
         unbinder = scope.$watch(attrs.source, changeHandler, true);
         markWatcher(scope, "igDataChart", attrs);
-        element.one('$destroy', function () {
+        element.one("$destroy", function () {
             unbinder();
         });
     };
@@ -312,7 +312,7 @@
             $(element)[controlName]("notifyClearItems", newValue);
         }, true);
         markWatcher(scope, controlName, attrs);
-        element.one('$destroy', function () {
+        element.one("$destroy", function () {
             unbinder();
         });
     };
@@ -329,7 +329,7 @@
             $(element)[controlName]("setContent", newValue, "html");
         }, true);
         markWatcher(scope, controlName, attrs);
-        element.one('$destroy', function () {
+        element.one("$destroy", function () {
             unbinder();
         });
     };
@@ -596,12 +596,12 @@
                         }
                         
                         // cleanup
-                        scope.$on('$destroy', function () {
+                        scope.$on("$destroy", function () {
                             if (element.data(controlName)) {
                                 element[controlName]("destroy");
                             }
                             if ($.ig.angular[controlName] && $.ig.angular[controlName].events && $.ig.angular[controlName].events.length) {
-                                element.off($.ig.angular[controlName].events.join(' '));
+                                element.off($.ig.angular[controlName].events.join(" "));
                             }
                         });
 
