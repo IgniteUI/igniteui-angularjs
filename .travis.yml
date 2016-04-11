@@ -13,5 +13,8 @@ before_install:
 script:
   - npm run start
   - sleep 3
+  - npm run instrument
   - npm run test-single
   - npm run protractor
+  - npm run cover-combined
+  - cat ./coverage/final/lcov.info | coveralls

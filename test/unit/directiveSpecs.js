@@ -104,7 +104,7 @@ describe('Ignite directives', function() {
 	}));
 
 	it('should create tree', inject(function($compile, $rootScope) {
-		var treeTpl ='<ig-tree id="tree1" data-source="ProductCategories">';
+		var treeTpl ='<ig-tree id="tree1" data-source="ProductCategories">' +
 		'<bindings child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID"></bindings>' +
 		'</ig-tree>';
 		var tree = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + treeTpl + '</div>');
@@ -115,5 +115,41 @@ describe('Ignite directives', function() {
 		expect(treeElement.length).toBe(1);
 		expect(treeElement.data('igTree')).not.toBeUndefined();
 		expect(treeElement.data('igTree').options.bindings.constructor).toBe(Object);
+	}));
+	
+	it('should create data chart', inject(function($compile, $rootScope) {
+		var dataChartTpl ='<ig-data-chart id="datachart1" data-source="dataChart">' +
+            '<axes><axis name="NameAxis" type="categoryX" title="Country" label="CountryName"></axis>' +
+            '<axis name="PopulationAxis" type="numericY"  minimumvalue="0" title="Milions of People"></axis></axes>' +
+            '<series><series name="2015Population" type="column" is-highlighting-enabled="true" is-transition-in-enabled="true" x-axis="NameAxis" y-axis="PopulationAxis" value-member-path="Pop2015">' +
+			'</series></series></ig-data-chart>';
+		var dataChart = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + dataChartTpl + '</div>');
+		var scope = $rootScope.$new();
+		$compile(dataChart)(scope);
+		scope.$digest();
+		var dataChartElement = dataChart.find('#datachart1');
+		expect(dataChartElement.length).toBe(1);
+		expect(dataChartElement.data('igDataChart')).not.toBeUndefined();
+	}));
+	
+	it('should create hierarchical grid', inject(function($compile, $rootScope) {
+		var hierarchicalGridTpl ='<ig-hierarchical-grid id="hgrid1"  data-source="northwindEmployees" width="100%" height="400px" auto-commit="true" auto-generate-columns="false" auto-generate-layouts="false">' +
+            '<columns> <column key="FirstName" header-text="First Name" width="25%" data-type="string"></column>' +
+				'<column key="LastName" header-text="Last Name"  width="25%"  data-type="string"></column>' +
+				'<column key="Title" header-text="Title"  width="25%" data-type="string"></column>' +
+				'<column key="BirthDate" header-text="Birth Date"  width="25%" data-type="date"></column></columns>' +
+				'<column-layouts><column-layout key="Orders" response-data-key="results" primary-key="OrderID" auto-generate-columns="false" width="100%">' +
+            '<columns><column key="OrderID" header-text="OrderID" width="25%" data-type="string"></column>' +
+				'<column key="Freight" header-text="Freight"  width="25%"  data-type="string"></column>' +
+				'<column key="ShipName" header-text="ShipName"  width="25%" data-type="string"></column>' +
+				'<column key="ShipAddress" header-text="ShipAddress"  width="25%" data-type="string"></column></columns>' +
+             '<features><feature name="Paging" page-size="10"></feature></features></column-layout></column-layouts>ig-hierarchical-grid>';
+		var hierarchicalGrid = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + hierarchicalGridTpl + '</div>');
+		var scope = $rootScope.$new();
+		$compile(hierarchicalGrid)(scope);
+		scope.$digest();
+		var hGridElement = hierarchicalGrid.find('#hgrid1');
+		expect(hGridElement.length).toBe(1);
+		expect(hGridElement.data('igHierarchicalGrid')).not.toBeUndefined();
 	}));
 });
