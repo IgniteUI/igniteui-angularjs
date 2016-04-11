@@ -2,6 +2,7 @@
   "name": "igniteui-angular",
   "dependencies": {},
   "devDependencies": {
+    "mkdirp": "",
     "coveralls": "",
     "grunt": "",
     "grunt-contrib-jshint": "",
@@ -9,20 +10,25 @@
     "grunt-contrib-watch": "",
     "jshint-stylish": "",
     "protractor": "",
+    "protractor-istanbul-plugin": "",
     "http-server": "",
     "bower": "",
     "shelljs": "",
+    "istanbul-coveralls": "",
     "karma": "",
     "karma-jasmine": "",
     "karma-coverage": "",
     "karma-chrome-launcher": "",
     "karma-firefox-launcher": "",
     "karma-junit-reporter": ""
-
   },
   "scripts": {
     "postinstall": "bower install",
-
+	"instrument": "istanbul instrument ./src/ -o ./instrument/",
+	
+	"cover-protractor": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
+	"cover-combined": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/karma/**/coverage*.json coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
+	
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 &",
 

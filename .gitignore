@@ -3,3 +3,4 @@ bower_components
 dist
 test_out
 coverage
+instrument
