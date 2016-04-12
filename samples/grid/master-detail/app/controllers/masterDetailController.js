@@ -1,13 +1,13 @@
-app.controller('masterDetailController',
+app.controller("masterDetailController",
                
-            ['$scope', 'dataService',
+            ["$scope", "dataService",
     function ($scope,   dataService) {
         
-        'use strict';
+        "use strict";
         
         $scope.error = null;
         
-        $scope.message = '';
+        $scope.message = "";
 
         $scope.selectedHome = null;
         $scope.selectedHomeOriginal = null;
@@ -15,7 +15,7 @@ app.controller('masterDetailController',
         $scope.save = function(){
             dataService.save($scope.selectedHome).then(function(){
                 $scope.selectedHome = null;
-                $scope.message = 'Home saved';
+                $scope.message = "Home saved";
             }, 
             function(error){
                 $scope.error = error;
@@ -36,24 +36,24 @@ app.controller('masterDetailController',
         
         // **** Grid-related event handlers ********
         $scope.homesGridRendered = function(e){
-            $scope.message = 'Grid is rendered';
+            $scope.message = "Grid is rendered";
         };
         
         $scope.homesGridColumnSorted = function(e, u){
             $scope.$apply(function () {
-                $scope.message = 'Column sorted';
+                $scope.message = "Column sorted";
             });
         };
         
         $scope.homesGridPageSelectionChanged = function(e, u){
             $scope.$apply(function () {
-                $scope.message = 'Page index changed';
+                $scope.message = "Page index changed";
             });
         };
         
         $scope.homesGridPageSizeChanged = function(e, u){
             $scope.$apply(function () {
-                $scope.message = 'Page size changed';
+                $scope.message = "Page size changed";
             });
         };
         

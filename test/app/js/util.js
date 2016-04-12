@@ -1,15 +1,13 @@
-var ptor = protractor.getInstance();
-
 function executeScript(script) {
-	ptor.driver.executeScript(script);
+	browser.driver.executeScript(script);
 }
 
 function getResult(script) {
-	return ptor.driver.executeScript('return ' + script);
+	return browser.driver.executeScript("return " + script);
 }
 
 function getAll(locatior) {
-	return ptor.findElements(locatior);
+	return browser.findElements(locatior);
 }
 
 function isInitialized(elementId, widget) {
@@ -19,10 +17,10 @@ function isInitialized(elementId, widget) {
 }
 
 function resetNorthwindScope() {
-	ptor.driver.executeScript(
+	browser.driver.executeScript(
 		'angular.element($("#grid1")).scope().northwind = angular.copy(angular.element($("#grid1")).scope().northwind_bak.slice(0));'
 	);
-	ptor.driver.executeScript(
+	browser.driver.executeScript(
 		'angular.element($("#grid1")).scope().$apply();'
 	);
 }

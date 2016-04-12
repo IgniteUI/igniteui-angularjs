@@ -1,7 +1,5 @@
-'use strict';
+"use strict";
 
-var app = angular.module('app',
-                         ['ngResource', 
-                          'igniteui-directives',]);
+var app = angular.module("app", ["ngResource", "igniteui-directives"]);
 
-app.constant('localStorage', window.localStorage);
+app.constant("localStorage", window.localStorage);
