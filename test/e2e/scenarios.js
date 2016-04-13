@@ -1,6 +1,7 @@
-'use strict';
+/*global it*/
+"use strict";
 
-describe('my app', function() {
+describe("my app", function() {
 
 	browser.get('index.html');
 
