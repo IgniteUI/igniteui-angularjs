@@ -18,29 +18,29 @@ describe("my app", function() {
 
 		it("should support binding through model", function () {
 			//set value to the input, which represents the model
-			util.executeScript('$("#gridmodel input[ng-model=\'product.ProductName\']:eq(0)").val("test").trigger("input")');
-			var cellText = util.getResult('$("#grid1").igGrid("getCellText", 1, "ProductName")');
+			util.executeScript("$('#gridmodel input[ng-model=\'product.ProductName\']:eq(0)').val('test').trigger('input')");
+			var cellText = util.getResult("$('#grid1').igGrid('getCellText', 1, 'ProductName')");
 			expect(cellText).toBe("test");
 		});
 
 		it("should support binding through the view from API", function() {
-			util.executeScript('$("#grid1").igGridUpdating("setCellValue", 1, "ProductName", "Headlights");');
+			util.executeScript("$('#grid1').igGridUpdating('setCellValue', 1, 'ProductName', 'Headlights');");
 			//API requires calling $apply to the scope
-			util.executeScript('angular.element("#grid1").scope().$apply();');
-			expect(util.getResult('$("input[ng-model=\'product.ProductName\']:first").val()')).toBe("Headlights");
+			util.executeScript("angular.element('#grid1').scope().$apply();");
+			expect(util.getResult("$('input[ng-model=\'product.ProductName\']:first').val()")).toBe("Headlights");
 		});
 
 		it("should update view when the scope is directly edited", function() {
-			util.executeScript('angular.element("#grid1").scope().northwind[1].ProductName = "Writing Pad"');
-			util.executeScript('angular.element("#grid1").scope().$apply();')
-			var cellText = util.getResult('$("#grid1").igGrid("getCellText", 2, "ProductName");')
+			util.executeScript("angular.element('#grid1').scope().northwind[1].ProductName = 'Writing Pad'");
+			util.executeScript("angular.element('#grid1').scope().$apply();")
+			var cellText = util.getResult("$('#grid1').igGrid('getCellText', 2, 'ProductName');")
 			expect(cellText).toBe("Writing Pad");
 		});
 
 		it("should initialize Filtering, Updating and Sorting", function() {
-			expect(util.getResult('$("#grid1").data("igGridFiltering") != undefined')).toBe(true);
-			expect(util.getResult('$("#grid1").data("igGridUpdating") != undefined')).toBe(true);
-			expect(util.getResult('$("#grid1").data("igGridSorting") != undefined')).toBe(true);
+			expect(util.getResult("$('#grid1').data('igGridFiltering') != undefined")).toBe(true);
+			expect(util.getResult("$('#grid1').data('igGridUpdating') != undefined")).toBe(true);
+			expect(util.getResult("$('#grid1').data('igGridSorting') != undefined")).toBe(true);
 		});
 
 		it("should retain the values from scope when a column is sorted", function() {
