@@ -18,7 +18,7 @@ describe("my app", function() {
 
 		it("should support binding through model", function () {
 			//set value to the input, which represents the model
-			util.executeScript("$('#gridmodel input[ng-model=\'product.ProductName\']:eq(0)').val('test').trigger('input')");
+			util.executeScript("$('#gridmodel input[ng-model=\"product.ProductName\"]:eq(0)').val('test').trigger('input')");
 			var cellText = util.getResult("$('#grid1').igGrid('getCellText', 1, 'ProductName')");
 			expect(cellText).toBe("test");
 		});
@@ -27,7 +27,7 @@ describe("my app", function() {
 			util.executeScript("$('#grid1').igGridUpdating('setCellValue', 1, 'ProductName', 'Headlights');");
 			//API requires calling $apply to the scope
 			util.executeScript("angular.element('#grid1').scope().$apply();");
-			expect(util.getResult("$('input[ng-model=\'product.ProductName\']:first').val()")).toBe("Headlights");
+			expect(util.getResult("$('input[ng-model=\"product.ProductName\"]:first').val()")).toBe("Headlights");
 		});
 
 		it("should update view when the scope is directly edited", function() {
