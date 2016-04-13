@@ -1,9 +1,9 @@
-app.factory('dataService', 
+app.factory("dataService", 
             
-            ['$http', '$q', 
+            ["$http", "$q", 
      function($http,   $q){
          
-         'use strict';
+         "use strict";
          
          var svc = {
              
@@ -11,7 +11,7 @@ app.factory('dataService',
                 
                 var deferred = $q.defer();
                 
-                $http.get('/api/homes').success(deferred.resolve).error(deferred.reject);
+                $http.get("/api/homes").success(deferred.resolve).error(deferred.reject);
                 
                 return deferred.promise;
             },
@@ -19,7 +19,7 @@ app.factory('dataService',
             save: function (home) {
                     var deferred = $q.defer();
 
-                    $http.post('/api/homes', home).success(function (result) {
+                    $http.post("/api/homes", home).success(function (result) {
                         deferred.resolve(result);
                     }).error(deferred.reject);
 
