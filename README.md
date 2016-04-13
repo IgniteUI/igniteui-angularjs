@@ -1,6 +1,8 @@
 #Ignite UI directives for AngularJS
 
-[![Build Status](https://travis-ci.org/IgniteUI/igniteui-angular.svg?branch=master)](https://travis-ci.org/IgniteUI/igniteui-angular) [![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angular)
+[![Build Status](https://travis-ci.org/IgniteUI/igniteui-angular.svg?branch=master)](https://travis-ci.org/IgniteUI/igniteui-angular)
+[![Coverage Status](https://coveralls.io/repos/github/IgniteUI/igniteui-angular/badge.svg?branch=master)](https://coveralls.io/github/IgniteUI/igniteui-angular?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angular)
 
 Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular).
 
@@ -150,7 +152,11 @@ Simply do:
 
 	npm install
 
-The command is preconfigured and it will also call `bower install` behind the scenes.
+The command is preconfigured and it will also call `bower install` behind the scenes. 
+
+Then you need to instrument the source file with:
+
+	npm run instrument
 
 ####Running Unit Tests
 The easiest way to run the unit tests is to use the npm script:
@@ -189,6 +195,25 @@ Running the tests is done with:
 	npm run protractor
 
 **Note:** You will need to run the protractor on a separate bash
+
+###Code coverage
+After running the Karma or Protractor tests by default a coverage will be created for each of them.
+
+To combine the both reports into one single report you need to execute:
+
+	npm run cover-combined
+	
+After that the default directory where you can open the code coverage is igniteui-angular/coverage/final/lcov/src.
+
+**Running specific coverage:** 
+
+To view only the Karma coverage you can see it under *coverage/karma/**/lcov-report/src*. 
+
+To view the code coverage only for the Protractor you need to run the command:
+
+	npm run cover-protractor
+
+After that the location is the same(igniteui-angular/coverage/final/lcov/src). That is because the Protractor report is not easily readable by default.
 
 ---------------------------------------
 

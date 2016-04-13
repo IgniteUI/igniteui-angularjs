@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*
     The factories are created to provide data and services
@@ -10,12 +10,12 @@
 	controller.
 */
 
-var app = angular.module('igniteui-sample', ['igniteui-directives']);
+var app = angular.module("igniteui-sample", ["igniteui-directives"]);
 
 // controllers
-app.controller('gridController',
+app.controller("gridController",
 
-            ['$scope', 'northwind',
+            ["$scope", "northwind",
     function ($scope,   northwind) {
         // only needed until https://github.com/angular/angular.js/issues/6683 is resolved
         for (var i = 0; i < northwind.data.length; i++) {
@@ -77,9 +77,9 @@ app.controller('gridController',
 
     }]);
 
-app.controller('comboController',
+app.controller("comboController",
 
-            ['$scope', 'northwind',
+            ["$scope", "northwind",
     function ($scope,   northwind) {
 
         $scope.northwind = northwind.data;
@@ -91,35 +91,35 @@ app.controller('comboController',
 
     }]);
 
-app.controller('dataChartController',
+app.controller("dataChartController",
 
-            ['$scope', 'populationData',
+            ["$scope", "populationData",
     function ($scope,   populationData) {
 
         $scope.dataChart = populationData.data;
 
     }]);
 
-app.controller('editorsController',
+app.controller("editorsController",
 
-            ['$scope',
+            ["$scope",
     function ($scope) {
 
         $scope.editors = {
             currency: 12.1,
             date: new Date(),
-            editor: 'Infragistics',
-            mask: '134-134-134',
+            editor: "Infragistics",
+            mask: "134-134-134",
             numeric: 123,
             percent: 0.12,
-            text: 'Ignite UI'
+            text: "Ignite UI"
         };
 
     }]);
 
-app.controller('treeController',
+app.controller("treeController",
 
-            ['$scope', 'productCategories',
+            ["$scope", "productCategories",
     function ($scope,   productCategories) {
 
         $scope.ProductCategories = productCategories.data;
@@ -159,44 +159,44 @@ app.controller('treeController',
         };
 
         $scope.removeSelectedNode = function () {
-            var selected = $('#tree1').igTree('selectedNode');
+            var selected = $("#tree1").igTree("selectedNode");
             if (selected.path !== null) {
-                $('#tree1').igTree('removeAt', selected.path);
+                $("#tree1").igTree("removeAt", selected.path);
             } else {
-                alert('Select a node from the tree first');
+                alert("Select a node from the tree first");
             }
         };
 
     }]);
 
-app.controller('hierarchicalGridController',
+app.controller("hierarchicalGridController",
 
-            ['$scope', 'northwindEmployees',
+            ["$scope", "northwindEmployees",
     function ($scope,   northwindEmployees) {
 
         $scope.northwindEmployees = northwindEmployees.data;
 
     }]);
 	
-app.controller('tileManagerController',
+app.controller("tileManagerController",
 
-            ['$scope', 'candidates',
+            ["$scope", "candidates",
     function ($scope,   candidates) {
 
         $scope.candidates = candidates.data;
 
     }]);
-app.controller('treeGridController',
+app.controller("treeGridController",
 
-            ['$scope', 'tasks',
+            ["$scope", "tasks",
     function ($scope,   tasks) {
 
         $scope.tasks = tasks.data;
 
     }]);
-app.controller('pivotGridController',
+app.controller("pivotGridController",
 
-            ['$scope',
+            ["$scope",
     function ($scope) {
 
         $scope.pivotData = new $.ig.OlapFlatDataSource({
@@ -218,7 +218,7 @@ app.controller('pivotGridController',
                                 {
                                     caption: "Units Sold", name: "UnitsSold",
                                     // returns a function that will be used as sum aggregator on the 'UnitsSold property' of the data objects
-                                    aggregator: $.ig.OlapUtilities.prototype.sumAggregator('UnitsSold')
+                                    aggregator: $.ig.OlapUtilities.prototype.sumAggregator("UnitsSold")
                                 }]
                         },
                         dimensions: [ // for each dimension name and hierarchies are required
@@ -255,21 +255,21 @@ app.controller('pivotGridController',
                 measures: "[Measures].[UnitsSold]"
             });
     }]);
-app.controller('pivotGridXmlaController',
+app.controller("pivotGridXmlaController",
 
-            ['$scope',
+            ["$scope",
     function ($scope) {
 		$scope.xmlaDataSource = new $.ig.OlapXmlaDataSource({
-                serverUrl: 'http://sampledata.infragistics.com/olap/msmdpump.dll',
-                catalog: 'Adventure Works DW Standard Edition',
-                cube: 'Adventure Works',
+                serverUrl: "http://sampledata.infragistics.com/olap/msmdpump.dll",
+                catalog: "Adventure Works DW Standard Edition",
+                cube: "Adventure Works",
                 rows: "[Ship Date].[Calendar]",
                 columns: "[Delivery Date].[Calendar]",
                 measures: "[Measures].[Product Gross Profit Margin Status],[Measures].[Product Gross Profit Margin Goal]",
             });
     }]);
-app.controller('htmlEditorController',
-            ['$scope',
+app.controller("htmlEditorController",
+            ["$scope",
     function ($scope) {
        $scope.data = "<p>Ignite UI controls:</p><p><ul><li>igEditors</li><li>igHtmlEditor</li><li>igGrid</li><li>igDataChart</li><li>etc.</li></ul></p>";
     }]);
