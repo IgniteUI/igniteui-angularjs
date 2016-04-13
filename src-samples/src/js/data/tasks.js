@@ -1,4 +1,4 @@
-app.factory('tasks', [function () {
+app.factory("tasks", [function () {
     var svc = {
         data: [
 			{

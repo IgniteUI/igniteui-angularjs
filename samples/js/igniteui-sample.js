@@ -217,7 +217,7 @@ app.controller("pivotGridController",
                             measures: [ //for each measure, name and aggregator are required
                                 {
                                     caption: "Units Sold", name: "UnitsSold",
-                                    // returns a function that will be used as sum aggregator on the 'UnitsSold property' of the data objects
+                                    // returns a function that will be used as sum aggregator on the "UnitsSold property" of the data objects
                                     aggregator: $.ig.OlapUtilities.prototype.sumAggregator("UnitsSold")
                                 }]
                         },

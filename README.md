@@ -8,7 +8,7 @@ Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igni
 
 #Requirements
 
-- [jQuery](http://www.jquery.com) v1.7 and later
+- [jQuery](http://www.jquery.com) v1.8 and later
 - [AngularJS](http://www.angularjs.org) v1.0 and later
 - [Ignite UI](http://www.igniteui.com) 13.1 and later
 
