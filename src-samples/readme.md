@@ -4,7 +4,7 @@ The files contained in this folder are the source files for the samples. The sam
 ## Building Samples
 When you are developing samples you should use `grunt watch` which automatically rebuilds the samples any time you make a change to any file associated with the samples.
 
-If you want to manually build the samples you can run `grunt generate:default`.
+If you want to manually build the samples you can run `grunt generator:default`.
 
 ## Using Partial HTML Files
 Sample HTML files are available under the `src` folder and require that you use a few placeholder tokens in order to build pages correctly.
