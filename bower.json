@@ -33,7 +33,7 @@
 	"package.json",
 	"Gruntfile.js"
   ],
-  "dependencies": {
+  "devDependencies": {
     "angular": "",
     "angular-route": "",
     "angular-loader": "",

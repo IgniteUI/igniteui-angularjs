@@ -1,5 +1,17 @@
 {
   "name": "igniteui-angular",
+  "version": "1.0.0",
+  "main": "src/igniteui-angular.js",
+  "author": "IgniteUI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IgniteUI/igniteui-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IgniteUI/igniteui-angular/issues"
+  },
+  "homepage": "https://github.com/IgniteUI/igniteui-angular",
   "dependencies": {},
   "devDependencies": {
     "mkdirp": "",
