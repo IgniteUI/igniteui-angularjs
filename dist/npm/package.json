@@ -1,0 +1,34 @@
+{
+  "name": "igniteui-angular",
+  "version": "1.0.4",
+  "main": "dist/igniteui-angular.min.js",
+  "author": "igniteui",
+  "description" : "A packaged version of IgniteUI directives for AngularJS",
+  "keywords": [
+    "ignite ui",
+    "igniteui",
+    "angular",
+    "angularjs",
+    "infragistics",
+    "jquery widgets",
+    "data visualization",
+    "data grids",
+    "jquery controls"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IgniteUI/igniteui-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IgniteUI/igniteui-angular/issues"
+  },
+  "homepage": "https://github.com/IgniteUI/igniteui-angular",
+  "dependencies": {
+    "angular": "",
+    "jquery": "",
+    "jquery-ui": "" 
+  },
+  "devDependencies": {},
+  "scripts": {}
+}

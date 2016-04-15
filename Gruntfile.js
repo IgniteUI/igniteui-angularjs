@@ -29,6 +29,16 @@ module.exports = function (grunt) {
 				jshintrc: ".jshintrc",
 				reporter: require("jshint-stylish")
 			}
+		},
+		
+		exec: {
+			update_src_npm: {
+				cmd: 'cp src/igniteui-angular.js dist/npm/'
+			},
+			
+			update_min_npm: {
+				cmd: 'cp dist/igniteui-angular.min.js dist/npm/'
+			}
 		}
 	});
 
@@ -40,8 +50,9 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-watch");
+	grunt.loadNpmTasks('grunt-exec');
 
-	grunt.registerTask("build", ["uglify"]);
+	grunt.registerTask("build", ["uglify", "exec:update_src_npm", "exec:update_min_npm"]);
 
 	grunt.registerTask("default", ["jshint"]);
 
