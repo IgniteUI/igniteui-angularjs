@@ -114,7 +114,7 @@ Each control also implements a custom attribute directive where the attribute na
 | igTree          | `<ul id="tree" data-ig-tree="tree_options"></ul>`                             |
 | igMap           | `<div id="map" data-ig-map="map_options"></div>`                              |
 | igUpload        | `<div id="upload" data-ig-upload="upload_options"></div>`                     |
- |igVideoPlayer   | `<div id="video" data-ig-video-player="video_options"></div>`                 |
+| igVideoPlayer   | `<div id="video" data-ig-video-player="video_options"></div>`                 |
 
 ## One-way Data Binding
 The following controls currently support one-way data binding:
