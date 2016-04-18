@@ -1,6 +1,6 @@
 {
   "name": "igniteui-angular",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "main": "src/igniteui-angular.js",
   "author": "IgniteUI",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "mkdirp": "",
     "coveralls": "",
     "grunt": "",
+    "grunt-exec": "",
     "grunt-contrib-jshint": "",
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
