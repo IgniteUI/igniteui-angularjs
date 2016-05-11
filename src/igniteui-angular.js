@@ -46,6 +46,12 @@
         function parseValue() {
             //"parse" through the control value, ensure no-flicker with formatted values
             //model controller will attempt to set the edit text (not actual value) to the model. Only allow the actual control value to update.
+            
+            // No events fired when custom value is entered, this change won't affect the old combo
+            var combo = element.data(controlName);
+            if (combo.options.allowCustomValue && combo.refreshValue != undefined) {
+                combo.refreshValue();
+            }
             return comboValue(element.data(controlName));
         }
         element.on($.ig.angular.igCombo.events.join(" "), function (event, args) {
