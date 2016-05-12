@@ -609,6 +609,13 @@ describe("my app", function() {
 			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
         	expect(util.getResult(scope + ".combo.value1")).toBe(2);
 		});
+
+		it("should update the ng-model when the data has been changed", function () {
+			util.executeScript(scope + ".northwind = [{'ProductID': 21, 'ProductName': 'Strawberry'}];");
+			util.executeScript(scope + ".combo.value2 = [21];");
+			util.executeScript(scope + ".$apply();");
+			expect(util.getResult('$("#combo2").val()')).toBe("Strawberry");
+		});
 	});
 
 	describe("HTML Editor", function() {

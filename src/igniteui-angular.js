@@ -23,7 +23,7 @@
         if (!model) {
             return;
         }
-        var controlName = attrs["data-ig-control-name"], unbinder;
+        var controlName = attrs["data-ig-control-name"], unbinder, comboItems;
         /**
          * Support both versions igCombo value methods before and after 15.1 
          */
@@ -36,6 +36,7 @@
             }
         }
         function setControlValue(value) {
+            comboItems = value;
             if (typeof value === "string") {
                 // in case view value is changed from text field (default Array.toString representation is comma separated)
                 value = value.split(",");
@@ -67,6 +68,8 @@
             items = comboValue(combo);
             angular.copy(newValue, newDataSource);
             combo._setOption("dataSource", newDataSource);
+            //if the items were not in the old data source, use stored values
+            items = items.length !== 0 ? items : comboItems;
             combo.value(items);
         }, true);
         markWatcher(scope, controlName, attrs);
