@@ -562,7 +562,8 @@ describe("my app", function() {
 	describe("Combo", function() {
 		var scope = 'angular.element("#combo1").scope()',
 		combo = '$("#combo1")',
-		combo2 = '$("#combo2")';
+		combo2 = '$("#combo2")',
+		combo3 = '$("#combo3")';
 
 		it("should be initialized", function () {
 			util.resetNorthwindScope();
@@ -608,6 +609,14 @@ describe("my app", function() {
 			// wait for sleep resolve:
 			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
         	expect(util.getResult(scope + ".combo.value1")).toBe(2);
+		});
+		
+		it("should update combo value when allowCustomValue is true", function(){
+			util.executeScript(combo3 + ".focus();");
+			expect(util.getResult('typeInInputWrap("customValue1", ' + combo3 + ', "combo.value1");')).toBe(false);
+			expect(browser.driver.sleep(250)).toBe(undefined);
+			util.executeScript(combo3 + ".igCombo('comboWrapper').find('.ui-igcombo-button').click();");
+			expect(util.getResult(combo3 + '.igCombo("value")[0]')).toBe("customValue1");
 		});
 	});
 
