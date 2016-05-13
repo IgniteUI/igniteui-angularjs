@@ -89,6 +89,8 @@
 		<ig-combo id="combo2" data-source="northwind" value-key-type="number" value-key="ProductID" text-key-type="string" text-Key="ProductName" ng-model="combo.value2">
             <multi-selection enabled="true"></multi-selection>
 		</ig-combo>
+		<ig-combo id="combo3" data-source="northwind" allow-custom-value="true" value-key="ProductID" text-key="ProductName" ng-model="combo.value1">
+    </ig-combo>
 		<br/>
 		<ul id="combomodel">
 			<li ng-repeat="record in northwind">
