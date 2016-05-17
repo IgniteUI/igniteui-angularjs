@@ -174,7 +174,7 @@
 			var i, j, existingDomRow, existingRow,
 				grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
 				gridUpdating = element.data("igGridUpdating"), column,
-				record, td, colIndex, newFormattedVal, dsRecord,
+				record, td, newFormattedVal, dsRecord,
 				ds = scope.$eval(attrs.source), diff = [];
 			/* check for a change of the data source. In this case rebind the grid */
 			if (ds !== grid.options.dataSource) {
@@ -238,8 +238,7 @@
 						// update the DOM of the grid
 						column = grid.columnByKey(diff[ i ].txlog[ j ].key);
 						record = ds[ diff[ i ].index ];
-						colIndex = grid._getCellIndexByColumnKey(diff[ i ].txlog[ j ].key);
-						td = element.find("tr[data-id='" + record[ pkKey ] + "']").children().get(colIndex);
+						td = grid.cellById(record[ pkKey ], diff[ i ].txlog[ j ].key);
 						if (column.template || grid.options.rowTemplate) {
 							newFormattedVal = grid
 								._renderTemplatedCell(diff[ i ].txlog[ j ].newVal, column)

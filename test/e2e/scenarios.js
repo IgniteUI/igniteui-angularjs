@@ -527,6 +527,42 @@ describe("my app", function() {
 			expect(util.getResult('$("#grid1 tbody tr:eq(3) td")[1].innerHTML')).toBe("Oil");
 			expect(util.getResult(scopeNorthwind)).toBe(util.getResult(gridData));
 		});
+
+		it("should update the correct cell when there is column fixing", function () {
+			//new grid with group by
+			util.resetNorthwindScope();
+			util.executeScript('$("#grid1").igGrid("destroy");');
+			util.executeScript('$("#grid1").remove();');
+			util.executeScript('angular.element("body").scope().addGrid(\''
+				+ '<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">'
+					+ '<columns>'
+						+ '<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>'
+						+ '<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>'
+						+ '<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="string"></column>'
+						+ '<column key="UnitsOnOrder" header-text="Units on order" width="200px" data-type="number"></column>'
+					+ '</columns>'
+					+ '<features>'
+						+ '<feature name="Updating">'
+							+ '<column-settings>'
+								+ '<column-setting column-key="ProductID" read-only="true">'
+							+ '</column-settings>'
+							+ '</column-settings>'
+						+ '</feature>'
+						+ '<feature name="ColumnFixing">'
+								+ '<column-settings>'
+									+ '<column-setting column-key="ProductName" is-fixed="true">'
+									+ '</column-setting>'
+								+ '</column-settings>'
+						+ '</feature>'
+					+ '</features>'
+				+ '</ig-grid>'
+				+ '\');'
+				);
+			util.executeScript('angular.element("#grid1").scope().northwind[0].ProductName = "Tea";');
+			util.executeScript('angular.element("#grid1").scope().$apply();');
+			expect(util.getResult('$("#grid1_fixed tbody tr:eq(0) td")[0].innerHTML')).toBe("Tea");
+			expect(util.getResult('$("#grid1 tbody tr:eq(0) td")[0].innerHTML')).toBe("1");
+		});
 	});
 	
 	describe("Tree", function() {
