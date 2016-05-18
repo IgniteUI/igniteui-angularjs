@@ -562,6 +562,15 @@ describe("my app", function() {
 			util.executeScript('angular.element("#grid1").scope().$apply();');
 			expect(util.getResult('$("#grid1_fixed tbody tr:eq(0) td")[0].innerHTML')).toBe("Tea");
 			expect(util.getResult('$("#grid1 tbody tr:eq(0) td")[0].innerHTML')).toBe("1");
+			util.executeScript('angular.element("#grid1").scope().northwind[1].ProductName = "Beer";');
+			util.executeScript('angular.element("#grid1").scope().northwind[2].UnitsOnOrder = 2;');
+			util.executeScript('angular.element("#grid1").scope().$apply();');
+			expect(util.getResult('$("#grid1_fixed tbody tr:eq(1) td")[0].innerHTML')).toBe("Beer");
+			//the other values should be preserved
+			expect(util.getResult('$("#grid1_fixed tbody tr:eq(2) td")[0].innerHTML')).toBe("Aniseed Syrup");
+			expect(util.getResult('$("#grid1 tbody tr:eq(2) td")[2].innerHTML')).toBe("2");
+			//the other values should be preserved
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML')).toBe("24 - 12 oz bottles");
 		});
 	});
 	
