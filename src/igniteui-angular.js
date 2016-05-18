@@ -18,6 +18,103 @@
 	$.ig.angular.igCombo.element = $.ig.angular.igCombo.element || "<input></input>";
 	$.ig.angular.igCombo.events = [ "igcombotextchanged", "igcomboselectionchanged" ];
 
+	// Mark watchers for discoverability
+	function markWatcher(scope, controlName, attrs) {
+		// Angular uses unshift(), so the last watcher is at 0:
+		scope.$$watchers[ 0 ][ controlName ] = attrs.id || controlName + scope.$$watchers.length;
+	}
+
+	// Interrogation functions
+	function isDate(value) {
+		return Object.prototype.toString.call(value) === "[object Date]";
+	}
+
+	function isRegExp(value) {
+		return Object.prototype.toString.call(value) === "[object RegExp]";
+	}
+
+	function isScope(obj) {
+		return obj && obj.$evalAsync && obj.$watch;
+	}
+
+	function isWindow(obj) {
+		return obj && obj.document && obj.location && obj.alert && obj.setInterval;
+	}
+
+	function isFunction(value) { return typeof value === "function"; }
+
+	function isArray(value) {
+		return Object.prototype.toString.call(value) === "[object Array]";
+	}
+
+	function equalsDiff(o1, o2, diff) {
+		if (o1 === o2) { return true; }
+		if (o1 === null || o2 === null) { return false; }
+		if (o1 !== o1 && o2 !== o2) { return true; }// NaN === NaN
+		var t1 = typeof o1, t2 = typeof o2, length, key, keySet,
+			dirty, skipDiff = false, changedVals = [];
+		if (t1 === t2) {
+			if (t1 === "object") {
+				if (isArray(o1)) {
+					if (!isArray(o2)) { return false; }
+					if ((length = o1.length) === o2.length) {
+						if (!isArray(diff)) {
+							skipDiff = true;
+						}
+						for (key = 0; key < length; key++) {
+							// we are comparing objects here
+							if (!equalsDiff(o1[ key ], o2[ key ], changedVals)) {
+								dirty = true;
+								if (!skipDiff) {
+									diff.push({ index: key, txlog: changedVals });
+								}
+							}
+						}
+						if (dirty) {
+							return false;
+						}
+						return true;
+					}
+				} else if (isDate(o1)) {
+					return isDate(o2) && o1.getTime() === o2.getTime();
+				} else if (isRegExp(o1) && isRegExp(o2)) {
+					return o1.toString() === o2.toString();
+				} else {
+					if (isScope(o1) || isScope(o2) ||
+							isWindow(o1) || isWindow(o2) ||
+							isArray(o2)) {
+						return false;
+					}
+					keySet = {};
+					if (!isArray(diff)) {
+						skipDiff = true;
+					}
+					for (key in o1) {
+						if (key.charAt(0) === "$" || isFunction(o1[ key ])) { continue; }
+						if (!equalsDiff(o1[ key ], o2[ key ])) {
+							dirty = true;
+							if (!skipDiff) {
+								diff.push({ key: key, oldVal: o2[ key ], newVal: o1[ key ] });
+							}
+						}
+						keySet[ key ] = true;
+					}
+					for (key in o2) {
+						if (!keySet.hasOwnProperty(key) &&
+							key.charAt(0) !== "$" &&
+							o2[ key ] !== undefined &&
+							!isFunction(o2[ key ])) { return false; }
+					}
+					if (dirty) {
+						return false;
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	// Two way data binding for the combo control
 	$.ig.angular.igCombo.bindEvents = $.ig.angular.igCombo.bindEvents ||
 		function (scope, element, attrs, model) {
@@ -157,20 +254,8 @@
 			function (scope, element, attrs) {
 		var unbinder,
 			collectionWatchMode = attrs && attrs.collectionWatch && attrs.collectionWatch === "true";
-		element.on($.ig.angular.igGrid.events.join(" "), function () {
-			unbinder();
-			/* When in collection watch mode, a change is detected only when the collection changes - a element is inserted or removed or the whole collection reference changes.
-			Changes in a specific element inside collection are not detected. This provides huge performance boost when such change detection is not required */
-			unbinder = collectionWatchMode ?
-				scope.$watchCollection(attrs.source, watchGridDataSource) :
-				scope.$watch(attrs.source, watchGridDataSource, true);
-			scope.$apply();
-			markWatcher(scope, "igGrid", attrs);
-		}).one("$destroy", function () {
-			unbinder();
-		});
 
-		function watchGridDataSource(newValue, oldValue) {
+			function watchGridDataSource(newValue, oldValue) {
 			var i, j, existingDomRow, existingRow,
 				grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
 				gridUpdating = element.data("igGridUpdating"), column,
@@ -256,6 +341,20 @@
 				}
 			}
 		}
+
+		element.on($.ig.angular.igGrid.events.join(" "), function () {
+			unbinder();
+			/* When in collection watch mode, a change is detected only when the collection changes - a element is inserted or removed or the whole collection reference changes.
+			Changes in a specific element inside collection are not detected. This provides huge performance boost when such change detection is not required */
+			unbinder = collectionWatchMode ?
+				scope.$watchCollection(attrs.source, watchGridDataSource) :
+				scope.$watch(attrs.source, watchGridDataSource, true);
+			scope.$apply();
+			markWatcher(scope, "igGrid", attrs);
+		}).one("$destroy", function () {
+			unbinder();
+		});
+
 		/* watch for changes from the data source to the view */
 		unbinder = collectionWatchMode ?
 			scope.$watchCollection(attrs.source, watchGridDataSource) :
@@ -380,12 +479,6 @@
 		});
 	};
 
-	// Mark watchers for discoverability
-	function markWatcher(scope, controlName, attrs) {
-		// Angular uses unshift(), so the last watcher is at 0:
-		scope.$$watchers[ 0 ][ controlName ] = attrs.id || controlName + scope.$$watchers.length;
-	}
-
 	// Utility functions
 	function convertToCamelCase(str) {
 		//convert hyphen to camelCase
@@ -498,97 +591,6 @@
 			}
 		}
 		return options;
-	}
-
-	function equalsDiff(o1, o2, diff) {
-		if (o1 === o2) { return true; }
-		if (o1 === null || o2 === null) { return false; }
-		if (o1 !== o1 && o2 !== o2) { return true; }// NaN === NaN
-		var t1 = typeof o1, t2 = typeof o2, length, key, keySet,
-			dirty, skipDiff = false, changedVals = [];
-		if (t1 === t2) {
-			if (t1 === "object") {
-				if (isArray(o1)) {
-					if (!isArray(o2)) { return false; }
-					if ((length = o1.length) === o2.length) {
-						if (!isArray(diff)) {
-							skipDiff = true;
-						}
-						for (key = 0; key < length; key++) {
-							// we are comparing objects here
-							if (!equalsDiff(o1[ key ], o2[ key ], changedVals)) {
-								dirty = true;
-								if (!skipDiff) {
-									diff.push({ index: key, txlog: changedVals });
-								}
-							}
-						}
-						if (dirty) {
-							return false;
-						}
-						return true;
-					}
-				} else if (isDate(o1)) {
-					return isDate(o2) && o1.getTime() === o2.getTime();
-				} else if (isRegExp(o1) && isRegExp(o2)) {
-					return o1.toString() === o2.toString();
-				} else {
-					if (isScope(o1) || isScope(o2) ||
-							isWindow(o1) || isWindow(o2) ||
-							isArray(o2)) {
-						return false;
-					}
-					keySet = {};
-					if (!isArray(diff)) {
-						skipDiff = true;
-					}
-					for (key in o1) {
-						if (key.charAt(0) === "$" || isFunction(o1[ key ])) { continue; }
-						if (!equalsDiff(o1[ key ], o2[ key ])) {
-							dirty = true;
-							if (!skipDiff) {
-								diff.push({ key: key, oldVal: o2[ key ], newVal: o1[ key ] });
-							}
-						}
-						keySet[ key ] = true;
-					}
-					for (key in o2) {
-						if (!keySet.hasOwnProperty(key) &&
-							key.charAt(0) !== "$" &&
-							o2[ key ] !== undefined &&
-							!isFunction(o2[ key ])) { return false; }
-					}
-					if (dirty) {
-						return false;
-					}
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	// Interrogation functions
-	function isDate(value) {
-		return Object.prototype.toString.call(value) === "[object Date]";
-	}
-
-	function isRegExp(value) {
-		return Object.prototype.toString.call(value) === "[object RegExp]";
-	}
-
-	function isScope(obj) {
-		return obj && obj.$evalAsync && obj.$watch;
-	}
-
-	function isWindow(obj) {
-		return obj && obj.document && obj.location && obj.alert && obj.setInterval;
-	}
-
-	function isFunction(value) { return typeof value === "function"; }
-
-	function isArray(value) {
-		return Object.prototype.toString.call(value) === "[object Array]";
 	}
 
 	function getHtml(selector) {
