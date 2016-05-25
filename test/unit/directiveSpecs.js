@@ -152,4 +152,20 @@ describe("Ignite directives", function() {
 		expect(hGridElement.length).toBe(1);
 		expect(hGridElement.data("igHierarchicalGrid")).not.toBeUndefined();
 	}));
+	
+	it("should modify different properties on different records in the grid",inject(function($compile,$rootScope){
+		var scope = $rootScope.$new();
+		$compile(grid)(scope);
+		scope.$digest();
+		var gridTable = grid.find("#grid1");
+		scope.northwind[0].prop1 = true;
+		scope.northwind[1].prop2 = false;
+		scope.$apply();
+		
+		var newData = gridTable.igGrid('option','dataSource');
+		expect(newData[0].prop1).toBe(true);
+		expect(newData[0].prop2).toBeUndefined();
+		expect(newData[1].prop1).toBeUndefined();
+		expect(newData[1].prop2).toBe(false);
+	}));
 });
