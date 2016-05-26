@@ -570,7 +570,8 @@ describe("my app", function() {
 			expect(util.getResult('$("#grid1_fixed tbody tr:eq(2) td")[0].innerHTML')).toBe("Aniseed Syrup");
 			expect(util.getResult('$("#grid1 tbody tr:eq(2) td")[2].innerHTML')).toBe("2");
 			//the other values should be preserved
-			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML')).toBe("24 - 12 oz bottles");
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML'))
+				.toBe(util.getResult('angular.element("#grid1").scope().northwind[1].UnitsOnOrder.toString()'));
 		});
 	});
 	
