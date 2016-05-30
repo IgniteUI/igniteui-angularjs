@@ -69,6 +69,7 @@
 									diff.push({ index: key, txlog: changedVals });
 								}
 							}
+							changedVals = [];
 						}
 						if (dirty) {
 							return false;
