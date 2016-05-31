@@ -158,9 +158,10 @@ describe("Ignite directives", function() {
 		$compile(grid)(scope);
 		scope.$digest();
 		var gridTable = grid.find("#grid1");
-		scope.northwind[0].prop1 = true;
-		scope.northwind[1].prop2 = false;
-		scope.$apply();
+		var gridScope = angular.element(gridTable).scope();
+		gridScope.northwind[0].prop1 = true;
+		gridScope.northwind[1].prop2 = false;
+		gridScope.$apply();
 		
 		var newData = gridTable.igGrid('option','dataSource');
 		expect(newData[0].prop1).toBe(true);
