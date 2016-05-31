@@ -153,7 +153,7 @@ describe("Ignite directives", function() {
 		expect(hGridElement.data("igHierarchicalGrid")).not.toBeUndefined();
 	}));
 	
-	it("should modify different properties on different records in the grid",inject(function($compile,$rootScope){
+	it("should modify different properties on different records in the grid",inject(function($compile,$rootScope,$timeout){
 		var scope = $rootScope.$new();
 		$compile(grid)(scope);
 		scope.$digest();
@@ -163,10 +163,12 @@ describe("Ignite directives", function() {
 		gridScope.northwind[1].prop2 = false;
 		gridScope.$apply();
 		
-		var newData = gridTable.igGrid('option','dataSource');
-		expect(newData[0].prop1).toBe(true);
-		expect(newData[0].prop2).toBeUndefined();
-		expect(newData[1].prop1).toBeUndefined();
-		expect(newData[1].prop2).toBe(false);
+		$timeout(function(){
+			var newData = gridTable.igGrid('option','dataSource');
+			expect(newData[0].prop1).toBe(true);
+			expect(newData[0].prop2).toBeUndefined();
+			expect(newData[1].prop1).toBeUndefined();
+			expect(newData[1].prop2).toBe(false);
+		},1000); //wait for the grid to render.
 	}));
 });
