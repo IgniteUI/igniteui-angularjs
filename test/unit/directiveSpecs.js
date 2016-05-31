@@ -170,5 +170,7 @@ describe("Ignite directives", function() {
 			expect(newData[1].prop1).toBeUndefined();
 			expect(newData[1].prop2).toBe(false);
 		},1000); //wait for the grid to render.
+		
+		$timeout.flush(); //so that the test does not pass falsely
 	}));
 });
