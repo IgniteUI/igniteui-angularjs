@@ -161,16 +161,12 @@ describe("Ignite directives", function() {
 		var gridScope = angular.element(gridTable).scope();
 		gridScope.northwind[0].prop1 = true;
 		gridScope.northwind[1].prop2 = false;
-		gridScope.$apply();
-		
-		$timeout(function(){
+		gridScope.$apply(function(){
 			var newData = gridTable.igGrid('option','dataSource');
 			expect(newData[0].prop1).toBe(true);
 			expect(newData[0].prop2).toBeUndefined();
 			expect(newData[1].prop1).toBeUndefined();
 			expect(newData[1].prop2).toBe(false);
-		},1000); //wait for the grid to render.
-		
-		$timeout.flush(); //so that the test does not pass falsely
+		}); //wait for the grid to render.
 	}));
 });
