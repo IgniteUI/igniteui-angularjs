@@ -479,6 +479,18 @@
 		});
 	};
 
+	// igHierarchicalGrid specific code instantiating the element on table
+	$.ig.angular.igHierarchicalGrid = $.ig.angular.igHierarchicalGrid || {};
+	$.ig.angular.igHierarchicalGrid.element = $.ig.angular.igHierarchicalGrid.element || "<table></table>";
+
+	// igTreeGrid specific code instantiating the element on table
+	$.ig.angular.igTreeGrid = $.ig.angular.igTreeGrid || {};
+	$.ig.angular.igTreeGrid.element = $.ig.angular.igTreeGrid.element || "<table></table>";
+
+	// igPivotGrid specific code instantiating the element on table
+	$.ig.angular.igPivotGrid = $.ig.angular.igPivotGrid || {};
+	$.ig.angular.igPivotGrid.element = $.ig.angular.igPivotGrid.element || "<table></table>";
+
 	// Utility functions
 	function convertToCamelCase(str) {
 		//convert hyphen to camelCase
