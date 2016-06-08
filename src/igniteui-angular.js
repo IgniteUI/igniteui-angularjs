@@ -327,8 +327,7 @@
 						td = grid.cellById(record[ pkKey ], diff[ i ].txlog[ j ].key);
 						if (column.template || grid.options.rowTemplate) {
 							newFormattedVal = grid
-								._renderTemplatedCell(diff[ i ].txlog[ j ].newVal, column)
-								.substring(1);
+								._renderTemplatedCell(diff[ i ].txlog[ j ].newVal, column);
 						} else {
 							newFormattedVal = grid
 								._renderCell(diff[ i ].txlog[ j ].newVal, column, record);

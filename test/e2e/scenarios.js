@@ -573,6 +573,39 @@ describe("my app", function() {
 			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML'))
 				.toBe(util.getResult('angular.element("#grid1").scope().northwind[1].UnitsOnOrder.toString()'));
 		});
+
+		it("should apply column template correctly", function () {
+			util.resetNorthwindScope();
+			util.executeScript('$("#grid1").igGrid("destroy");');
+			util.executeScript('$("#grid1").remove();');
+			util.executeScript('angular.element("body").scope().addGrid(\''
+				+ '<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">'
+					+ '<columns>'
+						+ '<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>'
+						+ '<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>'
+						+ '<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="string"></column>'
+						+ '<column key="UnitsOnOrder" header-text="Units on order" width="200px" data-type="number" template="<span>${UnitsOnOrder}</span>"></column>'
+					+ '</columns>'
+					+ '<features>'
+						+ '<feature name="Updating">'
+							+ '<column-settings>'
+								+ '<column-setting column-key="ProductID" read-only="true">'
+							+ '</column-settings>'
+							+ '</column-settings>'
+						+ '</feature>'
+					+ '</features>'
+				+ '</ig-grid>'
+				+ '\');'
+				);
+			//the template should be initialized correctly
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[3].innerHTML'))
+				.toBe('<span>40</span>');
+			util.executeScript('angular.element("#grid1").scope().northwind[1].UnitsOnOrder = 200;');
+			util.executeScript('angular.element("#grid1").scope().$apply();');
+			//the template should be applied correctly after changes in scope`
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[3].innerHTML'))
+				.toBe('<span>200</span>');
+		});
 	});
 	
 	describe("Tree", function() {
