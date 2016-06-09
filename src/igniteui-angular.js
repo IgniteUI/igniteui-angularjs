@@ -364,6 +364,8 @@
 
 	// igHierarchicalGrid specific code for one way data binding
 	$.ig.angular.igHierarchicalGrid = $.ig.angular.igHierarchicalGrid || {};
+	$.ig.angular.igHierarchicalGrid.element = $.ig.angular.igHierarchicalGrid.element ||
+		"<table></table>";
 	$.ig.angular.igHierarchicalGrid.bindEvents = $.ig.angular.igHierarchicalGrid.bindEvents ||
 			function (scope, element, attrs) {
 		var unbinder;
@@ -478,10 +480,6 @@
 			unbinder();
 		});
 	};
-
-	// igHierarchicalGrid specific code instantiating the element on table
-	$.ig.angular.igHierarchicalGrid = $.ig.angular.igHierarchicalGrid || {};
-	$.ig.angular.igHierarchicalGrid.element = $.ig.angular.igHierarchicalGrid.element || "<table></table>";
 
 	// igTreeGrid specific code instantiating the element on table
 	$.ig.angular.igTreeGrid = $.ig.angular.igTreeGrid || {};

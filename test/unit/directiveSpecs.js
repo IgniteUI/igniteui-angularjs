@@ -131,19 +131,34 @@ describe("Ignite directives", function() {
 		expect(dataChartElement.length).toBe(1);
 		expect(dataChartElement.data("igDataChart")).not.toBeUndefined();
 	}));
-	
+
 	it("should create hierarchical grid", inject(function($compile, $rootScope) {
-		var hierarchicalGridTpl ='<ig-hierarchical-grid id="hgrid1"  data-source="northwindEmployees" width="100%" height="400px" auto-commit="true" auto-generate-columns="false" auto-generate-layouts="false">' +
-            '<columns> <column key="FirstName" header-text="First Name" width="25%" data-type="string"></column>' +
+		var hierarchicalGridTpl =
+		'<ig-hierarchical-grid id="hgrid1"  data-source="data" width="100%" height="400px" auto-commit="true" auto-generate-columns="false" auto-generate-layouts="false">' +
+			'<columns>' +
+				'<column key="FirstName" header-text="First Name" width="25%" data-type="string"></column>' +
 				'<column key="LastName" header-text="Last Name"  width="25%"  data-type="string"></column>' +
 				'<column key="Title" header-text="Title"  width="25%" data-type="string"></column>' +
-				'<column key="BirthDate" header-text="Birth Date"  width="25%" data-type="date"></column></columns>' +
-				'<column-layouts><column-layout key="Orders" response-data-key="results" primary-key="OrderID" auto-generate-columns="false" width="100%">' +
-            '<columns><column key="OrderID" header-text="OrderID" width="25%" data-type="string"></column>' +
-				'<column key="Freight" header-text="Freight"  width="25%"  data-type="string"></column>' +
-				'<column key="ShipName" header-text="ShipName"  width="25%" data-type="string"></column>' +
-				'<column key="ShipAddress" header-text="ShipAddress"  width="25%" data-type="string"></column></columns>' +
-             '<features><feature name="Paging" page-size="10"></feature></features></column-layout></column-layouts>ig-hierarchical-grid>';
+				'<column key="BirthDate" header-text="Birth Date"  width="25%" data-type="date"></column>' +
+			'</columns>' +
+            '<features>' +
+                '<feature name="Selection" mode="row"></feature>' +
+            '</features>' +
+			'<column-layouts>' +
+				'<column-layout key="Orders" response-data-key="results" primary-key="OrderID" auto-generate-columns="false" width="100%">' +
+					'<columns>' +
+						'<column key="OrderID" header-text="OrderID" width="25%" data-type="string"></column>' +
+						'<column key="Freight" header-text="Freight"  width="25%"  data-type="string"></column>' +
+						'<column key="ShipName" header-text="ShipName"  width="25%" data-type="string"></column>' +
+						'<column key="ShipAddress" header-text="ShipAddress"  width="25%" data-type="string"></column>' +
+					'</columns>' +
+					'<features>' +
+						'<feature name="Paging" page-size="10"></feature>' +
+					'</features>' +
+				'</column-layout>' +
+			'</column-layouts>' +
+		'</ig-hierarchical-grid>';
+
 		var hierarchicalGrid = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + hierarchicalGridTpl + '</div>');
 		var scope = $rootScope.$new();
 		$compile(hierarchicalGrid)(scope);
@@ -151,5 +166,6 @@ describe("Ignite directives", function() {
 		var hGridElement = hierarchicalGrid.find("#hgrid1");
 		expect(hGridElement.length).toBe(1);
 		expect(hGridElement.data("igHierarchicalGrid")).not.toBeUndefined();
+		expect(hGridElement.data("igGridSelection")).not.toBeUndefined();
 	}));
 });
