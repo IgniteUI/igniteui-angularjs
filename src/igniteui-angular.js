@@ -405,12 +405,17 @@
 		var diff = [], ds = scope.$eval(attrs.source), unbinder;
 		var changeHandler = function (newValue, oldValue) {
 			var $chartElem = $(element), chart = $chartElem.data("igDataChart");
-			/* check for a change of the data source. In this case rebind */
-			if (chart.dataSources[ chart._containerSourceID ].data() !== newValue) {
+			if (newValue && (oldValue === undefined || oldValue === null)) {
 				$chartElem.igDataChart("option", "dataSource", newValue);
 				return;
 			}
-			if (newValue.length === oldValue.length) {
+			/* check for a change of the data source. In this case rebind */
+			if (chart.dataSources[ chart._containerSourceID ] &&
+					chart.dataSources[ chart._containerSourceID ].data() !== newValue) {
+				$chartElem.igDataChart("option", "dataSource", newValue);
+				return;
+			}
+			if (newValue && oldValue && newValue.length === oldValue.length) {
 				//attempt to optimize for value changes
 				var equals = equalsDiff(newValue, oldValue, diff);
 				if ((diff.length > 0) && !equals) {
@@ -424,7 +429,9 @@
 					return;
 				}
 			}
-			$chartElem.igDataChart("notifyClearItems", newValue);
+			if (newValue) {
+				$chartElem.igDataChart("notifyClearItems", newValue);
+			}
 		};
 
 		//handle push to track added data points, unbind and rebind watcher after.
