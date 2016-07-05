@@ -659,14 +659,14 @@ describe("my app", function() {
 			util.executeScript(scope + ".combo.value1 = 2;");
 			util.executeScript(scope + ".$apply();");
 			expect(util.getResult(combo + '.igCombo("value")')).toBe(2);
-            expect(util.getResult('$("#combo1").val()')).toBe("Chang");
+            expect(util.getResult('$("#combo1").igCombo("textInput").val()')).toBe("Chang");
 			util.executeScript('$("input[ng-model=\'combo.value1\']:eq(0)").val("5").trigger("input");');
-			expect(util.getResult('$("#combo1").val()')).toBe("Chef Anton's Gumbo Mix");
+			expect(util.getResult('$("#combo1").igCombo("textInput").val()')).toBe("Chef Anton's Gumbo Mix");
 
 			util.executeScript(scope + ".combo.value2 = [1];");
             util.executeScript(scope + ".$apply();");
             expect(util.getResult(combo2 + '.igCombo("value")[0]')).toBe(1);
-            expect(util.getResult('$("#combo2").val()')).toBe("Chai");
+            expect(util.getResult('$("#combo2").igCombo("textInput").val()')).toBe("Chai");
 		});
 
 		it("should set model on clear", function() {
@@ -682,17 +682,17 @@ describe("my app", function() {
 		});
 
 		it("should update model on change of combo input", function() {
-			util.executeScript(combo + ".focus();");
+			util.executeScript(combo + ".igCombo('textInput').focus();");
 			//check scope value remains unchanged during search entry
-			expect(util.getResult('typeInInputWrap("Chang", ' + combo + ', "combo.value1");')).toBe(false);
+			expect(util.getResult('typeInInputWrap("Chang", ' + combo3 + '.igCombo("textInput")' + ', "combo.value1");')).toBe(false);
 			// wait for sleep resolve:
 			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
         	expect(util.getResult(scope + ".combo.value1")).toBe(2);
 		});
 		
 		it("should update combo value when allowCustomValue is true", function(){
-			util.executeScript(combo3 + ".focus();");
-			expect(util.getResult('typeInInputWrap("customValue1", ' + combo3 + ', "combo.value1");')).toBe(false);
+			util.executeScript(combo3 + ".igCombo('textInput').focus();");
+			expect(util.getResult('typeInInputWrap("customValue1", ' + combo3 + '.igCombo("textInput")' + ', "combo.value1");')).toBe(false);
 			expect(browser.driver.sleep(250)).toBe(undefined);
 			util.executeScript(combo3 + ".igCombo('comboWrapper').find('.ui-igcombo-button').click();");
 			expect(util.getResult(combo3 + '.igCombo("value")[0]')).toBe("customValue1");
@@ -702,7 +702,12 @@ describe("my app", function() {
 			util.executeScript(scope + ".northwind = [{'ProductID': 21, 'ProductName': 'Strawberry'}];");
 			util.executeScript(scope + ".combo.value2 = [21];");
 			util.executeScript(scope + ".$apply();");
-			expect(util.getResult('$("#combo2").val()')).toBe("Strawberry");
+			expect(util.getResult('$("#combo2").igCombo("textInput").val()')).toBe("Strawberry");
+		});
+
+		it("should set model on clear when allowCustomValue is true", function () {
+			util.executeScript(combo3 + ".igCombo('comboWrapper').find('.ui-igcombo-clear').click();");
+			expect(util.getResult(scope + ".combo.value1.length")).toBe(0);
 		});
 	});
 
