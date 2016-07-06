@@ -16,7 +16,11 @@
 	// igCombo specific code for two way data binding
 	$.ig.angular.igCombo = $.ig.angular.igCombo || {};
 	$.ig.angular.igCombo.element = $.ig.angular.igCombo.element || "<div></div>";
-	$.ig.angular.igCombo.events = [ "igcombofiltered", "igcomboselectionchanged" ];
+	$.ig.angular.igCombo.events = [ 
+		"igcombofiltered",
+		"igcomboselectionchanged",
+		"igcombotextchanged"
+	];
 
 	// Mark watchers for discoverability
 	function markWatcher(scope, controlName, attrs) {
