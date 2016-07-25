@@ -58,7 +58,7 @@
 	        <input id="product-id" class="form-control" type="text" ng-model="combo.value1"/>
             <div class="text-sm text-muted text-right">values: 1 - 20</div>
         </div>
-        <div class="col-sm-3 col-md-2">
+        <div class="col-sm-3">
 
             <ig-combo id="combo1"
                       data-source="northwind"
@@ -66,11 +66,12 @@
                       value-key="ProductID"
                       text-key-type="string"
                       text-key="ProductName"
+                      width="100%"
                       ng-model="combo.value1">
             </ig-combo>
 
         </div>
-        <div class="col-sm-3 col-md-2">
+        <div class="col-sm-3">
 
             <ig-combo id="combo2"
                       data-source="northwind"
@@ -78,6 +79,7 @@
                       value-key="ProductID"
                       text-key-type="string"
                       text-key="ProductName"
+                      width="100%"
                       ng-model="combo.value1">
             </ig-combo>
 
@@ -107,13 +109,14 @@
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     
 <script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.util.js"></script>
 <script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.datasource.js"></script>
 <script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.shared.js"></script>
 <script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.combo.js"></script>
 <script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.validator.js"></script>
+<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.templating.js"></script>
 <script src="../src/igniteui-angular.js"></script>
 <script src="js/igniteui-sample.js"></script>
 <script src="js/data/northwind.js"></script>
