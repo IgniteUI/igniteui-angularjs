@@ -28,7 +28,7 @@
     "bower": "",
     "shelljs": "",
     "istanbul-coveralls": "",
-    "karma": "",
+    "karma": "0.13.22",
     "karma-jasmine": "",
     "karma-coverage": "",
     "karma-chrome-launcher": "",

@@ -15,8 +15,12 @@
 
 	// igCombo specific code for two way data binding
 	$.ig.angular.igCombo = $.ig.angular.igCombo || {};
-	$.ig.angular.igCombo.element = $.ig.angular.igCombo.element || "<input></input>";
-	$.ig.angular.igCombo.events = [ "igcombotextchanged", "igcomboselectionchanged" ];
+	$.ig.angular.igCombo.element = $.ig.angular.igCombo.element || "<div></div>";
+	$.ig.angular.igCombo.events = [ 
+		"igcombofiltered",
+		"igcomboselectionchanged",
+		"igcombotextchanged"
+	];
 
 	// Mark watchers for discoverability
 	function markWatcher(scope, controlName, attrs) {
@@ -158,6 +162,10 @@
 		element.on($.ig.angular.igCombo.events.join(" "), function (event, args) {
 			scope.$apply(function () {
 				model.$setViewValue(comboValue(args.owner));
+			});
+		}).on("click", "div.ui-igcombo-clear", function () {
+			scope.$apply(function () {
+				model.$setViewValue([]);
 			});
 		}).one("$destroy", function () {
 			unbinder();
@@ -327,8 +335,7 @@
 						td = grid.cellById(record[ pkKey ], diff[ i ].txlog[ j ].key);
 						if (column.template || grid.options.rowTemplate) {
 							newFormattedVal = grid
-								._renderTemplatedCell(diff[ i ].txlog[ j ].newVal, column)
-								.substring(1);
+								._renderTemplatedCell(diff[ i ].txlog[ j ].newVal, column);
 						} else {
 							newFormattedVal = grid
 								._renderCell(diff[ i ].txlog[ j ].newVal, column, record);
@@ -365,6 +372,8 @@
 
 	// igHierarchicalGrid specific code for one way data binding
 	$.ig.angular.igHierarchicalGrid = $.ig.angular.igHierarchicalGrid || {};
+	$.ig.angular.igHierarchicalGrid.element = $.ig.angular.igHierarchicalGrid.element ||
+		"<table></table>";
 	$.ig.angular.igHierarchicalGrid.bindEvents = $.ig.angular.igHierarchicalGrid.bindEvents ||
 			function (scope, element, attrs) {
 		var unbinder;
@@ -404,12 +413,17 @@
 		var diff = [], ds = scope.$eval(attrs.source), unbinder;
 		var changeHandler = function (newValue, oldValue) {
 			var $chartElem = $(element), chart = $chartElem.data("igDataChart");
-			/* check for a change of the data source. In this case rebind */
-			if (chart.dataSources[ chart._containerSourceID ].data() !== newValue) {
+			if (newValue && (oldValue === undefined || oldValue === null)) {
 				$chartElem.igDataChart("option", "dataSource", newValue);
 				return;
 			}
-			if (newValue.length === oldValue.length) {
+			/* check for a change of the data source. In this case rebind */
+			if (chart.dataSources[ chart._containerSourceID ] &&
+					chart.dataSources[ chart._containerSourceID ].data() !== newValue) {
+				$chartElem.igDataChart("option", "dataSource", newValue);
+				return;
+			}
+			if (newValue && oldValue && newValue.length === oldValue.length) {
 				//attempt to optimize for value changes
 				var equals = equalsDiff(newValue, oldValue, diff);
 				if ((diff.length > 0) && !equals) {
@@ -423,7 +437,9 @@
 					return;
 				}
 			}
-			$chartElem.igDataChart("notifyClearItems", newValue);
+			if (newValue) {
+				$chartElem.igDataChart("notifyClearItems", newValue);
+			}
 		};
 
 		//handle push to track added data points, unbind and rebind watcher after.
@@ -479,6 +495,14 @@
 			unbinder();
 		});
 	};
+
+	// igTreeGrid specific code instantiating the element on table
+	$.ig.angular.igTreeGrid = $.ig.angular.igTreeGrid || {};
+	$.ig.angular.igTreeGrid.element = $.ig.angular.igTreeGrid.element || "<table></table>";
+
+	// igPivotGrid specific code instantiating the element on table
+	$.ig.angular.igPivotGrid = $.ig.angular.igPivotGrid || {};
+	$.ig.angular.igPivotGrid.element = $.ig.angular.igPivotGrid.element || "<table></table>";
 
 	// Utility functions
 	function convertToCamelCase(str) {

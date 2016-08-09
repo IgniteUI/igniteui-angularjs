@@ -573,6 +573,39 @@ describe("my app", function() {
 			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML'))
 				.toBe(util.getResult('angular.element("#grid1").scope().northwind[1].UnitsOnOrder.toString()'));
 		});
+
+		it("should apply column template correctly", function () {
+			util.resetNorthwindScope();
+			util.executeScript('$("#grid1").igGrid("destroy");');
+			util.executeScript('$("#grid1").remove();');
+			util.executeScript('angular.element("body").scope().addGrid(\''
+				+ '<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">'
+					+ '<columns>'
+						+ '<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>'
+						+ '<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>'
+						+ '<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="string"></column>'
+						+ '<column key="UnitsOnOrder" header-text="Units on order" width="200px" data-type="number" template="<span>${UnitsOnOrder}</span>"></column>'
+					+ '</columns>'
+					+ '<features>'
+						+ '<feature name="Updating">'
+							+ '<column-settings>'
+								+ '<column-setting column-key="ProductID" read-only="true">'
+							+ '</column-settings>'
+							+ '</column-settings>'
+						+ '</feature>'
+					+ '</features>'
+				+ '</ig-grid>'
+				+ '\');'
+				);
+			//the template should be initialized correctly
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[3].innerHTML'))
+				.toBe('<span>40</span>');
+			util.executeScript('angular.element("#grid1").scope().northwind[1].UnitsOnOrder = 200;');
+			util.executeScript('angular.element("#grid1").scope().$apply();');
+			//the template should be applied correctly after changes in scope`
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[3].innerHTML'))
+				.toBe('<span>200</span>');
+		});
 	});
 	
 	describe("Tree", function() {
@@ -626,14 +659,14 @@ describe("my app", function() {
 			util.executeScript(scope + ".combo.value1 = 2;");
 			util.executeScript(scope + ".$apply();");
 			expect(util.getResult(combo + '.igCombo("value")')).toBe(2);
-            expect(util.getResult('$("#combo1").val()')).toBe("Chang");
+            expect(util.getResult('$("#combo1").igCombo("textInput").val()')).toBe("Chang");
 			util.executeScript('$("input[ng-model=\'combo.value1\']:eq(0)").val("5").trigger("input");');
-			expect(util.getResult('$("#combo1").val()')).toBe("Chef Anton's Gumbo Mix");
+			expect(util.getResult('$("#combo1").igCombo("textInput").val()')).toBe("Chef Anton's Gumbo Mix");
 
 			util.executeScript(scope + ".combo.value2 = [1];");
             util.executeScript(scope + ".$apply();");
             expect(util.getResult(combo2 + '.igCombo("value")[0]')).toBe(1);
-            expect(util.getResult('$("#combo2").val()')).toBe("Chai");
+            expect(util.getResult('$("#combo2").igCombo("textInput").val()')).toBe("Chai");
 		});
 
 		it("should set model on clear", function() {
@@ -649,17 +682,17 @@ describe("my app", function() {
 		});
 
 		it("should update model on change of combo input", function() {
-			util.executeScript(combo + ".focus();");
+			util.executeScript(combo + ".igCombo('textInput').focus();");
 			//check scope value remains unchanged during search entry
-			expect(util.getResult('typeInInputWrap("Chang", ' + combo + ', "combo.value1");')).toBe(false);
+			expect(util.getResult('typeInInputWrap("Chang", ' + combo3 + '.igCombo("textInput")' + ', "combo.value1");')).toBe(false);
 			// wait for sleep resolve:
 			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
         	expect(util.getResult(scope + ".combo.value1")).toBe(2);
 		});
 		
 		it("should update combo value when allowCustomValue is true", function(){
-			util.executeScript(combo3 + ".focus();");
-			expect(util.getResult('typeInInputWrap("customValue1", ' + combo3 + ', "combo.value1");')).toBe(false);
+			util.executeScript(combo3 + ".igCombo('textInput').focus();");
+			expect(util.getResult('typeInInputWrap("customValue1", ' + combo3 + '.igCombo("textInput")' + ', "combo.value1");')).toBe(false);
 			expect(browser.driver.sleep(250)).toBe(undefined);
 			util.executeScript(combo3 + ".igCombo('comboWrapper').find('.ui-igcombo-button').click();");
 			expect(util.getResult(combo3 + '.igCombo("value")[0]')).toBe("customValue1");
@@ -669,7 +702,12 @@ describe("my app", function() {
 			util.executeScript(scope + ".northwind = [{'ProductID': 21, 'ProductName': 'Strawberry'}];");
 			util.executeScript(scope + ".combo.value2 = [21];");
 			util.executeScript(scope + ".$apply();");
-			expect(util.getResult('$("#combo2").val()')).toBe("Strawberry");
+			expect(util.getResult('$("#combo2").igCombo("textInput").val()')).toBe("Strawberry");
+		});
+
+		it("should set model on clear when allowCustomValue is true", function () {
+			util.executeScript(combo3 + ".igCombo('comboWrapper').find('.ui-igcombo-clear').click();");
+			expect(util.getResult(scope + ".combo.value1.length")).toBe(0);
 		});
 	});
 
