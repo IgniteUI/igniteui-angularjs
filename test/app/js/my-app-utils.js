@@ -1,5 +1,5 @@
 function testEventListener(widget, elementId, event) {
-	return $("#" + elementId).data(widget).options[event] != undefined;
+	return $("#" + elementId).data(widget).options[event] !== undefined;
 }
 
 function typeInInput(characters, element, callback) {

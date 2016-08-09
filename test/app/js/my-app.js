@@ -3236,11 +3236,11 @@ var NorthwindCtrl = function ($scope, $element, $compile) {
 	$scope.lmRendered = function(event, args) {
 		args.item.append("<ul><li>colspan: " + args.itemData.colSpan + "</li><li>rowspan: " + args.itemData.rowSpan + "</li></ul></span>");
 		// get the element
-		if (args.itemData.colSpan == 2 && args.itemData.rowSpan == 2) {
+		if (args.itemData.colSpan === 2 && args.itemData.rowSpan === 2) {
 			args.item.css("background-color", "#eee");
 			args.item.css("color", "#555");
-		} else if (args.itemData.rowSpan == 1 && args.itemData.colSpan == 1) {
-			if (args.itemData.rowIndex == 0) {
+		} else if (args.itemData.rowSpan === 1 && args.itemData.colSpan === 1) {
+			if (args.itemData.rowIndex === 0) {
 				args.item.css("background-color", "#2CBDF9");
 				args.item.css("color", "#FFF");
 			} else {

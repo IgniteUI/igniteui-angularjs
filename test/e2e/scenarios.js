@@ -527,6 +527,52 @@ describe("my app", function() {
 			expect(util.getResult('$("#grid1 tbody tr:eq(3) td")[1].innerHTML')).toBe("Oil");
 			expect(util.getResult(scopeNorthwind)).toBe(util.getResult(gridData));
 		});
+
+		it("should update the correct cell when there is column fixing", function () {
+			//new grid with group by
+			util.resetNorthwindScope();
+			util.executeScript('$("#grid1").igGrid("destroy");');
+			util.executeScript('$("#grid1").remove();');
+			util.executeScript('angular.element("body").scope().addGrid(\''
+				+ '<ig-grid id="grid1" data-source="northwind" height="400px" primary-key="ProductID" auto-commit="true" width="700px" auto-generate-columns="false">'
+					+ '<columns>'
+						+ '<column key="ProductID" header-text="Product ID" width="200px" data-type="number"></column>'
+						+ '<column key="ProductName" header-text="Name" width="300px" data-type="string"></column>'
+						+ '<column key="QuantityPerUnit" header-text="Quantity per unit" width="200px" data-type="string"></column>'
+						+ '<column key="UnitsOnOrder" header-text="Units on order" width="200px" data-type="number"></column>'
+					+ '</columns>'
+					+ '<features>'
+						+ '<feature name="Updating">'
+							+ '<column-settings>'
+								+ '<column-setting column-key="ProductID" read-only="true">'
+							+ '</column-settings>'
+							+ '</column-settings>'
+						+ '</feature>'
+						+ '<feature name="ColumnFixing">'
+								+ '<column-settings>'
+									+ '<column-setting column-key="ProductName" is-fixed="true">'
+									+ '</column-setting>'
+								+ '</column-settings>'
+						+ '</feature>'
+					+ '</features>'
+				+ '</ig-grid>'
+				+ '\');'
+				);
+			util.executeScript('angular.element("#grid1").scope().northwind[0].ProductName = "Tea";');
+			util.executeScript('angular.element("#grid1").scope().$apply();');
+			expect(util.getResult('$("#grid1_fixed tbody tr:eq(0) td")[0].innerHTML')).toBe("Tea");
+			expect(util.getResult('$("#grid1 tbody tr:eq(0) td")[0].innerHTML')).toBe("1");
+			util.executeScript('angular.element("#grid1").scope().northwind[1].ProductName = "Beer";');
+			util.executeScript('angular.element("#grid1").scope().northwind[2].UnitsOnOrder = 2;');
+			util.executeScript('angular.element("#grid1").scope().$apply();');
+			expect(util.getResult('$("#grid1_fixed tbody tr:eq(1) td")[0].innerHTML')).toBe("Beer");
+			//the other values should be preserved
+			expect(util.getResult('$("#grid1_fixed tbody tr:eq(2) td")[0].innerHTML')).toBe("Aniseed Syrup");
+			expect(util.getResult('$("#grid1 tbody tr:eq(2) td")[2].innerHTML')).toBe("2");
+			//the other values should be preserved
+			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML'))
+				.toBe(util.getResult('angular.element("#grid1").scope().northwind[1].UnitsOnOrder.toString()'));
+		});
 	});
 	
 	describe("Tree", function() {
@@ -562,7 +608,8 @@ describe("my app", function() {
 	describe("Combo", function() {
 		var scope = 'angular.element("#combo1").scope()',
 		combo = '$("#combo1")',
-		combo2 = '$("#combo2")';
+		combo2 = '$("#combo2")',
+		combo3 = '$("#combo3")';
 
 		it("should be initialized", function () {
 			util.resetNorthwindScope();
@@ -608,6 +655,21 @@ describe("my app", function() {
 			// wait for sleep resolve:
 			expect(browser.driver.sleep(250)).toBe(undefined); //util.getResult(combo + '.igCombo("option", "delayInputChangeProcessing");')
         	expect(util.getResult(scope + ".combo.value1")).toBe(2);
+		});
+		
+		it("should update combo value when allowCustomValue is true", function(){
+			util.executeScript(combo3 + ".focus();");
+			expect(util.getResult('typeInInputWrap("customValue1", ' + combo3 + ', "combo.value1");')).toBe(false);
+			expect(browser.driver.sleep(250)).toBe(undefined);
+			util.executeScript(combo3 + ".igCombo('comboWrapper').find('.ui-igcombo-button').click();");
+			expect(util.getResult(combo3 + '.igCombo("value")[0]')).toBe("customValue1");
+		});
+
+		it("should update the ng-model when the data has been changed", function () {
+			util.executeScript(scope + ".northwind = [{'ProductID': 21, 'ProductName': 'Strawberry'}];");
+			util.executeScript(scope + ".combo.value2 = [21];");
+			util.executeScript(scope + ".$apply();");
+			expect(util.getResult('$("#combo2").val()')).toBe("Strawberry");
 		});
 	});
 

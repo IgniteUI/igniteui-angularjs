@@ -114,7 +114,7 @@ app.service("fakeServerService",
                     return homes;
                 };
 
-                if (data != undefined) {
+                if (data !== undefined) {
                     svc.deserializeData(data);
                 }
 
@@ -126,7 +126,7 @@ app.service("fakeServerService",
 
             insert: function (home) {
 
-                if (typeof home != "object") {
+                if (typeof home !== "object") {
 					throw new Error("A home object is required to do an insert.");
 				}
 
@@ -138,7 +138,7 @@ app.service("fakeServerService",
 
             update: function (home) {
                 
-                if (typeof home != "object") {
+                if (typeof home !== "object") {
 					throw new Error("A home object is required to do an update.");
 				}
 
@@ -175,7 +175,7 @@ app.service("fakeServerService",
                 
                 var lengthOfUUID = 36;
                 
-                if (id.length != lengthOfUUID) {
+                if (id.length !== lengthOfUUID) {
 					throw new Error("A valid UUID value is required as an ID.");
 				}
 
