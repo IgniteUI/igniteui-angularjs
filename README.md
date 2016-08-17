@@ -154,6 +154,9 @@ Each control also implements a custom attribute directive where the attribute na
 The following controls currently support one-way data binding:
 
 1. igHtmlEditor
+2. igDataChart
+3. igSparkline
+4. igFunnelChart
 
 ## Two-way Data Binding
 The following controls currently support two-way data binding:
