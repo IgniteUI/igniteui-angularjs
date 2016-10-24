@@ -634,7 +634,12 @@
 				var content, template, templateParts;
 				attrs.$set("data-ig-control-name", this.name);
 				content = element.find("content").html();
-				template = $.ig.angular[ this.name ] && $.ig.angular[ this.name ].element || "<div></div>";
+				// igTextEditor textMode known issue
+				if (attrs["textMode"] && attrs["textMode"] === "multiline" && attrs["data-ig-control-name"] === "igTextEditor") {
+						template = "<textarea></textarea>";
+				} else {
+					template = (attrs["element"] && "<_el_></_el_>".replace(/_el_/g, attrs["element"])) || ($.ig.angular[ this.name ] && $.ig.angular[ this.name ].element || "<div></div>");
+				}
 				/* In case there is a content tag in the directive manually construct the template by concatenating start tag + content + end tag */
 				if (content) {
 					templateParts = template.match("(<[^/][\\w]+>)(</[\\w]+>)");
