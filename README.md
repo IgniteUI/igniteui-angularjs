@@ -1,14 +1,13 @@
-#Ignite UI directives for AngularJS
+﻿# Ignite UI directives for AngularJS
 
 [![NPM version](https://img.shields.io/npm/v/igniteui-angular.svg?style=flat)](https://www.npmjs.com/package/igniteui-angular)
 [![Build Status](https://travis-ci.org/IgniteUI/igniteui-angular.svg?branch=master)](https://travis-ci.org/IgniteUI/igniteui-angular)
 [![Coverage Status](https://coveralls.io/repos/github/IgniteUI/igniteui-angular/badge.svg?branch=master)](https://coveralls.io/github/IgniteUI/igniteui-angular?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angular)
-[![Issue Stats](http://issuestats.com/github/IgniteUI/igniteui-angular/badge/pr?style=flat)](http://issuestats.com/github/IgniteUI/igniteui-angular)
 
 Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular).
 
-#Requirements
+# Requirements
 
 - [jQuery](http://www.jquery.com) v1.8 and later
 - [AngularJS](http://www.angularjs.org) v1.0 and later
@@ -16,7 +15,7 @@ Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igni
 
 > **Note:** The Ignite UI Angular directives *do not* work with the Ignite UI ASP.NET MVC Helpers
 
-#Install
+# Install
 
 You can install this package either with `npm` or with `bower`. This is a development repo!
 
@@ -32,7 +31,7 @@ npm install igniteui-angular
 bower install igniteui-angular
 ```
 
-#Building
+# Building
 Build will produce an obfuscated and minified version of the `src/igniteui-angular.js` in the `dist/igniteui-angular.min.js`.  
 The build will also put the original and the minified version of the `src/igniteui-angular.js` in the `dist/npm` for distribution to npm.
 The build uses [Grunt](http://gruntjs.com/), so you need [Node.js](http://nodejs.org/) installed on your machine.  
@@ -42,7 +41,7 @@ To build the project use the following steps:
 2. Run `npm install`
 3. Run `grunt build`
 
-#Getting Started
+# Getting Started
 
 ## Page setup
 
@@ -150,10 +149,20 @@ Each control also implements a custom attribute directive where the attribute na
 | igUpload        | `<div id="upload" data-ig-upload="upload_options"></div>`                     |
 | igVideoPlayer   | `<div id="video" data-ig-video-player="video_options"></div>`                 |
 
+## Element placeholder considerations
+
+By default all controls have default element placeholders. You can configure element placeholder by setting the `element` attribute to a name of a DOM element.
+
+Example:
+`<ig-text-editor id="editor1" text-mode="multiline" element="textarea"></ig-text-editor>`
+
 ## One-way Data Binding
 The following controls currently support one-way data binding:
 
 1. igHtmlEditor
+2. igDataChart
+3. igSparkline
+4. igFunnelChart
 
 ## Two-way Data Binding
 The following controls currently support two-way data binding:
@@ -165,10 +174,10 @@ The following controls currently support two-way data binding:
 
 **Note**: When using control API methods which modify the data source outside the Angular framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see Angular view updated.
 
-##Testing
+## Testing
 There are two kinds of tests in Igniteui-angular: Unit tests and End to End tests. All of them are written in [Jasmine](http://jasmine.github.io/).
 
-####Setup
+#### Setup
 Simply do:
 
 	npm install
@@ -179,7 +188,7 @@ Then you need to instrument the source file with:
 
 	npm run instrument
 
-####Running Unit Tests
+#### Running Unit Tests
 The easiest way to run the unit tests is to use the npm script:
 
 	npm test
@@ -194,10 +203,10 @@ To run the tests on Firefox you can use:
 
 	npm run test-single-firefox
 	
-###End to end testing
+### End to end testing
 These tests are run with the [Protractor](https://github.com/angular/protractor) test runner, it simulates interaction.
 
-####Setup
+#### Setup
 
 Before proceeding you need to download and install the latest version of the stand-alone WebDriver tool:
 
@@ -205,7 +214,7 @@ Before proceeding you need to download and install the latest version of the sta
 	
 After that make sure you have [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed on your machine. It is required for the Standalone Selenium Server.
 
-####Running tests
+#### Running tests
 
 So first the web server should be brought up so that Protractor can execute the tests against it:
 
@@ -217,7 +226,7 @@ Running the tests is done with:
 
 **Note:** You will need to run the protractor on a separate bash
 
-###Code coverage
+### Code coverage
 After running the Karma or Protractor tests by default a coverage will be created for each of them.
 
 To combine the both reports into one single report you need to execute:

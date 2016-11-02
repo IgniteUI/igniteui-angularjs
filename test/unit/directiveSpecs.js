@@ -168,4 +168,35 @@ describe("Ignite directives", function() {
 		expect(hGridElement.data("igHierarchicalGrid")).not.toBeUndefined();
 		expect(hGridElement.data("igGridSelection")).not.toBeUndefined();
 	}));
+	
+	it("should create text editor", inject(function($compile, $rootScope) {
+		var textEditor = angular.element('<div ng-app="my-app"><ig-text-editor id="editor1"></ig-text-editor></div>');
+		var scope = $rootScope.$new();
+		$compile(textEditor)(scope);
+		scope.$digest();
+		var textEditorInput = textEditor.find("#editor1");
+		expect(textEditorInput.length).toBe(1);
+		expect(textEditorInput.data("igTextEditor")).not.toBeUndefined();
+		expect(textEditorInput.data("igTextEditor").element[0].nodeName).toBe("INPUT");
+	}));
+	it("should create multiline text editor", inject(function($compile, $rootScope) {
+		var textEditor = angular.element('<div ng-app="my-app"><ig-text-editor id="editor1" text-mode="multiline"></ig-text-editor></div>');
+		var scope = $rootScope.$new();
+		$compile(textEditor)(scope);
+		scope.$digest();
+		var textEditorInput = textEditor.find("#editor1");
+		expect(textEditorInput.length).toBe(1);
+		expect(textEditorInput.data("igTextEditor")).not.toBeUndefined();
+		expect(textEditorInput.data("igTextEditor").element[0].nodeName).toBe("TEXTAREA");
+	}));
+	it("should create text editor on div DOM placeholder", inject(function($compile, $rootScope) {
+		var textEditor = angular.element('<div ng-app="my-app"><ig-text-editor id="editor1" element="div"></ig-text-editor></div>');
+		var scope = $rootScope.$new();
+		$compile(textEditor)(scope);
+		scope.$digest();
+		var textEditorInput = textEditor.find("#editor1");
+		expect(textEditorInput.length).toBe(1);
+		expect(textEditorInput.data("igTextEditor")).not.toBeUndefined();
+		expect(textEditorInput.data("igTextEditor").element[0].nodeName).toBe("DIV");
+	}));
 });
