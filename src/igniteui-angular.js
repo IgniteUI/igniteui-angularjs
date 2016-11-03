@@ -676,7 +676,7 @@
 
 						// cleanup
 						scope.$on("$destroy", function () {
-							if (element.data(controlName)) {
+							if (typeof element.data(controlName) === "object") {
 								element[ controlName ]("destroy");
 							}
 							if ($.ig.angular[ controlName ] &&
