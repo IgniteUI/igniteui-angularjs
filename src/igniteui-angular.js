@@ -650,43 +650,45 @@
 				return template;
 			},
 			replace: true,
-			link: function (scope, element, attrs, ngModel) {
-				scope.getHtml = scope.getHtml || getHtml;
-				var controlName = attrs[ "data-ig-control-name" ];
-				if (controlName) {
-					if (element.context) {
-						var options = scope.$eval(attrs[ controlName ]) ||
-							extractOptions(controlName, element.context, {}, element, scope);
-						/* removing the width and height attributes on the placeholder, because they affect the control dimensions */
-						if (element.removeAttr) {
-							element.removeAttr("width").removeAttr("height");
-						}
-
-						if (attrs.source) {
-							options.dataSource = scope.$eval(attrs.source);
-						} else {
-							attrs.source = attrs[ controlName ] + ".dataSource";
-							attrs.primaryKey = options.primaryKey;
-						}
-
-						// Two way data binding support using events from the controls
-						if ($.ig.angular[ controlName ] && $.ig.angular[ controlName ].bindEvents) {
-							$.ig.angular[ controlName ].bindEvents(scope, element, attrs, ngModel);
-						}
-
-						// cleanup
-						scope.$on("$destroy", function () {
-							if (typeof element.data(controlName) === "object") {
-								element[ controlName ]("destroy");
+			compile: function(tElement, tAttrs, transclude){
+				return function (scope, element, attrs, ngModel) {
+					var context = tElement.context, controlName = attrs[ "data-ig-control-name" ];		
+					scope.getHtml = scope.getHtml || getHtml;
+					if (controlName) {
+						if (context) {
+							var options = scope.$eval(attrs[ controlName ]) ||
+								extractOptions(controlName, context, {}, element, scope);
+							/* removing the width and height attributes on the placeholder, because they affect the control dimensions */
+							if (element.removeAttr) {
+								element.removeAttr("width").removeAttr("height");
 							}
-							if ($.ig.angular[ controlName ] &&
-									$.ig.angular[ controlName ].events &&
-									$.ig.angular[ controlName ].events.length) {
-								element.off($.ig.angular[ controlName ].events.join(" "));
-							}
-						} );
 
-						element[ controlName ](options);
+							if (attrs.source) {
+								options.dataSource = scope.$eval(attrs.source);
+							} else {
+								attrs.source = attrs[ controlName ] + ".dataSource";
+								attrs.primaryKey = options.primaryKey;
+							}
+
+							// Two way data binding support using events from the controls
+							if ($.ig.angular[ controlName ] && $.ig.angular[ controlName ].bindEvents) {
+								$.ig.angular[ controlName ].bindEvents(scope, element, attrs, ngModel);
+							}
+
+							// cleanup
+							scope.$on("$destroy", function () {
+								if (typeof element.data(controlName) === "object") {
+									element[ controlName ]("destroy");
+								}
+								if ($.ig.angular[ controlName ] &&
+										$.ig.angular[ controlName ].events &&
+										$.ig.angular[ controlName ].events.length) {
+									element.off($.ig.angular[ controlName ].events.join(" "));
+								}
+							} );
+
+							element[ controlName ](options);
+						}
 					}
 				}
 			}
