@@ -690,7 +690,7 @@
 							element[ controlName ](options);
 						}
 					}
-				}
+				};
 			}
 		};
 	};
