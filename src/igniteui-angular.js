@@ -119,6 +119,38 @@
 		}
 		return false;
 	}
+	
+	function _notifyRowAdded(gridElem, row) {
+		var rs = gridElem.data("igGridRowSelectors"),
+		pa = gridElem.data("igGridPaging"),
+		su = gridElem.data("igGridSummaries");
+		if (rs && typeof rs._rowAdded === "function") {
+			rs._rowAdded(row);
+		}
+		if (pa && typeof pa._rowAdded === "function") {
+			pa._rowAdded(row);
+		}
+		if (su && typeof su._rowAdded === "function") {
+			su._rowAdded(row);
+		}
+		gridElem.data("igGrid")._fireInternalEvent("_internalRowAdded", { row: row });
+	}
+	
+	function _notifyRowDeleted(gridElem, rowId, row) {
+		var se = gridElem.data("igGridSelection"),
+			pa = gridElem.data("igGridPaging"),
+			su = gridElem.data("igGridSummaries");
+		if (se && typeof se._rowDeleted === "function") {
+			se._rowDeleted(rowId, row);
+		}
+		if (su && typeof su._rowDeleted === "function") {
+			su._rowDeleted(rowId, row);
+		}
+		if (pa && typeof pa._rowDeleted === "function") {
+			pa._rowDeleted(rowId, row);
+		}
+		gridElem.data("igGrid")._fireInternalEvent("_internalRowDeleted", { rowID: rowId, row: row });
+	}
 
 	// Two way data binding for the combo control
 	$.ig.angular.igCombo.bindEvents = $.ig.angular.igCombo.bindEvents ||
@@ -269,7 +301,8 @@
 				grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
 				gridUpdating = element.data("igGridUpdating"), column,
 				record, td, newFormattedVal, dsRecord,
-				ds = scope.$eval(attrs.source), diff = [];
+				ds = scope.$eval(attrs.source), diff = [], row, grp, idx,
+				autoCommit = grid.options.autoCommit;
 			/* check for a change of the data source. In this case rebind the grid */
 			if (ds !== grid.options.dataSource) {
 				//Setting a timeout 0 pushes the slow databind event to the end of the stack, letting the digest cycle finish, improving the overall responsivness of the page
@@ -294,7 +327,12 @@
 					for (i = oldValue.length; i < newValue.length; i++) {
 						existingDomRow = element.find("tr[data-id='" + newValue[ i ][ pkKey ] + "']").length;
 						if (existingDomRow === 0) {
-							grid.renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+							grp = grid.element.children("tbody").children("tr.ui-iggrid-groupedrow").length > 0;
+							if (grp) {
+								grid.element.data("igGridGroupBy")._renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+							} else {
+								grid.renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+							}
 						}
 						existingRow = grid.dataSource.findRecordByKey(newValue[ i ][ pkKey ]);
 						if (!existingRow) {
@@ -302,16 +340,27 @@
 							// TODO: trigger rowAdded event?
 							grid.dataSource._addRow(newValue[ i ], -1);
 						}
+
+						row = grid.rowById(newValue[ i ][ pkKey ]);
+						grid.options.autoCommit = true;
+						_notifyRowAdded(element, row);
+						grid.options.autoCommit = autoCommit;
 					}
 				}
 
 				// deleting a row
 				if (newValue.length < oldValue.length) {
 					for (i = 0, j = 0; j < oldValue.length; i++, j++) {
-						if ((newValue[ i ] === undefined) || (newValue[ i ][ pkKey ] !== oldValue[ j ][ pkKey ])) {
-							element.find("tr[data-id='" + oldValue[ j ][ pkKey ] + "']").remove();
+						if ((newValue[ i ] === undefined) || (newValue[ i ][ pkKey ] !== oldValue[ j ][ pkKey ])) {							
 							grid.dataSource.deleteRow(oldValue[ j ][ pkKey ], true);
 							i--;
+							row = element.find("tr[data-id='" + oldValue[ j ][ pkKey ] + "']");			
+							idx = row.index();
+							row.remove();
+							grid._reapplyZebraStyle(idx);							
+							grid.options.autoCommit = true;
+							_notifyRowDeleted(element, oldValue[ j ][ pkKey ], row);
+							grid.options.autoCommit = autoCommit;
 						}
 					}
 				}
@@ -332,6 +381,7 @@
 						// update the DOM of the grid
 						column = grid.columnByKey(diff[ i ].txlog[ j ].key);
 						record = ds[ diff[ i ].index ];
+						row = grid.rowById(record[ pkKey ]);
 						td = grid.cellById(record[ pkKey ], diff[ i ].txlog[ j ].key);
 						if (column.template || grid.options.rowTemplate) {
 							newFormattedVal = grid
@@ -342,9 +392,10 @@
 						}
 						/* updatecell */
 						$(td).html(newFormattedVal);
+						grid._fireInternalEvent("_internalCellUpdated", { rowID: record[ pkKey ], cell: td });
 						/* update the grid data source */
 						dsRecord = grid.dataSource.findRecordByKey(record[ pkKey ]);
-						dsRecord[ column.key ] = diff[ i ].txlog[ j ].newVal;
+						dsRecord[ column.key ] = diff[ i ].txlog[ j ].newVal;			
 					}
 				}
 			}
