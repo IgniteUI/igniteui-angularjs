@@ -682,6 +682,7 @@
 			restrict: "EAC",
 			require: "?ngModel",
 			template: function (element, attrs) {
+				this.origElementCopy = element.clone();
 				var content, template, templateParts;
 				attrs.$set("data-ig-control-name", this.name);
 				content = element.find("content").html();
@@ -702,8 +703,9 @@
 			},
 			replace: true,
 			compile: function(tElement, tAttrs, transclude){
+				var context = this.origElementCopy[ 0 ];
 				return function (scope, element, attrs, ngModel) {
-					var context = tElement.context, controlName = attrs[ "data-ig-control-name" ];		
+					var controlName = attrs[ "data-ig-control-name" ];		
 					scope.getHtml = scope.getHtml || getHtml;
 					if (controlName) {
 						if (context) {
