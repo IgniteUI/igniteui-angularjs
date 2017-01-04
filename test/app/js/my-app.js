@@ -1256,7 +1256,8 @@ var NorthwindCtrl = function ($scope, $element, $compile) {
 		mask: "134-134-134",
 		numeric: 123,
 		percent: 12,
-		text: "some more text"
+		text: "some more text",
+		checkboxModel: true
 	};
 	
 	$scope.combo = {

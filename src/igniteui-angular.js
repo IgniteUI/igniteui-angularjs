@@ -204,7 +204,7 @@
 
 		function setControlValue(value) {
 			var editor = element.data(controlName),
-				displayFunc = editor.displayValue || editor.text;
+				displayFunc = editor.displayValue || editor.text || editor.value;
 
 			editor.value(value);
 			return displayFunc.call(editor);
@@ -247,6 +247,8 @@
 		.extend($.ig.angular.igDatePicker || {}, $.ig.angular.igEditor);
 	$.ig.angular.igPercentEditor = angular
 		.extend($.ig.angular.igPercentEditor || {}, $.ig.angular.igEditor);
+	$.ig.angular.igCheckboxEditor = angular
+		.extend($.ig.angular.igCheckboxEditor || {}, $.ig.angular.igEditor);
 
 	// igGrid specific code for two way data binding
 	$.ig.angular.igGrid = $.ig.angular.igGrid || {};

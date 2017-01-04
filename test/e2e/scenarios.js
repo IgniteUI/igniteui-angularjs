@@ -797,5 +797,31 @@ describe("my app", function() {
 			util.executeScript('$("#text1").trigger("blur");');
 			expect(util.getResult(textInModel)).toBe("newText");
 		});
+
+		it("Checkbox should be initialized", function() {
+			expect(util.getResult('$("#checkBoxEditor1").data("igCheckboxEditor") !== undefined')).toBe(true);
+		});
+		it("Checkbox should updated model correctly", function() {
+			var scope = 'angular.element("#checkBoxEditor1").scope()';
+			var checkboxModel = scope + '.editors.checkboxModel';
+			//initial value is set
+			expect(util.getResult('$("#checkBoxEditor1").parent().attr("aria-checked") === "true"')).toBe(true);
+			expect(util.getResult('$("#checkBoxEditor1").attr("value") === "true"')).toBe(true);
+			expect(util.getResult(checkboxModel)).toBe(true);
+
+			//click on the checkbox
+			util.executeScript('$("#checkBoxEditor1").trigger("click");');
+			expect(util.getResult('$("#checkBoxEditor1").parent().attr("aria-checked") === "false"')).toBe(true);
+			expect(util.getResult('$("#checkBoxEditor1").attr("value") === "false"')).toBe(true);
+			expect(util.getResult(checkboxModel)).toBe(false); // should change
+
+			//change the model from the scope
+			util.executeScript(checkboxModel + ' = true');
+			util.executeScript(scope + ".$apply();");
+			expect(util.getResult('$("#checkBoxEditor1").parent().attr("aria-checked") === "true"')).toBe(true);
+			expect(util.getResult('$("#checkBoxEditor1").attr("value") === "true"')).toBe(true);
+			expect(util.getResult(checkboxModel)).toBe(true);
+
+		});
 	});
 });
