@@ -299,6 +299,7 @@
 			function watchGridDataSource(newValue, oldValue) {
 			var i, j, existingDomRow, existingRow,
 				grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
+				groupByInstance = element.data("igGridGroupBy"),
 				gridUpdating = element.data("igGridUpdating"), column,
 				record, td, newFormattedVal, dsRecord,
 				ds = scope.$eval(attrs.source), diff = [], row, grp, idx,
@@ -324,12 +325,12 @@
 						// rebind the grid when there is a new inserted row, because igGrid doesn't have an API for inserting rows.
 						grid.dataBind();
 					}
+					grp = groupByInstance && groupByInstance.options.groupedColumns.length > 0;
 					for (i = oldValue.length; i < newValue.length; i++) {
 						existingDomRow = element.find("tr[data-id='" + newValue[ i ][ pkKey ] + "']").length;
 						if (existingDomRow === 0) {
-							grp = grid.element.children("tbody").children("tr.ui-iggrid-groupedrow").length > 0;
 							if (grp) {
-								grid.element.data("igGridGroupBy")._renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+								groupByInstance._renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
 							} else {
 								grid.renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
 							}
