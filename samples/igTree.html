@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>igTree - Ignite UI integration with AngularJS</title>
@@ -28,122 +28,121 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/igniteui-angular/index.html">Home</a></li>
+                    <li><a href="../index.html">Home</a></li>
                     <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
     
-<div ng-app="igniteui-sample" ng-controller="treeController">
-	<h1 class="push-down-md"><a href="http://igniteui.com/tree/overview" target="_blank">igTree</a></h1>
-    <div class="row description">
-        <div class="alert alert-info col-md-5 try-it-out">
-            <span class="h4">TRY IT OUT:</span>
-            <hr />
-            <ul>
-                <li>Add and remove nodes from the tree using the buttons</li>
-                <li>Edit product names and see how the tree responds</li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <p class="lead">This sample demonstrates how to create an igTree with an AngularJS directive.</p>
-            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igTree.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-3">
-
-            <ig-tree id="tree1" data-source="ProductCategories">
-                <bindings child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID">
-                </bindings>
-            </ig-tree>
-
-        </div>
-        <div class="col-md-9">
-
-            <div class="row">
-                <div class="col-sm-4">Add a new root-level node</div>
-                <div class="col-md-3"><input type="button" class="btn btn-default btn-info" ng-click="addNodeRootLevel()" value="Add" /></div>
+    <div class="push-down-xl" ng-app="igniteui-sample" ng-controller="treeController">
+        <h1 class="push-down-md"><a href="http://igniteui.com/tree/overview" target="_blank">igTree</a></h1>
+        <div class="row description">
+            <div class="alert alert-info col-md-5 try-it-out">
+                <span class="h4">TRY IT OUT:</span>
+                <hr />
+                <ul>
+                    <li>Add and remove nodes from the tree using the buttons</li>
+                    <li>Edit product names and see how the tree responds</li>
+                </ul>
             </div>
+            <div class="col-md-4">
+                <p class="lead">This sample demonstrates how to create an igTree with an AngularJS directive.</p>
+                <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igTree.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+            </div>
+        </div>
 
-            <div class="row push-down-xs">
-                <div class="col-sm-4">Add a new root-level node (by name)</div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <input class="form-control" placeholder="new product name" type="text" ng-model="newProductCategory.Name">
-                                <span class="input-group-addon text-muted">{{newProductCategory.ProductCategoryID = ProductCategories.length + 1}}</span>
+        <div class="row">
+            <div class="col-md-3">
+
+                <ig-tree id="tree1" data-source="ProductCategories">
+                    <bindings child-data-property="ProductSubcategories" text-key="Name" value-key="ProductCategoryID">
+                    </bindings>
+                </ig-tree>
+
+            </div>
+            <div class="col-md-9">
+
+                <div class="row">
+                    <div class="col-sm-4">Add a new root-level node</div>
+                    <div class="col-md-3"><input type="button" class="btn btn-default btn-info" ng-click="addNodeRootLevel()" value="Add" /></div>
+                </div>
+
+                <div class="row push-down-xs">
+                    <div class="col-sm-4">Add a new root-level node (by name)</div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="new product name" type="text" ng-model="newProductCategory.Name">
+                                    <span class="input-group-addon text-muted">{{newProductCategory.ProductCategoryID = ProductCategories.length + 1}}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <input class="btn btn-default btn-info btn" type="button" value="Add" ng-click="addProductCategory($index)" />
+                            <div class="col-sm-2">
+                                <input class="btn btn-default btn-info btn" type="button" value="Add" ng-click="addProductCategory($index)" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row push-down-xs">
-                <div class="col-sm-4">Remove the selected node from the tree</div>
-                <div class="col-md-3"><input type="button" class="btn btn-default btn-info" ng-click="removeSelectedNode()" value="Delete" /></div>
-            </div>
-            
+                <div class="row push-down-xs">
+                    <div class="col-sm-4">Remove the selected node from the tree</div>
+                    <div class="col-md-3"><input type="button" class="btn btn-default btn-info" ng-click="removeSelectedNode()" value="Delete" /></div>
+                </div>
 
-            <table id="treesampletable" class="table table-striped push-down-xs">
-                <tbody>
-                    <tr ng-repeat="pc in ProductCategories">
-                        <td>{{pc.ProductCategoryID}}</td>
-                        <td class="col-sm-3"><input class="form-control" type="text" ng-model="pc.Name"></td>
-                        <td><input class="btn btn-default btn-info btn-sm" type="button" value="Delete" ng-click="deleteProductCategory($index)" /></td>
-                        <td>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="input-group">
-                                        <input class="form-control" 
-                                               type="text" 
-                                               placeholder="product name"
-                                               ng-model="newProductSubcategory.Name">
-                                        <span class="input-group-addon text-muted">{{newProductSubcategory.ProductSubcategoryID = pc.ProductSubcategories.length + 1}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input class="btn btn-default btn-info btn-sm" 
-                                           type="button" 
-                                           value="Add" 
-                                           ng-click="addProductSubcategory($index)" />
-                                </div>
-                            </div>
-                            <hr />
-                            <div ng-repeat="ps in pc.ProductSubcategories">
+
+                <table id="treesampletable" class="table table-striped push-down-xs">
+                    <tbody>
+                        <tr ng-repeat="pc in ProductCategories">
+                            <td>{{pc.ProductCategoryID}}</td>
+                            <td class="col-sm-3"><input class="form-control" type="text" ng-model="pc.Name"></td>
+                            <td><input class="btn btn-default btn-info btn-sm" type="button" value="Delete" ng-click="deleteProductCategory($index)" /></td>
+                            <td>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input class="form-control" type="text" ng-model="ps.Name">
+                                        <div class="input-group">
+                                            <input class="form-control"
+                                                   type="text"
+                                                   placeholder="product name"
+                                                   ng-model="newProductSubcategory.Name">
+                                            <span class="input-group-addon text-muted">{{newProductSubcategory.ProductSubcategoryID = pc.ProductSubcategories.length + 1}}</span>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-1">
-                                        <input 
-                                               class="btn btn-default btn-info btn-sm"
+                                    <div class="col-sm-2">
+                                        <input class="btn btn-default btn-info btn-sm"
                                                type="button"
-                                               value="Delete"
-                                               ng-click="deleteProductSubcategory($parent.$index, $index)" />
+                                               value="Add"
+                                               ng-click="addProductSubcategory($index)" />
                                     </div>
                                 </div>
-                            </div>
-                        </td>
+                                <hr />
+                                <div ng-repeat="ps in pc.ProductSubcategories">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input class="form-control" type="text" ng-model="ps.Name">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input class="btn btn-default btn-info btn-sm"
+                                                   type="button"
+                                                   value="Delete"
+                                                   ng-click="deleteProductSubcategory($parent.$index, $index)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
 
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
 
 
+            </div>
         </div>
     </div>
-</div>
 
 	<footer>
         <p>
-            <a href="/igniteui-angular/index.html">Home</a> |
+            <a href="../index.html">Home</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
         </p>

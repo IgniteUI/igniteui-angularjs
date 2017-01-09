@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>igHierarchicalGrid - Ignite UI integration with AngularJS</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
 	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
@@ -12,6 +13,7 @@
     
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
+
 
 </head>
 <body class="container">
@@ -29,60 +31,60 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/igniteui-angular/index.html">Home</a></li>
+                    <li><a href="../index.html">Home</a></li>
                     <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
     
-<div ng-app="igniteui-sample" ng-controller="hierarchicalGridController">
-    <h1 class="push-down-md"><a href="http://igniteui.com/hierarchical-grid/overview" target="_blank">igHierarchicalGrid</a></h1>
-    
-    <div class="row description">
-        <div class="col-md-12">
-            <p class="lead">This sample demonstrates how AngularJS directives are used to instantiate igHierarchicalGrid.</p>
-            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igHierarchicalGrid.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+    <div class="push-down-xl" ng-app="igniteui-sample" ng-controller="hierarchicalGridController">
+        <h1 class="push-down-md"><a href="http://igniteui.com/hierarchical-grid/overview" target="_blank">igHierarchicalGrid</a></h1>
+
+        <div class="row description">
+            <div class="col-md-12">
+                <p class="lead">This sample demonstrates how AngularJS directives are used to instantiate igHierarchicalGrid.</p>
+                <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igHierarchicalGrid.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ig-hierarchical-grid id="grid1"
+                                      data-source="northwindEmployees"
+                                      width="100%"
+                                      height="400px"
+                                      auto-commit="true"
+                                      auto-generate-columns="false"
+                                      auto-generate-layouts="false">
+                    <columns>
+                        <column key="FirstName" header-text="First Name" width="25%" data-type="string"></column>
+                        <column key="LastName" header-text="Last Name" width="25%" data-type="string"></column>
+                        <column key="Title" header-text="Title" width="25%" data-type="string"></column>
+                        <column key="BirthDate" header-text="Birth Date" width="25%" data-type="date"></column>
+                    </columns>
+                    <column-layouts>
+                        <column-layout key="Orders" response-data-key="results" primary-key="OrderID" auto-generate-columns="false" width="100%">
+                            <columns>
+                                <column key="OrderID" header-text="OrderID" width="25%" data-type="string"></column>
+                                <column key="Freight" header-text="Freight" width="25%" data-type="string"></column>
+                                <column key="ShipName" header-text="ShipName" width="25%" data-type="string"></column>
+                                <column key="ShipAddress" header-text="ShipAddress" width="25%" data-type="string"></column>
+                            </columns>
+                            <features>
+                                <feature name="Paging" page-size="10"></feature>
+                            </features>
+                        </column-layout>
+                    </column-layouts>
+                </ig-hierarchical-grid>
+
+            </div>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-md-12">
-            <ig-hierarchical-grid id="grid1" 
-                     data-source="northwindEmployees" 
-                     width="100%" 
-                     height="400px" 
-                     auto-commit="true" 
-                     auto-generate-columns="false"
-                     auto-generate-layouts="false">
-                <columns>
-                    <column key="FirstName" header-text="First Name" width="25%" data-type="string"></column>
-                    <column key="LastName" header-text="Last Name"  width="25%"  data-type="string"></column>
-                    <column key="Title" header-text="Title"  width="25%" data-type="string"></column>
-                    <column key="BirthDate" header-text="Birth Date"  width="25%" data-type="date"></column>
-                </columns>
-                <column-layouts>
-                    <column-layout key="Orders" response-data-key="results" primary-key="OrderID" auto-generate-columns="false" width="100%">
-                        <columns>
-                            <column key="OrderID" header-text="OrderID" width="25%" data-type="string"></column>
-                            <column key="Freight" header-text="Freight"  width="25%"  data-type="string"></column>
-                            <column key="ShipName" header-text="ShipName"  width="25%" data-type="string"></column>
-                            <column key="ShipAddress" header-text="ShipAddress"  width="25%" data-type="string"></column>
-                        </columns>
-                        <features>
-                            <feature name="Paging" page-size="10"></feature>
-                        </features>
-                    </column-layout>
-                </column-layouts>
-            </ig-hierarchical-grid>
-            
-        </div>
-    </div>
-</div>
 
 	<footer>
         <p>
-            <a href="/igniteui-angular/index.html">Home</a> |
+            <a href="../index.html">Home</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
         </p>

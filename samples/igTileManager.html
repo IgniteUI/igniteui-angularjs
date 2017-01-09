@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>Tile Manager - Ignite UI integration with AngularJS</title>
@@ -13,6 +13,7 @@
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.splitter.css" rel="stylesheet" />
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.layout.css" rel="stylesheet" />
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.tilemanager.css" rel="stylesheet" />
+
 <style type="text/css">
     .dashboard {
         position: relative;
@@ -86,44 +87,43 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/igniteui-angular/index.html">Home</a></li>
+                    <li><a href="../index.html">Home</a></li>
                     <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
     
-<div ng-app="igniteui-sample" ng-controller="tileManagerController">
+    <div class="push-down-xl" ng-app="igniteui-sample" ng-controller="tileManagerController">
 
-    <h1 class="push-down-md"><a href="http://igniteui.com/tile-manager/overview" target="_blank">igTileManager</a></h1>
-    
-    <div class="row description">
-        <div class="col-md-12">
-            <p class="lead">This sample demonstrates how AngularJS directives are used to instantiate igTileManager.</p>
-            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igTileManager.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+        <h1 class="push-down-md"><a href="http://igniteui.com/tile-manager/overview" target="_blank">igTileManager</a></h1>
+
+        <div class="row description">
+            <div class="col-md-12">
+                <p class="lead">This sample demonstrates how AngularJS directives are used to instantiate igTileManager.</p>
+                <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igTileManager.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <ig-tile-manager 
-            id="dashboard" 
-            data-source="candidates" 
-            margin-left="10" 
-            margin-top="10" 
-            right-panel-tiles-width="200"
-            right-panel-tiles-height="156"
-            class="dashboard"
-            maximized-state='<h3>${name}</h3><img src="${picture}" title="${name}" alt="error" /><p class="text">${text}</p><div style="clear: both"><span class="color">Skills:</span></div><ul class="skills"></ul><div class="linkedIn"><span class="color">LinkedIn:</span> <a href="${linkedin}" target="_blank">http://www.linkedin.com/profile</a></div>'
+        <div class="row">
+            <div class="col-md-12">
+                <ig-tile-manager id="dashboard"
+                                 data-source="candidates"
+                                 margin-left="10"
+                                 margin-top="10"
+                                 right-panel-tiles-width="200"
+                                 right-panel-tiles-height="156"
+                                 class="dashboard"
+                                 maximized-state='<h3>${name}</h3><img src="${picture}" title="${name}" alt="error" /><p class="text">${text}</p><div style="clear: both"><span class="color">Skills:</span></div><ul class="skills"></ul><div class="linkedIn"><span class="color">LinkedIn:</span> <a href="${linkedin}" target="_blank">http://www.linkedin.com/profile</a></div>'
             minimized-state='<h4>${name}</h4><img src="${picture}" class="minimized" title="${name}" alt="error" />'
             >
             </ig-tile-manager>
+            </div>
         </div>
     </div>
-</div>
 
 	<footer>
         <p>
-            <a href="/igniteui-angular/index.html">Home</a> |
+            <a href="../index.html">Home</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
         </p>

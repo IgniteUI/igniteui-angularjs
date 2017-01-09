@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>igCombo - Ignite UI integration with AngularJS</title>
@@ -29,37 +29,35 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/igniteui-angular/index.html">Home</a></li>
+                    <li><a href="../index.html">Home</a></li>
                     <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
     
-<div ng-app="igniteui-sample" ng-controller="comboController">
-	<h1 class="push-down-md"><a href="http://igniteui.com/combo/overview" target="_blank">igCombo</a></h1>
-    <div class="row description">
-        <div class="alert alert-info col-md-5 try-it-out">
-            <span class="h4">TRY IT OUT:</span>
-            <hr />
-            <ul>
-                <li>Enter a Product ID in the textbox and see how the combos change</li>
-                <li>Change a product's name in the group of textboxes below and see how the names change in each combo</li>
-            </ul>
+    <div class="push-down-md push-down-xl" ng-app="igniteui-sample" ng-controller="comboController">
+        <h1 class="push-down-md"><a href="http://igniteui.com/combo/overview" target="_blank">igCombo</a></h1>
+        <div class="row description">
+            <div class="alert alert-info col-md-5 try-it-out">
+                <span class="h4">TRY IT OUT:</span>
+                <hr />
+                <ul>
+                    <li>Enter a Product ID in the textbox and see how the combos change</li>
+                    <li>Change a product's name in the group of textboxes below and see how the names change in each combo</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <p class="lead">This sample demonstrates how to use AngularJS directives to create igCombos.</p>
+                <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igCombo.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
+            </div>
         </div>
-        <div class="col-md-4">
-            <p class="lead">This sample demonstrates how to use AngularJS directives to create igCombos.</p>
-            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igCombo.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a></p>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-sm-2">
 	        <input id="product-id" class="form-control" type="text" ng-model="combo.value1"/>
             <div class="text-sm text-muted text-right">values: 1 - 20</div>
         </div>
         <div class="col-sm-3">
-
             <ig-combo id="combo1"
                       data-source="northwind"
                       value-key-type="number"
@@ -69,10 +67,8 @@
                       width="100%"
                       ng-model="combo.value1">
             </ig-combo>
-
         </div>
         <div class="col-sm-3">
-
             <ig-combo id="combo2"
                       data-source="northwind"
                       value-key-type="number"
@@ -82,24 +78,23 @@
                       width="100%"
                       ng-model="combo.value1">
             </ig-combo>
+            </div>
+        </div>
+
+        <hr />
+        <h2 class="h3">Edit Product Name</h2>
+        <div class="row">
+
+            <div class="col-sm-3" ng-repeat="record in northwind">
+                <input class="form-control" ng-model="record.ProductName">
+            </div>
 
         </div>
     </div>
 
-    <hr />
-    <h2 class="h3">Edit Product Name</h2>
-	<div class="row">
-
-		<div class="col-sm-3" ng-repeat="record in northwind">
-			<input class="form-control" ng-model="record.ProductName">
-		</div>
-
-	</div>
-</div>
-
 	<footer>
         <p>
-            <a href="/igniteui-angular/index.html">Home</a> |
+            <a href="../index.html">Home</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
         </p>

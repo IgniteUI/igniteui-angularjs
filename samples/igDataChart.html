@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>Ignite UI Chart and Zoombar - Ignite UI integration with AngularJS</title>
@@ -30,65 +30,66 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/igniteui-angular/index.html">Home</a></li>
+                    <li><a href="../index.html">Home</a></li>
                     <li><a href="https://github.com/IgniteUI/igniteui-angular">View on GitHub <i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
     
-<div ng-app="igniteui-sample" ng-controller="dataChartController">
-	<h1 class="push-down-md"><a href="http://igniteui.com/data-chart/overview" target="_blank">igChart</a> &amp; <a href="http://igniteui.com/zoombar/overview" target="_blank">igZoombar</a></h1> 
-    <div class="row description">
-        <div class="alert alert-info col-md-5 try-it-out">
-            <span class="h4">TRY IT OUT:</span>
-            <hr />
-            <ul>
-                <li>Scroll the chart with the scroll bar</li>
-                <li>Change the viewable area of the chart by dragging the handles inside the zoombar</li>
-            </ul>
+    <div class="push-down-xl" ng-app="igniteui-sample" ng-controller="dataChartController">
+        <h1 class="push-down-md"><a href="http://igniteui.com/data-chart/overview" target="_blank">igChart</a> &amp; <a href="http://igniteui.com/zoombar/overview" target="_blank">igZoombar</a></h1>
+        <div class="row description">
+            <div class="alert alert-info col-md-5 try-it-out">
+                <span class="h4">TRY IT OUT:</span>
+                <hr />
+                <ul>
+                    <li>Scroll the chart with the scroll bar</li>
+                    <li>Change the viewable area of the chart by dragging the handles inside the zoombar</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <p class="lead">This sample demonstrates how to link together the igDataChart and igZoomBar using AngularJS directives.</p>
+                <p>
+                    <a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igDataChart.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a>
+                </p>
+            </div>
         </div>
-        <div class="col-md-4">
-            <p class="lead">This sample demonstrates how to link together the igDataChart and igZoomBar using AngularJS directives.</p>
-            <p><a href="https://github.com/IgniteUI/igniteui-angular/blob/master/samples/igDataChart.html" class="btn btn-default btn-lg btn-primary" target="_blank"><i class="fa fa-code fa-lg"></i> Explore the Code</a>
-            </p>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
 
-            <ig-data-chart id="datachart1" data-source="dataChart">
-                <axes>
-                    <axis name="NameAxis"
-                         type="categoryX"
-                         title="Country"
-                         label="CountryName"></axis>
+                <ig-data-chart id="datachart1" data-source="dataChart">
+                    <axes>
+                        <axis name="NameAxis"
+                              type="categoryX"
+                              title="Country"
+                              label="CountryName"></axis>
 
-                    <axis name="PopulationAxis"
-                         type="numericY"
-                         minimumvalue="0"
-                         title="Milions of People"></axis>
-                </axes>
-                <series>
-                    <series name="2015Population"
-                           type="column"
-                           is-highlighting-enabled="true"
-                           is-transition-in-enabled="true"
-                           x-axis="NameAxis"
-                           y-axis="PopulationAxis"
-                           value-member-path="Pop2015">
+                        <axis name="PopulationAxis"
+                              type="numericY"
+                              minimumvalue="0"
+                              title="Milions of People"></axis>
+                    </axes>
+                    <series>
+                        <series name="2015Population"
+                                type="column"
+                                is-highlighting-enabled="true"
+                                is-transition-in-enabled="true"
+                                x-axis="NameAxis"
+                                y-axis="PopulationAxis"
+                                value-member-path="Pop2015">
+                        </series>
                     </series>
-                </series>
-            </ig-data-chart>
-            <ig-zoombar id="zoombar1" target="#datachart1"></ig-zoombar>
+                </ig-data-chart>
+                <ig-zoombar id="zoombar1" target="#datachart1"></ig-zoombar>
+            </div>
         </div>
     </div>
-</div>
 
 	<footer>
         <p>
-            <a href="/igniteui-angular/index.html">Home</a> |
+            <a href="../index.html">Home</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular/issues">Feedback &amp; Questions</a> |
             <a href="https://github.com/IgniteUI/igniteui-angular">Clone &amp; Fork</a>
         </p>
@@ -100,6 +101,7 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     
+
 	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.util.js"></script>
 	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.datasource.js"></script>
 	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.templating.js"></script>
@@ -125,6 +127,7 @@
 	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.datachart_stacked.js"></script>
 	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.datachart_annotation.js"></script>
 	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.zoombar.js"></script>
+
 	<script src="../src/igniteui-angular.js"></script>
 	<script src="js/igniteui-sample.js"></script>
 	<script src="js/data/population.js"></script>
