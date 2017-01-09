@@ -119,6 +119,38 @@
 		}
 		return false;
 	}
+	
+	function _notifyRowAdded(gridElem, row) {
+		var rs = gridElem.data("igGridRowSelectors"),
+		pa = gridElem.data("igGridPaging"),
+		su = gridElem.data("igGridSummaries");
+		if (rs && typeof rs._rowAdded === "function") {
+			rs._rowAdded(row);
+		}
+		if (pa && typeof pa._rowAdded === "function") {
+			pa._rowAdded(row);
+		}
+		if (su && typeof su._rowAdded === "function") {
+			su._rowAdded(row);
+		}
+		gridElem.data("igGrid")._fireInternalEvent("_internalRowAdded", { row: row });
+	}
+	
+	function _notifyRowDeleted(gridElem, rowId, row) {
+		var se = gridElem.data("igGridSelection"),
+			pa = gridElem.data("igGridPaging"),
+			su = gridElem.data("igGridSummaries");
+		if (se && typeof se._rowDeleted === "function") {
+			se._rowDeleted(rowId, row);
+		}
+		if (su && typeof su._rowDeleted === "function") {
+			su._rowDeleted(rowId, row);
+		}
+		if (pa && typeof pa._rowDeleted === "function") {
+			pa._rowDeleted(rowId, row);
+		}
+		gridElem.data("igGrid")._fireInternalEvent("_internalRowDeleted", { rowID: rowId, row: row });
+	}
 
 	// Two way data binding for the combo control
 	$.ig.angular.igCombo.bindEvents = $.ig.angular.igCombo.bindEvents ||
@@ -204,7 +236,7 @@
 
 		function setControlValue(value) {
 			var editor = element.data(controlName),
-				displayFunc = editor.displayValue || editor.text;
+				displayFunc = editor.displayValue || editor.text || editor.value;
 
 			editor.value(value);
 			return displayFunc.call(editor);
@@ -247,6 +279,8 @@
 		.extend($.ig.angular.igDatePicker || {}, $.ig.angular.igEditor);
 	$.ig.angular.igPercentEditor = angular
 		.extend($.ig.angular.igPercentEditor || {}, $.ig.angular.igEditor);
+	$.ig.angular.igCheckboxEditor = angular
+		.extend($.ig.angular.igCheckboxEditor || {}, $.ig.angular.igEditor);
 
 	// igGrid specific code for two way data binding
 	$.ig.angular.igGrid = $.ig.angular.igGrid || {};
@@ -267,9 +301,11 @@
 			function watchGridDataSource(newValue, oldValue) {
 			var i, j, existingDomRow, existingRow,
 				grid = element.data("igGrid"), pkKey = grid.options.primaryKey,
+				groupByInstance = element.data("igGridGroupBy"),
 				gridUpdating = element.data("igGridUpdating"), column,
 				record, td, newFormattedVal, dsRecord,
-				ds = scope.$eval(attrs.source), diff = [];
+				ds = scope.$eval(attrs.source), diff = [], row, grp, idx,
+				autoCommit = grid.options.autoCommit;
 			/* check for a change of the data source. In this case rebind the grid */
 			if (ds !== grid.options.dataSource) {
 				//Setting a timeout 0 pushes the slow databind event to the end of the stack, letting the digest cycle finish, improving the overall responsivness of the page
@@ -291,10 +327,15 @@
 						// rebind the grid when there is a new inserted row, because igGrid doesn't have an API for inserting rows.
 						grid.dataBind();
 					}
+					grp = groupByInstance && groupByInstance.options.groupedColumns.length > 0;
 					for (i = oldValue.length; i < newValue.length; i++) {
 						existingDomRow = element.find("tr[data-id='" + newValue[ i ][ pkKey ] + "']").length;
 						if (existingDomRow === 0) {
-							grid.renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+							if (grp) {
+								groupByInstance._renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+							} else {
+								grid.renderNewRow(newValue[ i ], newValue[ i ][ pkKey ]);
+							}
 						}
 						existingRow = grid.dataSource.findRecordByKey(newValue[ i ][ pkKey ]);
 						if (!existingRow) {
@@ -302,16 +343,27 @@
 							// TODO: trigger rowAdded event?
 							grid.dataSource._addRow(newValue[ i ], -1);
 						}
+
+						row = grid.rowById(newValue[ i ][ pkKey ]);
+						grid.options.autoCommit = true;
+						_notifyRowAdded(element, row);
+						grid.options.autoCommit = autoCommit;
 					}
 				}
 
 				// deleting a row
 				if (newValue.length < oldValue.length) {
 					for (i = 0, j = 0; j < oldValue.length; i++, j++) {
-						if ((newValue[ i ] === undefined) || (newValue[ i ][ pkKey ] !== oldValue[ j ][ pkKey ])) {
-							element.find("tr[data-id='" + oldValue[ j ][ pkKey ] + "']").remove();
+						if ((newValue[ i ] === undefined) || (newValue[ i ][ pkKey ] !== oldValue[ j ][ pkKey ])) {							
 							grid.dataSource.deleteRow(oldValue[ j ][ pkKey ], true);
 							i--;
+							row = element.find("tr[data-id='" + oldValue[ j ][ pkKey ] + "']");			
+							idx = row.index();
+							row.remove();
+							grid._reapplyZebraStyle(idx);							
+							grid.options.autoCommit = true;
+							_notifyRowDeleted(element, oldValue[ j ][ pkKey ], row);
+							grid.options.autoCommit = autoCommit;
 						}
 					}
 				}
@@ -332,6 +384,7 @@
 						// update the DOM of the grid
 						column = grid.columnByKey(diff[ i ].txlog[ j ].key);
 						record = ds[ diff[ i ].index ];
+						row = grid.rowById(record[ pkKey ]);
 						td = grid.cellById(record[ pkKey ], diff[ i ].txlog[ j ].key);
 						if (column.template || grid.options.rowTemplate) {
 							newFormattedVal = grid
@@ -342,9 +395,10 @@
 						}
 						/* updatecell */
 						$(td).html(newFormattedVal);
+						grid._fireInternalEvent("_internalCellUpdated", { rowID: record[ pkKey ], cell: td });
 						/* update the grid data source */
 						dsRecord = grid.dataSource.findRecordByKey(record[ pkKey ]);
-						dsRecord[ column.key ] = diff[ i ].txlog[ j ].newVal;
+						dsRecord[ column.key ] = diff[ i ].txlog[ j ].newVal;			
 					}
 				}
 			}
@@ -631,10 +685,16 @@
 			restrict: "EAC",
 			require: "?ngModel",
 			template: function (element, attrs) {
+				this.origElementCopy = element.clone();
 				var content, template, templateParts;
 				attrs.$set("data-ig-control-name", this.name);
 				content = element.find("content").html();
-				template = $.ig.angular[ this.name ] && $.ig.angular[ this.name ].element || "<div></div>";
+				// igTextEditor textMode known issue
+				if (attrs.textMode && attrs.textMode === "multiline" && attrs["data-ig-control-name"] === "igTextEditor") {
+						template = "<textarea></textarea>";
+				} else {
+					template = (attrs.element && "<_el_></_el_>".replace(/_el_/g, attrs.element)) || ($.ig.angular[ this.name ] && $.ig.angular[ this.name ].element || "<div></div>");
+				}
 				/* In case there is a content tag in the directive manually construct the template by concatenating start tag + content + end tag */
 				if (content) {
 					templateParts = template.match("(<[^/][\\w]+>)(</[\\w]+>)");
@@ -645,45 +705,48 @@
 				return template;
 			},
 			replace: true,
-			link: function (scope, element, attrs, ngModel) {
-				scope.getHtml = scope.getHtml || getHtml;
-				var controlName = attrs[ "data-ig-control-name" ];
-				if (controlName) {
-					if (element.context) {
-						var options = scope.$eval(attrs[ controlName ]) ||
-							extractOptions(controlName, element.context, {}, element, scope);
-						/* removing the width and height attributes on the placeholder, because they affect the control dimensions */
-						if (element.removeAttr) {
-							element.removeAttr("width").removeAttr("height");
-						}
-
-						if (attrs.source) {
-							options.dataSource = scope.$eval(attrs.source);
-						} else {
-							attrs.source = attrs[ controlName ] + ".dataSource";
-							attrs.primaryKey = options.primaryKey;
-						}
-
-						// Two way data binding support using events from the controls
-						if ($.ig.angular[ controlName ] && $.ig.angular[ controlName ].bindEvents) {
-							$.ig.angular[ controlName ].bindEvents(scope, element, attrs, ngModel);
-						}
-
-						// cleanup
-						scope.$on("$destroy", function () {
-							if (element.data(controlName)) {
-								element[ controlName ]("destroy");
+			compile: function(tElement, tAttrs, transclude){
+				var context = this.origElementCopy[ 0 ];
+				return function (scope, element, attrs, ngModel) {
+					var controlName = attrs[ "data-ig-control-name" ];		
+					scope.getHtml = scope.getHtml || getHtml;
+					if (controlName) {
+						if (context) {
+							var options = scope.$eval(attrs[ controlName ]) ||
+								extractOptions(controlName, context, {}, element, scope);
+							/* removing the width and height attributes on the placeholder, because they affect the control dimensions */
+							if (element.removeAttr) {
+								element.removeAttr("width").removeAttr("height");
 							}
-							if ($.ig.angular[ controlName ] &&
-									$.ig.angular[ controlName ].events &&
-									$.ig.angular[ controlName ].events.length) {
-								element.off($.ig.angular[ controlName ].events.join(" "));
-							}
-						} );
 
-						element[ controlName ](options);
+							if (attrs.source) {
+								options.dataSource = scope.$eval(attrs.source);
+							} else {
+								attrs.source = attrs[ controlName ] + ".dataSource";
+								attrs.primaryKey = options.primaryKey;
+							}
+
+							// Two way data binding support using events from the controls
+							if ($.ig.angular[ controlName ] && $.ig.angular[ controlName ].bindEvents) {
+								$.ig.angular[ controlName ].bindEvents(scope, element, attrs, ngModel);
+							}
+
+							// cleanup
+							scope.$on("$destroy", function () {
+								if (typeof element.data(controlName) === "object") {
+									element[ controlName ]("destroy");
+								}
+								if ($.ig.angular[ controlName ] &&
+										$.ig.angular[ controlName ].events &&
+										$.ig.angular[ controlName ].events.length) {
+									element.off($.ig.angular[ controlName ].events.join(" "));
+								}
+							} );
+
+							element[ controlName ](options);
+						}
 					}
-				}
+				};
 			}
 		};
 	};

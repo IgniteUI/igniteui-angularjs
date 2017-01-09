@@ -11,11 +11,14 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="/igniteui-angular/samples/sample.css" />
     
-	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />    
-	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.pivot.css" rel="stylesheet" />
-	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.tree.css" rel="stylesheet" />
-	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.validator.css" rel="stylesheet" />
-	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.combo.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.scroll.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.popover.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.notifier.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.validator.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.combo.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.grid.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.tree.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.pivot.css"/>
 
     <style>
         #dataSelector, #pivotGrid {
@@ -108,20 +111,23 @@
 	<script type="text/javascript">
 		$.support.cors = true;
 	</script>
-    <script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.templating.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.util.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.datasource.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.olapflatdatasource.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.olapxmladatasource.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.shared.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.grid.framework.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.grid.multicolumnheaders.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.tree.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.pivot.shared.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.validator.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.combo.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.pivotgrid.js"></script>
-	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.pivotdataselector.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.util.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.datasource.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.olapxmladatasource.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.olapflatdatasource.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.templating.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.scroll.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.shared.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.popover.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.notifier.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.validator.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.combo.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.grid.framework.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.grid.multicolumnheaders.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.tree.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.pivot.shared.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.pivotgrid.js"></script>
+	<script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/latest/js/modules/infragistics.ui.pivotdataselector.js"></script>
 	<script src="../src/igniteui-angular.js"></script>
 	<script src="js/igniteui-sample.js"></script>
 
