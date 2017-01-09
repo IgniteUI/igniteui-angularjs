@@ -433,7 +433,9 @@
 		var unbinder;
 		/* rebind data source on changes */
 		unbinder = scope.$watch(attrs.source, function (newValue) {
-			$(element).igHierarchicalGrid("option", "dataSource", newValue);
+			setTimeout(function(){
+				$(element).igHierarchicalGrid("option", "dataSource", newValue);
+			}, 1);	
 		}, true);
 		markWatcher(scope, "igHierarchicalGrid", attrs);
 		element.one("$destroy", function () {
