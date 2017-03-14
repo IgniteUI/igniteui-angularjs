@@ -431,11 +431,18 @@
 	$.ig.angular.igHierarchicalGrid.bindEvents = $.ig.angular.igHierarchicalGrid.bindEvents ||
 			function (scope, element, attrs) {
 		var unbinder;
-		/* rebind data source on changes */
+		// rebind data source on changes
 		unbinder = scope.$watch(attrs.source, function (newValue) {
-			setTimeout(function(){
-				$(element).igHierarchicalGrid("option", "dataSource", newValue);
-			}, 1);	
+			var ds = scope.$eval(attrs.source), grid = element.data("igHierarchicalGrid");
+
+			if (ds !== grid.options.dataSource) {
+				//Setting a timeout 0 pushes the slow databind event to the end of the stack, letting the digest cycle finish, improving the overall responsivness of the page
+				setTimeout(function () {
+					$(element).igHierarchicalGrid("option", "dataSource", newValue);
+				}, 0);
+				return;
+			}
+			
 		}, true);
 		markWatcher(scope, "igHierarchicalGrid", attrs);
 		element.one("$destroy", function () {
