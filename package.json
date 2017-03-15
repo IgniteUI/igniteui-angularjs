@@ -22,7 +22,7 @@
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
     "jshint-stylish": "",
-    "protractor": "",
+    "protractor": "4.0.14",
     "protractor-istanbul-plugin": "",
     "http-server": "",
     "bower": "",
