@@ -724,10 +724,6 @@
 						if (context) {
 							var options = scope.$eval(attrs[ controlName ]) ||
 								extractOptions(controlName, context, {}, element, scope);
-							/* removing the width and height attributes on the placeholder, because they affect the control dimensions */
-							if (element.removeAttr) {
-								element.removeAttr("width").removeAttr("height");
-							}
 
 							if (attrs.source) {
 								options.dataSource = scope.$eval(attrs.source);
@@ -753,7 +749,22 @@
 								}
 							});
 
+							/* removing the width and height attributes on the placeholder, because they affect the control dimensions
+								remove other attributes too, they may confront with some html5 attributes for example draggable
+								D.K. fix for bug #234087
+							*/
+							for (var a in attrs) {
+								if (a !== "id" &&
+										!a.startsWith("$") &&
+										!a.startsWith("data-") &&
+										!a.startsWith("ng-") &&
+										element.removeAttr) {
+									element.removeAttr(a);
+								}
+							}
+
 							element[ controlName ](options);
+
 						}
 					}
 				};
