@@ -572,6 +572,14 @@ describe("my app", function() {
 			//the other values should be preserved
 			expect(util.getResult('$("#grid1 tbody tr:eq(1) td")[2].innerHTML'))
 				.toBe(util.getResult('angular.element("#grid1").scope().northwind[1].UnitsOnOrder.toString()'));
+			expect(util.getResult('$("#grid1").attr("width")'))
+				.toBe(null);
+			expect(util.getResult('$("#grid1").attr("height")'))
+				.toBe(null);
+			expect(util.getResult('$("#grid1").attr("auto-commit")'))
+				.toBe(null);
+			expect(util.getResult('$("#grid1").attr("primary-key")'))
+				.toBe(null);
 		});
 
 		it("should apply column template correctly", function () {

@@ -759,7 +759,7 @@
 										!a.startsWith("data-") &&
 										!a.startsWith("ng-") &&
 										element.removeAttr) {
-									element.removeAttr(a);
+									element.removeAttr(a.replace(/([A-Z])/g, "-$1").toLowerCase());
 								}
 							}
 
