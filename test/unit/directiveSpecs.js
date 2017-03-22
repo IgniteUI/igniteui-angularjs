@@ -201,4 +201,21 @@ describe("Ignite directives", function() {
 		expect(textEditorInput.data("igTextEditor")).not.toBeUndefined();
 		expect(textEditorInput.data("igTextEditor").element[0].nodeName).toBe("DIV");
 	}));
+	
+	it("should modify different properties on different records in the grid",inject(function($compile,$rootScope,$timeout){
+		var scope = $rootScope.$new();
+		$compile(grid)(scope);
+		scope.$digest();
+		var gridTable = grid.find("#grid1");
+		var gridScope = angular.element(gridTable).scope();
+		gridScope.northwind[0].prop1 = true;
+		gridScope.northwind[1].prop2 = false;
+		gridScope.$apply(function(){
+			var newData = gridTable.igGrid('option','dataSource');
+			expect(newData[0].prop1).toBe(true);
+			expect(newData[0].prop2).toBeUndefined();
+			expect(newData[1].prop1).toBeUndefined();
+			expect(newData[1].prop2).toBe(false);
+		}); //wait for the grid to render.
+	}));
 });
