@@ -61,7 +61,7 @@ describe("Ignite directives", function() {
 	}));
 
 	it("should create dialog", inject(function($compile, $rootScope) {
-		var dialogTpl ='<ig-dialog id="dialog1" header-text="Foo" height="325px"><content>' +
+		var dialogTpl ='<ig-dialog id="dialog1" header-text="Foo" height="325px" draggable="true"><content>' +
 		'<p><img style="width: 220px" src="http://www.igniteui.com/images/samples/dialog-window/content.jpg" /></p><input style="margin: 5px" /></content>' +
 		'</ig-dialog>';
 		var dialog = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + dialogTpl + '</div>');
@@ -73,6 +73,8 @@ describe("Ignite directives", function() {
 		expect(img.length).toBe(1);
 		expect(dialogElement.length).toBe(1);
 		expect(dialogElement.data("igDialog")).not.toBeUndefined();
+		expect(dialogElement.attr("draggable")).toBeUndefined();
+		expect(dialogElement.attr("height")).toBeUndefined();
 	}));
 
 	it("should create dialog with nested controls", inject(function($compile, $rootScope) {
