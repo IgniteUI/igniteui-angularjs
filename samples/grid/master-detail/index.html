@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>igGrid: Master/Detail - Ignite UI integration with AngularJS</title>
@@ -8,8 +8,8 @@
 	<link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.shared.css" rel="stylesheet" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="/igniteui-angular/samples/sample.css" />
-    
+    <link rel="stylesheet" href="../../sample.css" />
+
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.grid.css" rel="stylesheet" />
 <link type="text/css" href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/modules/infragistics.ui.editors.css" rel="stylesheet" />
 <style>
@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Ignite UI AngularJS Directives</a> 
+                <a class="navbar-brand" href="/">Ignite UI AngularJS Directives</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -40,16 +40,16 @@
             </div>
         </div>
     </div>
-    
+
 <div ng-app="app" ng-controller="masterDetailController">
     <h1 class="push-down-md">igGrid Master/Detail</h1>
     <div class="alert alert-danger" data-ng-cloak data-ng-show="error != null">Oops! There's been a problem: {{error}}</div>
     <div class="alert alert-info" data-ng-cloak data-ng-show="message.length > 0" data-ng-bind="message"></div>
-    <ig-grid id="homesGrid" 
-             data-source="homes" 
-             width="100%"  
-             primary-key="id" 
-             auto-commit="true" 
+    <ig-grid id="homesGrid"
+             data-source="homes"
+             width="100%"
+             primary-key="id"
+             auto-commit="true"
              auto-generate-columns="false"
              event-rendered="homesGridRendered">
         <columns>
@@ -60,9 +60,9 @@
             <column key="id" header-text="ID" data-type="string" hidden="true"></column>
         </columns>
         <features>
-            <feature name="Sorting" 
+            <feature name="Sorting"
                      event-column-sorted="homesGridColumnSorted"></feature>
-            <feature name="Selection" 
+            <feature name="Selection"
                      event-row-selection-changed="homesGridRowSelectionChanged"></feature>
             <feature name="Paging"
                      page-size="5"
@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Address</label>
                     <div class="col-sm-10">
-                        <input id="addressBox" 
+                        <input id="addressBox"
                                type="text"
                                class="form-control"
                                placeholder="Address"
@@ -88,7 +88,7 @@
                 <div class="form-group">
                     <label for="cityBox" class="col-sm-2 control-label">City</label>
                     <div class="col-sm-10">
-                      <input id="cityBox" 
+                      <input id="cityBox"
                                type="text"
                                class="form-control"
                                placeholder="City"
@@ -98,7 +98,7 @@
                 <div class="form-group">
                     <label for="bedroomsBox" class="col-sm-2 control-label">Bedrooms</label>
                     <div class="col-sm-10">
-                      <input id="bedroomsBox" 
+                      <input id="bedroomsBox"
                                type="text"
                                class="form-control"
                                placeholder="Bedrooms"
@@ -108,7 +108,7 @@
                 <div class="form-group">
                     <label for="bathroomsBox" class="col-sm-2 control-label">Bathrooms</label>
                     <div class="col-sm-10">
-                      <input id="bathroomsBox" 
+                      <input id="bathroomsBox"
                                type="text"
                                class="form-control"
                                placeholder="Bathrooms"
@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <label for="sqfeetBox" class="col-sm-2 control-label">Sq. Feet</label>
                     <div class="col-sm-10">
-                      <input id="sqfeetBox" 
+                      <input id="sqfeetBox"
                                type="text"
                                class="form-control"
                                placeholder="Sq. Feet"
@@ -128,7 +128,7 @@
                 <div class="form-group">
                     <label for="priceBox" class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-10">
-                      <input id="priceBox" 
+                      <input id="priceBox"
                                type="text"
                                class="form-control"
                                placeholder="Price"
@@ -138,8 +138,8 @@
                 <div class="form-group">
                     <label for="notesBox" class="col-sm-2 control-label">Notes</label>
                     <div class="col-sm-10">
-                        <textarea id="notesBox" 
-                                  class="form-control" 
+                        <textarea id="notesBox"
+                                  class="form-control"
                                   placeholder="Notes"
                                   data-ng-model="selectedHome.notes"></textarea>
                     </div>
@@ -168,7 +168,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    
+
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-mocks.js"></script>
 
