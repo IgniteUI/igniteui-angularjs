@@ -18,9 +18,9 @@
             color:#999;
             margin:.75em .75em 0 0;
         }
-        
+
         .billboard {
-            background: url(images/home-background.jpg) no-repeat center center; 
+            background: url(images/home-background.jpg) no-repeat center center;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -29,31 +29,31 @@
             background-color: #aa8c68;
             border-bottom: 10px solid #d16717;
         }
-        
+
         .billboard .row {
             margin: 1em;
         }
-        
+
         .lead {
             margin-top:1em;
         }
-        
+
         @media only screen and (min-width:641px){
-            
+
             .lead {
                 margin-top:0;
             }
-            
+
             .billboard {
                 min-height: 600px;
             }
-            
+
 
             .billboard .lead {
                 font-size: 1.2em;
                 text-transform: uppercase;
             }
-            
+
             .billboard .row {
                 margin:0;
                 margin-top: 4em;
@@ -90,9 +90,9 @@
         <h2>Try it out...</h2>
         <div class="row">
             <div class="col-sm-8">
-                <ig-grid id="employees-grid" 
-                     data-source="employees" 
-                     primary-key="EmployeeID" 
+                <ig-grid id="employees-grid"
+                     data-source="employees"
+                     primary-key="EmployeeID"
                      auto-generate-columns="false">
                     <columns>
                         <column key="EmployeeID" header-text="ID" data-type="number"></column>
@@ -103,9 +103,9 @@
                 </ig-grid>
                 <div class="hidden-xs hidden-sm">
                     <h4>Code</h4>
-                    <pre>&lt;ig-grid id=&quot;employees-grid&quot; 
-     data-source=&quot;employees&quot; 
-     primary-key=&quot;employeeID&quot; 
+                    <pre>&lt;ig-grid id=&quot;employees-grid&quot;
+     data-source=&quot;employees&quot;
+     primary-key=&quot;employeeID&quot;
      auto-generate-columns=&quot;false&quot;&gt;
     &lt;columns&gt;
         &lt;column key=&quot;employeeID&quot; header-text=&quot;ID&quot; width=&quot;65px&quot; data-type=&quot;number&quot;&gt;&lt;/column&gt;
@@ -130,7 +130,7 @@
             </div>
         </div>
         <hr />
-        
+
         <h2>Samples</h2>
         <div class="links">
             <div class="btn-group">
@@ -182,7 +182,7 @@
             </div>
         </div>
     </footer>
-    
+
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -191,7 +191,7 @@
 
 	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.core.js"></script>
     <script src="http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.lob.js"></script>
-    
+
     <script src="src/igniteui-angular.js"></script>
     <script>var app = angular.module('app', ['ngRoute','igniteui-directives']);</script>
     <script src="samples/js/data/northwind-employees.js"></script>
