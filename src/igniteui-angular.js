@@ -169,13 +169,14 @@
 				}
 			}
 			function setControlValue( value ) {
+				var combo = element.data(controlName), multiSelection = combo.options.multiSelection;
 				comboItems = value;
-				if (typeof value === "string") {
+				if (typeof value === "string" && multiSelection && multiSelection.enabled) {
 					// in case view value is changed from text field (default Array.toString representation is comma separated)
-					value = value.split(",");
+					value = value.split(multiSelection.itemSeparator);
 				}
-				comboValue(element.data(controlName), value);
-				return element.data(controlName).text();
+				comboValue(combo, value);
+				return combo.text();
 			}
 			function parseValue() {
 				//"parse" through the control value, ensure no-flicker with formatted values
@@ -187,7 +188,7 @@
 					combo.refreshValue();
 				}
 
-				return comboValue(element.data(controlName));
+				return comboValue(combo);
 			}
 			element.on($.ig.angular.igCombo.events.join(" "), function (event, args) {
 				scope.$apply(function () {
