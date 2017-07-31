@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/IgniteUI/igniteui-angular/badge.svg?branch=master)](https://coveralls.io/github/IgniteUI/igniteui-angular?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angular)
 
-Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular).
+Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular) or quickly bootstrap your AngularJS project with this preconfigured application - [Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angular-seed/).
 
 # Requirements
 
@@ -42,6 +42,14 @@ To build the project use the following steps:
 3. Run `grunt build`
 
 # Getting Started
+
+There are two ways of getting started with the Ignite UI directives. The first one is to use the Ignite UI AngularJS quick start application which is described below. The other way is to configure the application yourself following the page setup instructions step by step.
+
+## Ignite UI AngularJS quick start application
+
+[Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angular-seed/) is an application skeleton for a typical AngularJS web app using the Ignite UI directives for AngularJS. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.
+
+The seed contains a sample AngularJS application and is preconfigured to install the Angular framework and a bunch of development and testing tools for instant web development gratification.
 
 ## Page setup
 
@@ -247,8 +255,7 @@ After that the location is the same(igniteui-angular/coverage/final/lcov/src). T
 
 ---------------------------------------
 
-##What is Ignite UI?
-[![Ignite UI Logo](http://infragistics-blogs.github.io/github-assets/logos/igniteui.png)](http://igniteui.com)
+## What is Ignite UI? &nbsp;&nbsp;[![Ignite UI Logo](http://infragistics-blogs.github.io/github-assets/logos/igniteui.png)](http://igniteui.com)
 
 [Ignite UI](http://igniteui.com/) is an advanced HTML5+ toolset that helps you create stunning, modern Web apps. Building on jQuery and jQuery UI, it primarily consists of feature rich, high-performing UI controls/widgets such as all kinds of charts, data visualization maps, (hierarchical, editable) data grids, pivot grids, enhanced editors (combo box, masked editors, HTML editor, date picker, to name a few), flexible data source connectors, and a whole lot more.  Too many to list here - check out [the site](http://igniteui.com/) for more info and to [download](https://igniteui.com/download) a trial.
 
