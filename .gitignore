@@ -3,6 +3,6 @@ bower_components
 test_out
 coverage
 instrument
-dist/igniteui-angular.min.js
-dist/npm/igniteui-angular.js
-dist/npm/igniteui-angular.min.js
+dist/igniteui-angularjs.min.js
+dist/npm/igniteui-angularjs.js
+dist/npm/igniteui-angularjs.min.js

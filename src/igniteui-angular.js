@@ -1,10 +1,10 @@
 /*!@license
  * Ignite UI directives for AngularJS   1.1.4
- * https://github.com/IgniteUI/igniteui-angular
+ * https://github.com/IgniteUI/igniteui-angularjs
  *
  * Copyright (c) 2014-2016 Infragistics, Inc.
  * Licensed under the MIT license.
- * https://github.com/IgniteUI/igniteui-angular/blob/master/license.txt
+ * https://github.com/IgniteUI/igniteui-angularjs/blob/master/license.txt
  */
 
 /*global angular*/

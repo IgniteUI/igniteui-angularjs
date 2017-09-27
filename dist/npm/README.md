@@ -1,4 +1,4 @@
-Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular).
+Use the directives found in `igniteui-angularjs.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angularjs).
 
 #Requirements
 
@@ -12,7 +12,7 @@ Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igni
 
 ## Page setup
 
-In the page markup include the Ignite UI AngularJS directives file found in `./node_modules/igniteui-angular/igniteui-angular.min.js` along with the Ignite UI scripts:
+In the page markup include the Ignite UI AngularJS directives file found in `./node_modules/igniteui-angularjs/igniteui-angularjs.min.js` along with the Ignite UI scripts:
 
 	<script src="jquery.min.js"></script>
 	<script src="jquery-ui.min.js"></script>
@@ -21,7 +21,7 @@ In the page markup include the Ignite UI AngularJS directives file found in `./n
 	<script src="infragistics.core.js"></script>
 	<script src="infragistics.lob.js"></script>
 
-	<script src="igniteui-angular.min.js"></script>
+	<script src="igniteui-angularjs.min.js"></script>
 	
 Reference the `igniteui-directives` in your AngularJS module:
 

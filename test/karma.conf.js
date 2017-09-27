@@ -12,7 +12,7 @@ module.exports = function(config){
 			"http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.core.js",
 			"http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.dv.js",
 			"http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.lob.js",
-			"src/igniteui-angular.js",
+			"src/igniteui-angularjs.js",
 			"test/app/js/my-app.js",
 			"test/unit/**/*.js"
 		],
