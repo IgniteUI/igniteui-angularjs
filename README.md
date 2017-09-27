@@ -7,13 +7,15 @@
 
 Use the directives found in `igniteui-angularjs.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angularjs) or quickly bootstrap your AngularJS project with this preconfigured application - [Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angularjs-seed/).
 
+**IMPORTANT** The repository has been renamed from `igniteui-angular` to `igniteui-angularjs`. This is to avoid confusion caused by the new [naming convention](https://medium.com/google-developer-experts/angular-new-naming-guidelines-eacbebd09363) of Angular. 
+
 # Requirements
 
 - [jQuery](http://www.jquery.com) v1.8 and later
 - [AngularJS](http://www.angularjs.org) v1.0 and later
 - [Ignite UI](http://www.igniteui.com) 13.1 and later
 
-> **Note:** The Ignite UI Angular directives *do not* work with the Ignite UI ASP.NET MVC Helpers
+> **Note:** The Ignite UI AngularJS directives *do not* work with the Ignite UI ASP.NET MVC Helpers
 
 # Install
 
@@ -78,7 +80,7 @@ Controls can be initialized in two ways:
 ## Markup Initialization
 
 ### Custom tags
-Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard Angular normalization process).
+Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard AngularJS normalization process).
 
 **Note**: It is recommended to use closing tags (`</ig-combo>`) over the self-closing tags (`<ig-combo/>`), because the latter are known to make issues on some browsers (depending on the used document mode).
 
@@ -135,7 +137,7 @@ Binding to control events is done again with attributes. Event attribute names a
 |igDateEditor.events.keypress | `<ig-date-editor event-keypress="keypressHandler">`  |
 
 ## Controller Initialization
-Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (this naming convention follows the standard Angular normalization process) and the attribute value corresponds to the scope object holding the control options.
+Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (this naming convention follows the standard AngularJS normalization process) and the attribute value corresponds to the scope object holding the control options.
 
 #### Examples:
 
@@ -180,7 +182,7 @@ The following controls currently support two-way data binding:
 3. igEditors
 4. igTree
 
-**Note**: When using control API methods which modify the data source outside the Angular framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see Angular view updated.
+**Note**: When using control API methods which modify the data source outside the AngularJS framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see AngularJS view updated.
 
 ## Testing
 There are two kinds of tests in igniteui-angularjs: Unit tests and End to End tests. All of them are written in [Jasmine](http://jasmine.github.io/).
