@@ -19,7 +19,15 @@ Use the directives found in `igniteui-angularjs.js` to use [Ignite UI](http://ig
 
 # Install
 
-You can install this package either with `npm` or with `bower`. This is a development repo!
+You can install this package either with `npm` or with `bower`. This is a development repo!  
+
+`igniteui-angularjs` depends on the `ignite-ui-full` licensed package. Follow [this guide](https://www.igniteui.com/help/using-ignite-ui-npm-packages) on setting up access to the Ignite UI private npm feed and add the dependency to the `package.json`.
+
+```
+"dependencies": {
+	"@infragistics/ignite-ui-full": "latest"
+}
+```
 
 ### npm
 

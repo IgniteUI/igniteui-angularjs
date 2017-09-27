@@ -12,13 +12,7 @@
     "url": "https://github.com/IgniteUI/igniteui-angularjs/issues"
   },
   "homepage": "https://github.com/IgniteUI/igniteui-angularjs",
-  "dependencies": {
-	/* 
-	Follow this topic to setup the Ignite UI private registry access
-	https://www.igniteui.com/help/using-ignite-ui-npm-packages
-	"@infragistics/ignite-ui-full": "latest"
-	*/
-  },
+  "dependencies": {},
   "devDependencies": {
     "mkdirp": "",
     "coveralls": "",
