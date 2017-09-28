@@ -1,11 +1,13 @@
 ﻿# Ignite UI directives for AngularJS
 
-[![NPM version](https://img.shields.io/npm/v/igniteui-angular.svg?style=flat)](https://www.npmjs.com/package/igniteui-angular)
-[![Build Status](https://travis-ci.org/IgniteUI/igniteui-angular.svg?branch=master)](https://travis-ci.org/IgniteUI/igniteui-angular)
-[![Coverage Status](https://coveralls.io/repos/github/IgniteUI/igniteui-angular/badge.svg?branch=master)](https://coveralls.io/github/IgniteUI/igniteui-angular?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angular)
+[![NPM version](https://img.shields.io/npm/v/igniteui-angularjs.svg?style=flat)](https://www.npmjs.com/package/igniteui-angularjs)
+[![Build Status](https://travis-ci.org/IgniteUI/igniteui-angularjs.svg?branch=master)](https://travis-ci.org/IgniteUI/igniteui-angularjs)
+[![Coverage Status](https://coveralls.io/repos/github/IgniteUI/igniteui-angularjs/badge.svg?branch=master)](https://coveralls.io/github/IgniteUI/igniteui-angularjs?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angularjs)
 
-Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angular) or quickly bootstrap your AngularJS project with this preconfigured application - [Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angular-seed/).
+Use the directives found in `igniteui-angularjs.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angularjs) or quickly bootstrap your AngularJS project with this preconfigured application - [Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angularjs-seed/).
+
+**IMPORTANT** The repository has been renamed from `igniteui-angular` to `igniteui-angularjs`. This is to avoid confusion caused by the new [naming convention](https://medium.com/google-developer-experts/angular-new-naming-guidelines-eacbebd09363) of Angular. 
 
 # Requirements
 
@@ -13,31 +15,39 @@ Use the directives found in `igniteui-angular.js` to use [Ignite UI](http://igni
 - [AngularJS](http://www.angularjs.org) v1.0 and later
 - [Ignite UI](http://www.igniteui.com) 13.1 and later
 
-> **Note:** The Ignite UI Angular directives *do not* work with the Ignite UI ASP.NET MVC Helpers
+> **Note:** The Ignite UI AngularJS directives *do not* work with the Ignite UI ASP.NET MVC Helpers
 
 # Install
 
-You can install this package either with `npm` or with `bower`. This is a development repo!
+You can install this package either with `npm` or with `bower`. This is a development repo!  
+
+`igniteui-angularjs` depends on the `ignite-ui-full` licensed package. Follow [this guide](https://www.igniteui.com/help/using-ignite-ui-npm-packages) on setting up access to the Ignite UI private npm feed and add the dependency to the `package.json`.
+
+```
+"dependencies": {
+	"@infragistics/ignite-ui-full": "latest"
+}
+```
 
 ### npm
 
 ```shell
-npm install igniteui-angular
+npm install igniteui-angularjs
 ```
 
 ### bower
 
 ```shell
-bower install igniteui-angular
+bower install igniteui-angularjs
 ```
 
 # Building
-Build will produce an obfuscated and minified version of the `src/igniteui-angular.js` in the `dist/igniteui-angular.min.js`.  
-The build will also put the original and the minified version of the `src/igniteui-angular.js` in the `dist/npm` for distribution to npm.
+Build will produce an obfuscated and minified version of the `src/igniteui-angularjs.js` in the `dist/igniteui-angularjs.min.js`.  
+The build will also put the original and the minified version of the `src/igniteui-angularjs.js` in the `dist/npm` for distribution to npm.
 The build uses [Grunt](http://gruntjs.com/), so you need [Node.js](http://nodejs.org/) installed on your machine.  
 To build the project use the following steps:
 
-1. Open a console in the folder where the **igniteui-angular** project is located
+1. Open a console in the folder where the **igniteui-angularjs** project is located
 2. Run `npm install`
 3. Run `grunt build`
 
@@ -47,13 +57,13 @@ There are two ways of getting started with the Ignite UI directives. The first o
 
 ## Ignite UI AngularJS quick start application
 
-[Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angular-seed/) is an application skeleton for a typical AngularJS web app using the Ignite UI directives for AngularJS. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.
+[Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angularjs-seed/) is an application skeleton for a typical AngularJS web app using the Ignite UI directives for AngularJS. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.
 
 The seed contains a sample AngularJS application and is preconfigured to install the Angular framework and a bunch of development and testing tools for instant web development gratification.
 
 ## Page setup
 
-In the page markup include the Ignite UI AngularJS directives file found in `dist/igniteui-angular.min.js` along with the Ignite UI scripts:
+In the page markup include the Ignite UI AngularJS directives file found in `dist/igniteui-angularjs.min.js` along with the Ignite UI scripts:
 
 	<script src="jquery.min.js"></script>
 	<script src="jquery-ui.min.js"></script>
@@ -62,7 +72,7 @@ In the page markup include the Ignite UI AngularJS directives file found in `dis
 	<script src="infragistics.core.js"></script>
 	<script src="infragistics.lob.js"></script>
 
-	<script src="igniteui-angular.min.js"></script>
+	<script src="igniteui-angularjs.min.js"></script>
 	
 Reference the `igniteui-directives` in your AngularJS module:
 
@@ -78,7 +88,7 @@ Controls can be initialized in two ways:
 ## Markup Initialization
 
 ### Custom tags
-Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard Angular normalization process).
+Each control implements a custom tag directive where the tag name is formed by splitting each capital letter in the control name with the `-` symbol (This naming convention follows the standard AngularJS normalization process).
 
 **Note**: It is recommended to use closing tags (`</ig-combo>`) over the self-closing tags (`<ig-combo/>`), because the latter are known to make issues on some browsers (depending on the used document mode).
 
@@ -135,7 +145,7 @@ Binding to control events is done again with attributes. Event attribute names a
 |igDateEditor.events.keypress | `<ig-date-editor event-keypress="keypressHandler">`  |
 
 ## Controller Initialization
-Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (this naming convention follows the standard Angular normalization process) and the attribute value corresponds to the scope object holding the control options.
+Each control also implements a custom attribute directive where the attribute name is formed by splitting each capital letter in the control name with the `-` symbol (this naming convention follows the standard AngularJS normalization process) and the attribute value corresponds to the scope object holding the control options.
 
 #### Examples:
 
@@ -180,10 +190,10 @@ The following controls currently support two-way data binding:
 3. igEditors
 4. igTree
 
-**Note**: When using control API methods which modify the data source outside the Angular framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see Angular view updated.
+**Note**: When using control API methods which modify the data source outside the AngularJS framework you need to explicitly call [Scope.$apply()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) in order to see AngularJS view updated.
 
 ## Testing
-There are two kinds of tests in Igniteui-angular: Unit tests and End to End tests. All of them are written in [Jasmine](http://jasmine.github.io/).
+There are two kinds of tests in igniteui-angularjs: Unit tests and End to End tests. All of them are written in [Jasmine](http://jasmine.github.io/).
 
 #### Setup
 Simply do:
@@ -241,7 +251,7 @@ To combine the both reports into one single report you need to execute:
 
 	npm run cover-combined
 	
-After that the default directory where you can open the code coverage is igniteui-angular/coverage/final/lcov/src.
+After that the default directory where you can open the code coverage is igniteui-angularjs/coverage/final/lcov/src.
 
 **Running specific coverage:** 
 
@@ -251,7 +261,7 @@ To view the code coverage only for the Protractor you need to run the command:
 
 	npm run cover-protractor
 
-After that the location is the same(igniteui-angular/coverage/final/lcov/src). That is because the Protractor report is not easily readable by default.
+After that the location is the same(igniteui-angularjs/coverage/final/lcov/src). That is because the Protractor report is not easily readable by default.
 
 ---------------------------------------
 
