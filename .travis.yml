@@ -21,3 +21,21 @@ script:
   - npm run protractor
   - npm run cover-combined
   - cat ./coverage/final/lcov.info | coveralls
+
+before_deploy:
+# package and navigate to dist
+- grunt build
+- cd dist/npm
+# update package version
+- npm version "$TRAVIS_TAG" --no-git-tag-version --save
+
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: igniteui@infragistics.com
+  api_key:
+    secure: DLdsRhCKRwkaLfiwojo5eEgXBskejGC0Ll9r/ijZj3y/F/pYQw63Xk2ZMA3MEVyR7BW2xtoNkcyEqy7l3pEsqZT9MxHOXBoSX6/120EfiHVRc6PKW2S643TujA6ajVL2WeF+2TW1Cg/0mGfU9y+j0sxCSrq8tyfN4ymv8IRrQ3U=
+  on:
+    tags: true
+    repo: IgniteUI/igniteui-angularjs
+    branch: master
