@@ -1,9 +1,9 @@
 ﻿# Ignite UI directives for AngularJS
 
-[![NPM version](https://img.shields.io/npm/v/igniteui-angularjs.svg?style=flat)](https://www.npmjs.com/package/igniteui-angularjs)
 [![Build Status](https://travis-ci.org/IgniteUI/igniteui-angularjs.svg?branch=master)](https://travis-ci.org/IgniteUI/igniteui-angularjs)
 [![Coverage Status](https://coveralls.io/repos/github/IgniteUI/igniteui-angularjs/badge.svg?branch=master)](https://coveralls.io/github/IgniteUI/igniteui-angularjs?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angularjs)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/f7b38e525b504be0aabc891079530521)](https://www.codacy.com/app/kdinev/igniteui-angularjs)  
+[![npm version](https://badge.fury.io/js/igniteui-angularjs.svg)](https://badge.fury.io/js/igniteui-angularjs)
 
 Use the directives found in `igniteui-angularjs.js` to use [Ignite UI](http://igniteui.com) controls in [AngularJS](http://angularjs.com) pages. [Work with the running samples here](http://igniteui.github.io/igniteui-angularjs) or quickly bootstrap your AngularJS project with this preconfigured application - [Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angularjs-seed/).
 
