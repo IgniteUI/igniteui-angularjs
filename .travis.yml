@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - "5"
+  - '5'
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
@@ -34,7 +34,7 @@ deploy:
   skip_cleanup: true
   email: igniteui@infragistics.com
   api_key:
-    secure: DLdsRhCKRwkaLfiwojo5eEgXBskejGC0Ll9r/ijZj3y/F/pYQw63Xk2ZMA3MEVyR7BW2xtoNkcyEqy7l3pEsqZT9MxHOXBoSX6/120EfiHVRc6PKW2S643TujA6ajVL2WeF+2TW1Cg/0mGfU9y+j0sxCSrq8tyfN4ymv8IRrQ3U=
+    secure: awkGIEJWnAsXTag3RTFVpEdkx8WSspSqbT6rV3S0VlaIUN1lcMSBIrdNVzyTkKGq4s6SbY8omdHzfX/6uGDMM6+HMI7kGQeYHH0M73dzlVNj0TJ1xHKJ6zuqDXsWWatIRFYe7EkbX3xl9d0b0mfvHMIaLXH1CwxiLVF60CCFfLU=
   on:
     tags: true
     repo: IgniteUI/igniteui-angularjs
