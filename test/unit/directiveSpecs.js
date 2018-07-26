@@ -126,12 +126,14 @@ describe("Ignite directives", function() {
             '<series><series name="2015Population" type="column" is-highlighting-enabled="true" is-transition-in-enabled="true" x-axis="NameAxis" y-axis="PopulationAxis" value-member-path="Pop2015">' +
 			'</series></series></ig-data-chart>';
 		var dataChart = angular.element('<div ng-app="my-app"><div ng-controller="NorthwindCtrl">' + dataChartTpl + '</div>');
+		dataChart.appendTo("body");
 		var scope = $rootScope.$new();
 		$compile(dataChart)(scope);
 		scope.$digest();
 		var dataChartElement = dataChart.find("#datachart1");
 		expect(dataChartElement.length).toBe(1);
 		expect(dataChartElement.data("igDataChart")).not.toBeUndefined();
+		dataChart.remove();
 	}));
 
 	it("should create hierarchical grid", inject(function($compile, $rootScope) {
