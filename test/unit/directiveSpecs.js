@@ -136,7 +136,8 @@ describe("Ignite directives", function() {
 		dataChart.remove();
 	}));
 
-	it("should create hierarchical grid", inject(function($compile, $rootScope) {
+	it("should create hierarchical grid", inject(function($compile, $rootScope, $timeout) {
+		jasmine.clock().install();
 		var hierarchicalGridTpl =
 		'<ig-hierarchical-grid id="hgrid1"  data-source="data" width="100%" height="400px" auto-commit="true" auto-generate-columns="false" auto-generate-layouts="false">' +
 			'<columns>' +
@@ -167,6 +168,7 @@ describe("Ignite directives", function() {
 		var scope = $rootScope.$new();
 		$compile(hierarchicalGrid)(scope);
 		scope.$digest();
+		jasmine.clock().tick(1); // setTimeout in HGrid scope watch
 		var hGridElement = hierarchicalGrid.find("#hgrid1");
 		expect(hGridElement.length).toBe(1);
 		expect(hGridElement.data("igHierarchicalGrid")).not.toBeUndefined();
