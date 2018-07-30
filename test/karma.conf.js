@@ -9,13 +9,15 @@ module.exports = function(config){
 			"bower_components/angular/angular.js",
 			"bower_components/angular-route/angular-route.js",
 			"bower_components/angular-mocks/angular-mocks.js",
-			"http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.core.js",
-			"http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.dv.js",
-			"http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.lob.js",
+			"https://cdn-na.infragistics.com/igniteui/latest/js/infragistics.core.js",
+			"https://cdn-na.infragistics.com/igniteui/latest/js/infragistics.dv.js",
+			"https://cdn-na.infragistics.com/igniteui/latest/js/infragistics.lob.js",
 			"src/igniteui-angularjs.js",
 			"test/app/js/my-app.js",
 			"test/unit/**/*.js"
 		],
+
+		crossOriginAttribute: false,
 
 		autoWatch : true,
 
