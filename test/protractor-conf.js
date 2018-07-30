@@ -1,5 +1,8 @@
 var cfg = {
-	
+
+	// https://www.protractortest.org/#/server-setup#connecting-directly-to-browser-drivers 
+	directConnect: true,
+
 	allScriptsTimeout: 11000,
 	
 	plugins : [{
