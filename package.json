@@ -1,17 +1,17 @@
 {
-  "name": "igniteui-angular",
+  "name": "igniteui-angularjs",
   "version": "1.0.4",
-  "main": "src/igniteui-angular.js",
+  "main": "src/igniteui-angularjs.js",
   "author": "IgniteUI",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/IgniteUI/igniteui-angular.git"
+    "url": "https://github.com/IgniteUI/igniteui-angularjs.git"
   },
   "bugs": {
-    "url": "https://github.com/IgniteUI/igniteui-angular/issues"
+    "url": "https://github.com/IgniteUI/igniteui-angularjs/issues"
   },
-  "homepage": "https://github.com/IgniteUI/igniteui-angular",
+  "homepage": "https://github.com/IgniteUI/igniteui-angularjs",
   "dependencies": {},
   "devDependencies": {
     "mkdirp": "",
@@ -22,40 +22,30 @@
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
     "jshint-stylish": "",
-    "protractor": "4.0.14",
+    "protractor": "^5.4.0",
     "protractor-istanbul-plugin": "",
     "http-server": "",
     "bower": "",
     "shelljs": "",
     "istanbul-coveralls": "",
-    "karma": "0.13.22",
+    "karma": "^2.0.5",
     "karma-jasmine": "",
     "karma-coverage": "",
-    "karma-chrome-launcher": "",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "",
     "karma-junit-reporter": ""
   },
   "scripts": {
     "postinstall": "bower install",
-	"instrument": "istanbul instrument ./src/ -o ./instrument/",
-	
-	"cover-protractor": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
-	"cover-combined": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/karma/**/coverage*.json coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
-	
-    "prestart": "npm install",
+    "instrument": "istanbul instrument ./src/ -o ./instrument/",
+    "cover-protractor": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
+    "cover-combined": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/karma/**/coverage*.json coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
     "start": "http-server -a localhost -p 8000 &",
-
-    "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
     "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots,coverage",
     "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
-
-    "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update",
-
-    "preprotractor": "npm run update-webdriver",
+    "preprotractor": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",
-
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   }
 }
