@@ -57,7 +57,7 @@ There are two ways of getting started with the Ignite UI directives. The first o
 
 ## Ignite UI AngularJS quick start application
 
-[Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angularjs-seed/) is an application skeleton for a typical AngularJS web app using the Ignite UI directives for AngularJS. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.
+[Ignite UI AngularJS seed](https://github.com/IgniteUI/igniteui-angular-seed/) is an application skeleton for a typical AngularJS web app using the Ignite UI directives for AngularJS. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.
 
 The seed contains a sample AngularJS application and is preconfigured to install the Angular framework and a bunch of development and testing tools for instant web development gratification.
 
