@@ -207,6 +207,10 @@
 			});
 			model.$formatters.push(setControlValue);
 			model.$parsers.push(parseValue);
+			model.$isEmpty = function (value) {
+				var isEmpty = !value || (Array.isArray(value) && value.length == 0);
+				return isEmpty;
+			};
 
 			unbinder = scope.$watch(attrs.source, function (newValue) {
 				var items = [], newDataSource = [], combo = element.data(controlName);
