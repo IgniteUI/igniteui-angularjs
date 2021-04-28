@@ -44,7 +44,7 @@ module.exports = function(config){
 			],
 		},
 		
-		browsers : ["Chrome"],
+		browsers : ["ChromeHeadless"],
 		
 		customLaunchers: {
             Chrome_travis_ci: {
