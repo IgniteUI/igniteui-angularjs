@@ -1,9 +1,9 @@
-module.exports = function(config){
-	var cfg = {
+module.exports = function (config) {
+	config.set({
 
-		basePath : "../",
+		basePath: "../",
 
-		files : [
+		files: [
 			"http://code.jquery.com/jquery-1.10.2.min.js",
 			"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js",
 			"bower_components/angular/angular.js",
@@ -19,44 +19,37 @@ module.exports = function(config){
 
 		crossOriginAttribute: false,
 
-		autoWatch : true,
+		autoWatch: true,
 
 		frameworks: ["jasmine"],
 
-		plugins : [ "karma-chrome-launcher", "karma-firefox-launcher", "karma-jasmine", "karma-junit-reporter", "karma-coverage" ],
-		
+		plugins: [
+			require('karma-jasmine'),
+			require('karma-coverage'),
+			require('karma-chrome-launcher'),
+			require('karma-jasmine-html-reporter'),
+			require('karma-junit-reporter')
+		],
+
 		reporters: ["junit", "coverage"],
-		
-		junitReporter : {
+
+		junitReporter: {
 			outputDir: "./test_out",
 			outputFile: "unit.xml",
 			suite: "unit"
 		},
-		
+
 		preprocessors: {
-		  "src/*.js": ["coverage"]
+			'src/*.js': ['coverage']
 		},
-		
+
 		coverageReporter: {
-			reporters:[
-				{ type: "lcov", dir:"coverage/karma/" },
-				{ type: "json", dir:"coverage/karma/", file: "coverage.json" },
+			reporters: [
+				{ type: "lcov", dir: "coverage/karma/" },
+				{ type: "json", dir: "coverage/karma/", file: "coverage.json" },
 			],
 		},
-		
-		browsers : ["ChromeHeadless"],
-		
-		customLaunchers: {
-            Chrome_travis_ci: {
-                base: "ChromeHeadless",
-                flags: ["--no-sandbox"]
-            }
-        }
-	};
-	
-	if (process.env.TRAVIS) {
-		cfg.browsers = ["Chrome_travis_ci"];
-    }
 
-    config.set(cfg);
+		browsers: ["ChromeHeadless"]
+	});
 };
