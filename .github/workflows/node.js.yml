@@ -27,7 +27,6 @@ jobs:
     - run: npm ci
     - run: npm run start
     - run: npm run test-single
-    - run: npm run instrument
     - run: npm run protractor
     - run: npm run cover-combined
 
