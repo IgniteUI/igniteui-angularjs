@@ -1,4 +1,4 @@
-var cfg = {
+exports.config = {
 
 	// https://www.protractortest.org/#/server-setup#connecting-directly-to-browser-drivers 
 	directConnect: true,
@@ -26,11 +26,3 @@ var cfg = {
 		defaultTimeoutInterval: 30000
 	}
 };
-
-if (process.env.TRAVIS) {
-	cfg.capabilities.chromeOptions = {
-			"args": ["--no-sandbox"]
-		};
-}
-
-exports.config = cfg;
