@@ -22,18 +22,18 @@
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
     "jshint-stylish": "",
-    "protractor": "^5.4.0",
+    "protractor": "^7.0.0",
     "protractor-istanbul-plugin": "",
     "http-server": "",
     "bower": "",
     "shelljs": "",
     "istanbul-coveralls": "",
-    "karma": "^2.0.5",
-    "karma-jasmine": "",
-    "karma-coverage": "",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-firefox-launcher": "",
-    "karma-junit-reporter": ""
+    "karma": "^6.3.2",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage": "^2.0.3",
+    "karma-jasmine": "^4.0.1",
+    "karma-jasmine-html-reporter": "^1.5.4",
+    "karma-junit-reporter": "^2.0.1"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -42,10 +42,12 @@
     "cover-combined": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/karma/**/coverage*.json coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
     "start": "http-server -a localhost -p 8000 &",
     "test": "karma start test/karma.conf.js",
-    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots,coverage",
+    "test-single": "karma start test/karma.conf.js --single-run --code-coverage",
     "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
     "preprotractor": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",
-    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\"",
+    "hint": "grunt default",
+    "build": "grunt build"
   }
 }
