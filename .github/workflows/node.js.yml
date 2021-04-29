@@ -25,14 +25,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run start
+    - run: npm run hint
     - run: npm run test-single
-    - run: npm run protractor
-    - run: npm run cover-combined
 
     - name: Publish to coveralls.io
       if: github.repository == 'IgniteUI/igniteui-angularjs' && matrix.node-version == '14.x'
       uses: coverallsapp/github-action@v1.1.2
       with:
-          path-to-lcov: ./coverage/final/lcov.info
+          path-to-lcov: ./coverage/lcov.info
           github-token: ${{ github.token }}

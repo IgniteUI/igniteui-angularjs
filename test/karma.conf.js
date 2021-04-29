@@ -44,9 +44,9 @@ module.exports = function (config) {
 		},
 
 		coverageReporter: {
+			dir: require('path').join(__dirname, '../coverage/'),
 			reporters: [
-				{ type: "lcov", dir: "coverage/karma/" },
-				{ type: "json", dir: "coverage/karma/", file: "coverage.json" },
+				{ type: 'lcov' }
 			],
 		},
 
