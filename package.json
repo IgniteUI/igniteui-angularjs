@@ -42,7 +42,7 @@
     "cover-combined": "rm -rf coverage/tmp && mkdirp coverage/tmp/ && cp coverage/karma/**/coverage*.json coverage/tmp/ && cp coverage/protractor/*.json coverage/tmp/ && istanbul report --include=./coverage/tmp/*.json -dir coverage/final",
     "start": "http-server -a localhost -p 8000 &",
     "test": "karma start test/karma.conf.js",
-    "test-single": "karma start test/karma.conf.js --single-run --reporters junit,dots,coverage",
+    "test-single": "karma start test/karma.conf.js --single-run --code-coverage",
     "test-single-firefox": "karma start test/karma.conf.js --browsers Firefox --single-run  --reporters junit,dots",
     "preprotractor": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",

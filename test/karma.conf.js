@@ -27,17 +27,12 @@ module.exports = function (config) {
 			require('karma-jasmine'),
 			require('karma-coverage'),
 			require('karma-chrome-launcher'),
-			require('karma-jasmine-html-reporter'),
-			require('karma-junit-reporter')
+			require('karma-jasmine-html-reporter')
 		],
-
-		reporters: ["junit", "coverage"],
-
-		junitReporter: {
-			outputDir: "./test_out",
-			outputFile: "unit.xml",
-			suite: "unit"
+		client: {
+			clearContext: false // leave Jasmine Spec Runner output visible in browser
 		},
+		reporters: ["progress", "coverage"],
 
 		preprocessors: {
 			'src/*.js': ['coverage']
@@ -45,8 +40,9 @@ module.exports = function (config) {
 
 		coverageReporter: {
 			dir: require('path').join(__dirname, '../coverage/'),
+			subdir: '.',
 			reporters: [
-				{ type: 'lcov' }
+				{ type: 'lcovonly' }
 			],
 		},
 
